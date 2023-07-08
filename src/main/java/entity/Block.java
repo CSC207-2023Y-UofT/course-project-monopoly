@@ -3,14 +3,14 @@ package entity;
 /**
  * Represents the blocks of the map
  */
-public class Blocks {
+public class Block {
     public int id;
 
     /**
      * Class constructor
      * @param ID
      */
-    public Blocks(int ID){
+    public Block(int ID){
         this.id = ID;
     }
 
