@@ -6,7 +6,7 @@ import java.util.ArrayList;
 /**
  * Represents the property blocks
  */
-public class Property extends Blocks{
+public class Property extends Block {
 
     String name;
     int level;

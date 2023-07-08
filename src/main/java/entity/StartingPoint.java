@@ -3,7 +3,7 @@ package entity;
 /**
  *  Represents the starting point block
  */
-public class StartingPoint extends Blocks{
+public class StartingPoint extends Block {
     int bonus;
 
     public StartingPoint(int ID, int bonus) {
