@@ -7,10 +7,10 @@ import java.util.ArrayList;
  */
 public class Player {
 
-    private int userId;
-    private int money;
-    private ArrayList<Property> properties;
-    private ArrayList<String> status;
+    int userId;
+    int money;
+    ArrayList<Property> properties;
+    ArrayList<String> status;
 
     public Player(int userId, int money){
         this.userId = userId;
@@ -48,11 +48,6 @@ public class Player {
     public void addStatus(String status) {this.status.add(status);}
 
     public void removeStatus(String status) {this.status.remove(status);}
-
-
-    public boolean equals(Player player){
-        return this.userId == player.getUserId();
-    }
 
     @Override
     public String toString() {

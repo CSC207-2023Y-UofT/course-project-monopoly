@@ -6,13 +6,13 @@ import java.util.ArrayList;
 /**
  * Represents the property blocks
  */
-public class Property extends Block {
+public class Property extends Blocks{
 
-    private String name;
-    private int level;
-    private Player owner;
-    private ArrayList<Integer> price;
-    private ArrayList<Integer> tax;
+    String name;
+    int level;
+    Player owner;
+    ArrayList<Integer> price;
+    ArrayList<Integer> tax;
 
     public Property(int ID, String name, int level, ArrayList<Integer> price, ArrayList<Integer> tax){
         super(ID);
