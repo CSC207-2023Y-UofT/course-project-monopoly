@@ -4,7 +4,7 @@ package entity;
  * Represents the blocks of the map
  */
 public class Block {
-    public int id;
+    protected int id;
 
     /**
      * Class constructor
@@ -30,10 +30,4 @@ public class Block {
         this.id = id;
     }
 
-    @Override
-    public String toString() {
-        return "Blocks{" +
-                "id=" + id +
-                '}';
-    }
 }
