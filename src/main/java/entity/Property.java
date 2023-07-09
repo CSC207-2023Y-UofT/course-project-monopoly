@@ -8,11 +8,11 @@ import java.util.ArrayList;
  */
 public class Property extends Block {
 
-    String name;
-    int level;
-    Player owner;
-    ArrayList<Integer> price;
-    ArrayList<Integer> tax;
+    private String name;
+    private int level;
+    private Player owner;
+    private ArrayList<Integer> price;
+    private ArrayList<Integer> tax;
 
     public Property(int ID, String name, int level, ArrayList<Integer> price, ArrayList<Integer> tax){
         super(ID);
