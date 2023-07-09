@@ -8,6 +8,6 @@ import entity.Property;
  */
 public class OwnerIdentifier {
     public boolean isOwner(Player player, Property property){
-        return player == property.getOwner();
+        return player.equals(property.getOwner());
     }
 }

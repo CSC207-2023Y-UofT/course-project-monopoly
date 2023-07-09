@@ -7,8 +7,8 @@ import java.util.ArrayList;
  */
 public class DestinyCard {
 
-    String message;
-    ArrayList<Object> actions;
+    private String message;
+    private ArrayList<Object> actions;
 
     public DestinyCard(String message, ArrayList<Object> actions) {
         this.message = message;
