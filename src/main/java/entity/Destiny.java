@@ -8,8 +8,15 @@ import java.util.ArrayList;
 public class Destiny extends Block {
     private ArrayList<DestinyCard> destinyCardPool;
 
-    public Destiny(int ID, ArrayList<DestinyCard> destinyCardPool) {
+    public Destiny(int ID) {
         super(ID);
+    }
+
+    public ArrayList<DestinyCard> getDestinyCardPool() {
+        return destinyCardPool;
+    }
+
+    public void setDestinyCardPool(ArrayList<DestinyCard> destinyCardPool) {
         this.destinyCardPool = destinyCardPool;
     }
 }
