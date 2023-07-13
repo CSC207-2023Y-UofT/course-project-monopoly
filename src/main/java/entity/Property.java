@@ -11,15 +11,20 @@ public class Property extends Block {
     private String name;
     private int level;
     private Player owner;
-    private ArrayList<Integer> price;
-    private ArrayList<Integer> tax;
+    private int price;
+    private int tax;
+    private ArrayList<Integer> priceList;
+    private ArrayList<Integer> taxList;
 
-    public Property(int ID, String name, int level, ArrayList<Integer> price, ArrayList<Integer> tax){
+
+    public Property(int ID, String name, ArrayList<Integer> priceList, ArrayList<Integer> taxList) {
         super(ID);
         this.name = name;
-        this.level = level;
-        this.price = price;
-        this.tax = tax;
+        this.level = 0;
+        this.price = priceList.get(0);
+        this.tax = 0;
+        this.priceList = priceList; // priceList sample: [15, 30, 45, 0]
+        this.taxList = taxList; // taxList sample: [0, 10, 20, 30]
     }
 
     public String getName() {
@@ -36,6 +41,8 @@ public class Property extends Block {
 
     public void upgradeLevel() {
         this.level ++ ;
+        this.price = this.priceList.get(this.level);
+        this.tax = this.taxList.get(this.level);
     }
 
     public Player getOwner() {
@@ -46,20 +53,24 @@ public class Property extends Block {
         this.owner = owner;
     }
 
-    public ArrayList<Integer> getPrice() {
-        return price;
+    public int getPrice() { return price; }
+
+    public int getTax() { return tax; }
+
+    public ArrayList<Integer> getPriceList() {
+        return priceList;
     }
 
-    public void setPrice(ArrayList<Integer> price) {
-        this.price = price;
+    public void setPriceList(ArrayList<Integer> priceList) {
+        this.priceList = priceList;
     }
 
-    public ArrayList<Integer> getTax() {
-        return tax;
+    public ArrayList<Integer> getTaxList() {
+        return taxList;
     }
 
-    public void setTax(ArrayList<Integer> tax) {
-        this.tax = tax;
+    public void setTaxList(ArrayList<Integer> taxList) {
+        this.taxList = taxList;
     }
 
     @Override
