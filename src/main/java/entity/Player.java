@@ -7,14 +7,19 @@ import java.util.ArrayList;
  */
 public class Player {
 
+    /**
+     *
+     */
     private int userId;
     private int money;
+    private int position; // the id of the block that this player stands on
     private ArrayList<Property> properties;
     private ArrayList<String> status;
 
     public Player(int userId, int money){
         this.userId = userId;
         this.money = money;
+        this.position = 0;
     }
 
     public int getUserId() {
@@ -31,6 +36,14 @@ public class Player {
 
     public void setMoney(int money) {
         this.money = money;
+    }
+
+    public int getPosition() {
+        return this.position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
 
     public ArrayList<Property> getProperties() {
