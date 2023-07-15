@@ -90,6 +90,9 @@ public class PositionImpactor {
      * @param blockId id of the new block
      */
     public void absoluteMove(Player player, int blockId) {
+        if (this.position.get(blockId) == null) {
+            throw new RuntimeException("Block with id " + blockId + " does not exist");
+        }
         this.position.get(player.getPosition()).remove(player);
         this.position.get(blockId).add(player);
         player.setPosition(blockId);
