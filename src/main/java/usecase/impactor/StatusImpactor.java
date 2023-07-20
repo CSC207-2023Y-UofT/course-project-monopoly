@@ -11,11 +11,14 @@ import java.util.HashMap;
  */
 public class StatusImpactor {
 
-    public void innitStatus(Player player){
+    public void initStatus(Player player){
         if(player.getStatus() == null) {
+            /*
+             for playable : 0 for true and -1 for false
+             for movable:  0 for true and negative number for rounds that the player cannot move*/
             HashMap<String, Integer> initialStatus = new HashMap<>();
-            initialStatus.put("movable", 1);
-            initialStatus.put("playable", 1);
+            initialStatus.put("movable", 0);
+            initialStatus.put("playable", 0);
             player.setStatus(initialStatus);
         }
         }
@@ -35,7 +38,7 @@ public class StatusImpactor {
         // use this method to change the Status of the player automatically
         // (for counting the rounds in exam center)
         HashMap<String, Integer> original = player.getStatus();
-        if(original.get("movable") <=0)
+        if(original.get("movable") <0)
         {
             int value = original.get("movable");
             value += 1;
