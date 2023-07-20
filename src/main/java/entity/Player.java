@@ -1,6 +1,7 @@
 package entity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Represents the player of the game
@@ -14,7 +15,7 @@ public class Player {
     private int money;
     private int position; // the id of the block that this player stands on
     private ArrayList<Property> properties;
-    private ArrayList<String> status;
+    private HashMap<String, Integer> status;
 
     public Player(int userId, int money){
         this.userId = userId;
@@ -54,13 +55,11 @@ public class Player {
         this.properties = properties;
     }
 
-    public ArrayList<String> getStatus() {
+    public HashMap<String, Integer> getStatus() {
         return status;
     }
 
-    public void addStatus(String status) {this.status.add(status);}
-
-    public void removeStatus(String status) {this.status.remove(status);}
+    public void setStatus(HashMap<String, Integer> status){this.status = status;};
 
 
     public boolean equals(Player player){
