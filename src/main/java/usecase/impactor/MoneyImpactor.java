@@ -8,11 +8,12 @@ import entity.Player;
 public class MoneyImpactor {
 
     /**
-     * change the money of two players
-     * @param price the amount of money to change
+     * change the money of a player
+     * @param price the amount of money to change, positive if it is deduction,
+     *              negative if it is increase
      * @param giver the player to give money
      */
-    public void trade(int price, Player giver){
+    public void deduct(int price, Player giver){
         giver.setMoney(giver.getMoney() - price);
 
         if (giver.getMoney() < 0) {
@@ -28,7 +29,7 @@ public class MoneyImpactor {
      * @param receiver the player to receive money
      */
     public void trade(int price, Player giver, Player receiver) {
-        this.trade(price, giver);
+        this.deduct(price, giver);
         receiver.setMoney(receiver.getMoney() + price);
     }
 }
