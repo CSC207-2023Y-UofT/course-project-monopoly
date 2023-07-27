@@ -6,11 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 
 public class GameData {
-    public final Block[] blocks;                           // all the blocks in order
     public final int MAXROUNDS = 100;
     public final int MAXMONEY = 10000;
     public final int playerNum;
 
+    public final Block[] blocks;                           // all the blocks in order
 
     public HashMap<Integer, List<Player>> playerAtPosition; // map from each block id to a list of players currently on th block
     public int gameRounds;

@@ -12,7 +12,7 @@ public class PropertyImpactor {
      * @param player the new owner of the property
      * @param property the property whose owner should be change
      */
-    public void changeOwner(Player player, Property property){
+    public static void changeOwner(Player player, Property property){
         property.setOwner(player);
     }
 
@@ -20,7 +20,7 @@ public class PropertyImpactor {
      * Upgrade the level of a property
      * @param property the property whose level should be upgraded
      */
-    public void upgrade(Property property){
+    public static void upgrade(Property property){
         property.upgradeLevel();
     }
 }

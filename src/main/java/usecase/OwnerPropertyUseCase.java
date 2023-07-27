@@ -10,17 +10,8 @@ import java.util.Scanner;
  * Represent the use case when a player arrives at his property or an unowned property
  */
 public class OwnerPropertyUseCase {
-    private final Player owner;
-    private final Property property;
-    private final MoneyImpactor impactor;
 
-    public OwnerPropertyUseCase(Player owner, Property property) {
-        this.owner = owner;
-        this.property = property;
-        this.impactor = new MoneyImpactor();
-    }
-
-    public void run() {
+    public static void run(Player owner, Property property) {
         // ask for user input
         Scanner scanner = new Scanner(System.in);
         String verb = "upgrade";
@@ -32,35 +23,35 @@ public class OwnerPropertyUseCase {
         if (!(option.equals("Y")))
             return;
 
-        if (this.property.getLevel() == 3) {
+        if (property.getLevel() == 3) {
             System.out.println("this property cannot be updated further, did nothing");
             return;
         }
 
 
-        int price = this.property.getPrice();
-        if (price > this.owner.getMoney()) {
+        int price = property.getPrice();
+        if (price > owner.getMoney()) {
             System.out.println("the player doesn't have enough money to upgrade, did nothing");
             return;
         }
 
-        this.impactor.deduct(price, owner);
+        MoneyImpactor.deduct(price, owner);
 
-        if (this.property.getLevel() == 0) {
-            this.property.setOwner(owner);
+        if (property.getLevel() == 0) {
+            property.setOwner(owner);
             verb = "bought";
             ArrayList<Property> properties = owner.getProperties();
             if (properties == null) {
                 properties = new ArrayList<>();
             }
-            properties.add(this.property);
+            properties.add(property);
             owner.setProperties(properties);
         } else {verb = "upgraded";}
 
-        this.property.upgradeLevel();
+        property.upgradeLevel();
 
-        System.out.println("Player " + this.owner.getUserId() + " " +  verb + " property "
-                + this.property.getId() + " Player money: " + this.owner.getMoney()
-                + " Property level: " + this.property.getLevel());
+        System.out.println("Player " + owner.getUserId() + " " +  verb + " property "
+                + property.getId() + " Player money: " + owner.getMoney()
+                + " Property level: " + property.getLevel());
     }
 }
