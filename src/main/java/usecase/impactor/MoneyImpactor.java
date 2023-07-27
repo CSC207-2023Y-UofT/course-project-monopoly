@@ -13,12 +13,11 @@ public class MoneyImpactor {
      *              negative if it is increase
      * @param giver the player to give money
      */
-    public void deduct(int price, Player giver){
+    public static void deduct(int price, Player giver){
         giver.setMoney(giver.getMoney() - price);
 
         if (giver.getMoney() < 0) {
-            StatusImpactor statusImpactor = new StatusImpactor();
-            statusImpactor.changeStatus(giver, "playable", -8964);
+            StatusImpactor.changeStatus(giver, "playable", -1);
         }
     }
 
@@ -28,8 +27,8 @@ public class MoneyImpactor {
      * @param giver the player to give money
      * @param receiver the player to receive money
      */
-    public void trade(int price, Player giver, Player receiver) {
-        this.deduct(price, giver);
+    public static void trade(int price, Player giver, Player receiver) {
+        MoneyImpactor.deduct(price, giver);
         receiver.setMoney(receiver.getMoney() + price);
     }
 }

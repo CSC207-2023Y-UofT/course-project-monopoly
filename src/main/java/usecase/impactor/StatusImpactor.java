@@ -11,7 +11,7 @@ import java.util.HashMap;
  */
 public class StatusImpactor {
 
-    public void initStatus(Player player){
+    public static void initStatus(Player player){
         if(player.getStatus() == null) {
             /*
              for playable : 0 for true and -1 for false
@@ -22,7 +22,7 @@ public class StatusImpactor {
             player.setStatus(initialStatus);
         }
         }
-    public void changeStatus(Player player, String name, Integer status)
+    public static void changeStatus(Player player, String name, Integer status)
     {
         /*
         use this method to change the Status of the player due to different event
@@ -33,7 +33,7 @@ public class StatusImpactor {
         player.setStatus(original);
 
     }
-    public void changeStatus(Player player)
+    public static void changeStatus(Player player)
     {
         // use this method to change the Status of the player automatically
         // (for counting the rounds in exam center)
