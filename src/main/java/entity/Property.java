@@ -81,6 +81,8 @@ public class Property extends Block {
                 ", owner=" + owner +
                 ", price=" + price +
                 ", tax=" + tax +
+                ", priceList=" + priceList +
+                ", taxList=" + taxList +
                 ", id=" + id +
                 '}';
     }
