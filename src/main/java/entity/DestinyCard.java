@@ -7,19 +7,27 @@ import java.util.ArrayList;
  */
 public class DestinyCard {
 
-    private String message;
+    private final String message;
 
     /**
      * There are three elements in the arraylist:
      * 1st (Integer): represents the value of change of the money
      * 2nd (Integer): represents the value of change of the position or the id of the target block
-     * 3rd (String): represents the statuses
+     * 3rd (Integer): represents the rounds the player should stop
      */
-    private ArrayList<Object> actions;
+    private final ArrayList<Object> actions;
 
     public DestinyCard(String message, ArrayList<Object> actions) {
         this.message = message;
         this.actions = actions;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public ArrayList<Object> getActions() {
+        return actions;
     }
 
     @Override
