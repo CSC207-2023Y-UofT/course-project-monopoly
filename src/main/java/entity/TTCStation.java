@@ -7,4 +7,9 @@ public class TTCStation extends Block {
     public TTCStation(int ID) {
         super(ID);
     }
+    public String getBlockName()
+    {
+        return "ttcstation";
+    }
+
 }

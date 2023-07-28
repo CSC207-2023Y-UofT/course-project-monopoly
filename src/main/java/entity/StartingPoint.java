@@ -10,6 +10,11 @@ public class StartingPoint extends Block {
         super(ID);
         this.bonus = bonus;
     }
+    public String getBlockName()
+    {
+        return "startingpoint";
+    }
+
 
     public int getBonus() {
         return bonus;

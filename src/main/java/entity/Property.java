@@ -26,6 +26,11 @@ public class Property extends Block {
         this.priceList = priceList; // priceList sample: [15, 30, 45, 0]
         this.taxList = taxList; // taxList sample: [0, 10, 20, 30]
     }
+    public String getBlockName()
+    {
+        return "property";
+    }
+
 
     public String getName() {
         return name;
