@@ -6,7 +6,13 @@ import java.util.ArrayList;
  * Represents the destiny block
  */
 public class Destiny extends Block {
+
     private ArrayList<DestinyCard> destinyCardPool;
+    public String getBlockName()
+    {
+        return "destiny";
+    }
+
 
     public Destiny(int ID) {
         super(ID);

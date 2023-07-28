@@ -47,17 +47,13 @@ public class GameController {
     }
     public boolean isCurrentMovable()
     {
-        Player player = data.currentPlayers.get(data.currentPlayerIndex);
-        if(!StatusChecker.isMovable(player))
-        {
-            StatusImpactor.changeStatus(player);
-            return false;
-        }
-        return true;
+        Player player = findCunrrentPlayer();
+        return StatusChecker.isMovable(player);
     }
     public void settleOneRound()
     {
         data.gameRounds += 1;
+        StatusImpactor.changeStatus(findCunrrentPlayer());
         data.currentPlayerIndex = (data.currentPlayerIndex + 1) % data.playerNum;
     }
     public int randomDice()
@@ -71,12 +67,16 @@ public class GameController {
     }
     public void playerRelativeWalk()
     {
-        Player player = data.currentPlayers.get(data.currentPlayerIndex);
+        Player player = findCunrrentPlayer();
         PositionImpactor.relativeMove(data, player, randomDice());
     }
     public void playerAbsoluteWalk(int BlockId)
     {
-        Player player = data.currentPlayers.get(data.currentPlayerIndex);
+        Player player = findCunrrentPlayer();
         PositionImpactor.absoluteMove(data, player, BlockId);
+    }
+    public Player findCunrrentPlayer()
+    {
+        return data.currentPlayers.get(data.currentPlayerIndex);
     }
 }

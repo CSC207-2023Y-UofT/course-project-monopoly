@@ -12,4 +12,6 @@ public class StartingPointUseCase {
         int bonus = startingPoint.getBonus();
         MoneyImpactor.deduct(bonus * -1, player);
     }
+
+
 }
