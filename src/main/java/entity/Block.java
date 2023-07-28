@@ -3,7 +3,7 @@ package entity;
 /**
  * Represents the blocks of the map
  */
-public abstract class Block {
+public class Block {
     protected int id;
 
     /**
@@ -30,6 +30,8 @@ public abstract class Block {
         this.id = id;
     }
 
-    public abstract String getBlockName();
+    public String getBlockName() {
+        return "";
+    }
 
 }
