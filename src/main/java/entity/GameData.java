@@ -10,32 +10,41 @@ public class GameData {
     public final int MAXMONEY = 10000;
     public final int playerNum;
 
-    public final Block[] blocks;                           // all the blocks in order
+    public final ArrayList<Block> blocks;                           // all the blocks in order
 
     public HashMap<Integer, List<Player>> playerAtPosition; // map from each block id to a list of players currently on th block
     public int gameRounds;
     public int currentPlayerIndex;
     public ArrayList<Player> currentPlayers;    //players that are still playing the game
-    public GameData(int num, Block[] blocks, Player[] players, HashMap<Integer, List<Player>> position)
+    public GameData(int num, ArrayList<Block> blocks, ArrayList<Player> players, HashMap<Integer, List<Player>> position)
     {
         this.playerNum = num;
         this.blocks = blocks;
         this.playerAtPosition = position;
         this.currentPlayerIndex = 0;
         this.gameRounds = 0;
-        this.currentPlayers = new ArrayList<Player>();
-        currentPlayers.addAll(Arrays.asList(players));
+        this.currentPlayers = players;
     }
     public int getPositionFromId(int id)
     {
-        for(int i=0;  i<this.blocks.length;i++)
+        for(int i=0;  i<this.blocks.size();i++)
         {
-            if(this.blocks[i].getId()==id)
+            if(this.blocks.get(i).getId()==id)
             {
                 return i;
             }
         }
         return -1;
+    }
+
+    public Block getBlockFromId(int id)
+    {
+        for (Block block: this.blocks)
+        {
+            if (block.getId() == id)
+                return block;
+        }
+        return null;
     }
 
 }

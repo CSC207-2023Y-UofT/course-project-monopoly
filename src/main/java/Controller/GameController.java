@@ -12,7 +12,7 @@ public class GameController {
 
 
     private final GameData data;
-    GameController(GameData data)
+    public GameController(GameData data)
     {
         this.data = data;
     }
