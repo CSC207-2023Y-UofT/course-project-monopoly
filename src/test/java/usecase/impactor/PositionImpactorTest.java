@@ -46,7 +46,7 @@ class PositionImpactorTest {
         for (Player player: players)
             player.setPosition(blocks[0].getId());
 
-        data = new GameData(4, blocks, players, position);
+        data = new GameData(4, new ArrayList<>(Arrays.asList(blocks)), new ArrayList<>(Arrays.asList(players)), position);
     }
 
 

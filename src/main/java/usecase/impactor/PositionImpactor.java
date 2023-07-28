@@ -23,8 +23,8 @@ public class PositionImpactor {
         }
         data.playerAtPosition.get(oldPos).remove(player);
         // find new block
-        int newPos = Math.floorMod(oldPos + distance, data.blocks.length);
-        int newBlockId = data.blocks[newPos].getId();
+        int newPos = Math.floorMod(oldPos + distance, data.blocks.size());
+        int newBlockId = data.blocks.get(newPos).getId();
         // add player on the block
         data.playerAtPosition.get(newPos).add(player);
         // change player's block
