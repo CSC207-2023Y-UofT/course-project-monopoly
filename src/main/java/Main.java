@@ -2,6 +2,9 @@ import Controller.GameController;
 import Controller.InitController;
 import entity.*;
 import usecase.*;
+import usecase.impactor.PropertyImpactor;
+
+import java.util.ArrayList;
 
 
 public class Main {
@@ -76,5 +79,6 @@ public class Main {
 
             controller.settleOneRound();
         }
+        controller.finish();
     }
 }

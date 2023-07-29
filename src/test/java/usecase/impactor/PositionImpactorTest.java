@@ -23,14 +23,14 @@ class PositionImpactorTest {
     @BeforeEach
     void setUp() {
         blocks = new Block[] {
-                new Block(100),
-                new Block(101),
-                new Block(102),
-                new Block(103),
-                new Block(104),
-                new Block(105),
-                new Block(106),
-                new Block(107),};
+                new ExamCenter(100),
+                new ExamCenter(101),
+                new ExamCenter(102),
+                new ExamCenter(103),
+                new ExamCenter(104),
+                new ExamCenter(105),
+                new ExamCenter(106),
+                new ExamCenter(107),};
 
         players = new Player[] {
                 new Player(1000, 1000),

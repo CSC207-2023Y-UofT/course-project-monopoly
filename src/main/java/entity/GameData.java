@@ -8,7 +8,7 @@ import java.util.List;
 public class GameData {
     public final int MAXROUNDS = 100;
     public final int MAXMONEY = 10000;
-    public final int playerNum;
+    public int playerNum;
 
     public final ArrayList<Block> blocks;                           // all the blocks in order
 
