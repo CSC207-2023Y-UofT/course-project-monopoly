@@ -12,12 +12,12 @@ public class GameData {
 
     public final ArrayList<Block> blocks;                           // all the blocks in order
 
-    public HashMap<Integer, List<Player>> playerAtPosition; // map from each block id to a list of players currently on th block
+    public HashMap<Integer, ArrayList<Player>> playerAtPosition; // map from each block id to a list of players currently on th block
     public int gameRounds;
     public int currentPlayerIndex;
     public Player currentPlayer;
     public ArrayList<Player> currentPlayers;    //players that are still playing the game
-    public GameData(int num, ArrayList<Block> blocks, ArrayList<Player> players, HashMap<Integer, List<Player>> position)
+    public GameData(int num, ArrayList<Block> blocks, ArrayList<Player> players, HashMap<Integer, ArrayList<Player>> position)
     {
         this.playerNum = num;
         this.blocks = blocks;
