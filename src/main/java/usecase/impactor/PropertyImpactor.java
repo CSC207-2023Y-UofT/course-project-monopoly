@@ -23,4 +23,5 @@ public class PropertyImpactor {
     public static void upgrade(Property property){
         property.upgradeLevel();
     }
+    public static void downgradeToZero(Property property){property.downgradeToZero();}
 }

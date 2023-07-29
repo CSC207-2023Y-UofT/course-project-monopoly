@@ -30,8 +30,13 @@ public class Block {
         this.id = id;
     }
 
-    public String getBlockName() {
-        return "";
+    public String getBlockName()
+    {
+        return null;
     }
+    /**
+     * use State Pattern
+
+     */
 
 }
