@@ -31,6 +31,7 @@ public class Main {
         {
             System.out.println("===================================\n\nCurrent Player is: Player"
                     + data.currentPlayer.getUserId());
+
             if(!controller.isCurrentMovable()) {
                 System.out.println("Player " + data.currentPlayerIndex + " cannot move.");
                 controller.settleOneRound();
@@ -72,6 +73,7 @@ public class Main {
                     break;
                 }
             }
+
             controller.settleOneRound();
         }
     }

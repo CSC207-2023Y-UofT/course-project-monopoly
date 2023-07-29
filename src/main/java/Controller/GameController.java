@@ -3,6 +3,7 @@ package Controller;
 import entity.*;
 import usecase.*;
 import usecase.impactor.PositionImpactor;
+import usecase.impactor.PropertyImpactor;
 import usecase.impactor.StatusImpactor;
 
 import java.util.ArrayList;
@@ -19,10 +20,24 @@ public class GameController {
     }
     public void updatePlayablePlayer()
             /**
-             * removev not playable players;
+             * remove not playable players;
             * */
-    {
-        data.currentPlayers.removeIf(player -> !StatusChecker.isPlayable(player));
+    {   for(int i = 0; i < data.currentPlayers.size(); i++)
+        {
+            Player player = data.currentPlayers.get(i);
+            if(!StatusChecker.isPlayable(player))
+            {
+                i--;
+                data.playerNum -= 1;
+                data.currentPlayers.remove(player);
+                ArrayList<Property> properties = player.getProperties();
+                for (Property property: properties) {
+                    PropertyImpactor.changeOwner(null,property);
+                    PropertyImpactor.downgradeToZero(property);
+                }
+            }
+        }
+
     }
     public Player getMaxMoneyPlayer()
     {
@@ -38,7 +53,7 @@ public class GameController {
     }
     public boolean isGameOver()
     {
-        if(data.currentPlayers.size()==1)
+        if(data.currentPlayers.size() <= 1)
         {
             return true;
         }
@@ -55,8 +70,21 @@ public class GameController {
     {
         data.gameRounds += 1;
         StatusImpactor.changeStatus(data.currentPlayer);
-        data.currentPlayerIndex = (data.currentPlayerIndex + 1) % data.playerNum;
-        data.setCurrentPlayer();
+
+        for(int i =1 ;i<= data.currentPlayers.size();i++)
+        {
+            data.currentPlayerIndex = (data.currentPlayerIndex + 1) % data.currentPlayers.size();
+            data.currentPlayer = data.currentPlayers.get(data.currentPlayerIndex);
+            if (StatusChecker.isPlayable(data.currentPlayer))
+                break;
+        }
+
+        updatePlayablePlayer();
+        if (data.currentPlayers.size() ==0) return;
+        data.currentPlayerIndex = data.currentPlayers.indexOf(data.currentPlayer);
+
+
+
         // some summary for each round
         if (data.gameRounds % data.currentPlayers.size() == 0) {
             System.out.println("\n=====================================" +
