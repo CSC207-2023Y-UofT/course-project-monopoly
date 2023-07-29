@@ -1,4 +1,4 @@
-package usecase.generator;
+package useCases.generator;
 
 import entity.Property;
 
@@ -40,7 +40,6 @@ public class PropertyGenerator {
 
                 Property property = new Property(Integer.parseInt(values[0]), values[1], priceList, taxList);
                 propertyList.add(property);
-                System.out.println(property);
             }
 
         } catch (IOException e){

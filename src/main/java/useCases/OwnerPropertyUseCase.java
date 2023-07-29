@@ -1,7 +1,7 @@
-package usecase;
+package useCases;
 
 import entity.*;
-import usecase.impactor.MoneyImpactor;
+import useCases.impactor.MoneyImpactor;
 
 import java.util.ArrayList;
 import java.util.Scanner;

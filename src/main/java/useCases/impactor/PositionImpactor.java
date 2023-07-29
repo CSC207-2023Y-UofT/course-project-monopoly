@@ -1,8 +1,5 @@
-package usecase.impactor;
-import entity.Block;
-import entity.Player;
+package useCases.impactor;
 import entity.GameData;
-import java.util.*;
 
 /**
  * It is an impactor impacting the position of the player

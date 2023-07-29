@@ -1,4 +1,4 @@
-package usecase;
+package useCases;
 
 import entity.Destiny;
 import entity.DestinyCard;

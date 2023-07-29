@@ -1,4 +1,4 @@
-package usecase.impactor;
+package useCases.impactor;
 
 import entity.Player;
 import entity.Property;
