@@ -9,7 +9,7 @@ import java.io.*;
 import java.util.*;
 
 public class InitController {
-    private static final String DELIMITER = ",(?=([^\\\"]*\\\"[^\\\"]*\\\")*[^\\\"]*$)";
+    private static final String DELIMITER = ",(?=([^\"]*\"[^\"]*\")*[^\"]*$)";
     private static final int INITMONEY = 1000;
 
     public static GameData init(String propertiesFile, String extraBlocksFile, String[] destinyFiles) {

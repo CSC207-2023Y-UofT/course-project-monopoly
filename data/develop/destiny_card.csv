@@ -1,9 +1,9 @@
-﻿Drank a bowl of soup in Robart Library at noon which caused your stomach discomfort and cost 300 TBucks t+A1:A42o see a doctor.,-300,0,0
+﻿Drank a bowl of soup in Robart Library at noon which caused your stomach discomfort and cost 300 TBucks to see a doctor.,-300,0,0
 You accidentally spilled coffee on your computer during class and need to spend 500 TBucks to repair it.,-500,0,0
-"oops! There is a homeless man who has been following you, you speed up your footsteps forward 5 blocks to get rid of him.",0,5,0
-"You were playing games last night and missed the important assignment deadline, 3 blocks back.",0,-3,0
+oops! There is a homeless man who has been following you. You speed up your footsteps forward 5 blocks to get rid of him.,0,5,0
+You were playing games last night and missed the important assignment deadline. Move back 3 blocks.,0,-3,0
 Met a snowstorm and can not leave. Miss a round.,0,0,-1
-"The sidewalk and steps on the south side of UC are being reconstructed, 2 blocks back",0,-2,0
+The sidewalk and steps on the south side of UC are being reconstructed. Move back 2 blocks.,0,-2,0
 Your enrolment time begins at 9:00 AM EDT. You can choose any place you want.,0,106,0
 The semester's over but your meal plan's not. Lost 500 Tbucks.,-500,0,0
 Congratulations on receiving a scholarship of 600 TBucks for your excellent grades!,600,0,0
@@ -28,7 +28,7 @@ Failed a midterm exam. Study harder and miss a turn.,0,0,-1
 Missed the shuttle bus to the UTM campus. Pay 100 TBucks for alternative transportation.,-100,0,0
 You got locked out of your dorm room. Move back two blocks to sort out the situation.,0,-2,0
 You found a secret shortcut between buildings. Advance three blocks.,0,3,0
-"You're lost in UC and missed the compulsory tutorial session, move back three blocks.",0,-3,0
+You're lost in UC and missed the compulsory tutorial session. Move back three blocks.,0,-3,0
 Attended a campus career fair and landed an interview. Advance two blocks for job prospects.,0,2,0
 Caught a severe cold during midterms. Miss the next two rounds to recover.,0,0,-2
 Overcommitted to extracurricular activities. Miss a round to manage your schedule better.,0,0,-1

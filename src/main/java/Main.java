@@ -10,13 +10,13 @@ public class Main {
 
 
 //    public static final String propertiesFile = "data/properties.csv";
-    public static final String propertiesFile = "data/test/properties_example.csv";
+    public static final String propertiesFile = "data/develop/properties_example.csv";
 
 //    public static final String extraBlocksFile = "data/extra_blocks.csv";
-    public static final String extraBlocksFile = "data/test/extra_blocks_example.csv";
+    public static final String extraBlocksFile = "data/develop/extra_blocks_example.csv";
 
 //    public static final String[] destinyFiles = {"data/test/destiny_card_test.csv", "data/test/destiny_card_test.csv", "data/test/destiny_card_test.csv"};
-    public static final String[] destinyFiles = {"data/destiny_card.csv", "data/destiny_card.csv", "data/destiny_card.csv"};
+    public static final String[] destinyFiles = {"data/develop/destiny_card.csv", "data/develop/destiny_card.csv", "data/develop/destiny_card.csv"};
     public static void uploadData()
     {
         data = InitController.init(propertiesFile, extraBlocksFile, destinyFiles);
