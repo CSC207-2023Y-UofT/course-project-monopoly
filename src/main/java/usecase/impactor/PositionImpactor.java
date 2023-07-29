@@ -37,7 +37,6 @@ public class PositionImpactor {
 
     /**
      * change the distance of the player directly
-     * @param player player to move
      * @param blockId id of the new block
      */
     public static void absoluteMove(GameData data, int blockId) {

@@ -39,7 +39,7 @@ class PositionImpactorTest {
                 new Player(1003, 1000),
         };
 
-        HashMap<Integer, List<Player>> position = new HashMap<>();
+        HashMap<Integer, ArrayList<Player>> position = new HashMap<>();
         for (int i = 0; i < blocks.length; i++)
             position.put(i, new ArrayList<>());
         position.get(0).addAll(Arrays.asList(players));
@@ -54,14 +54,16 @@ class PositionImpactorTest {
     void relativeMove() {
         for (int m = -1000; m <= 1000; m += 1000) {
             for (int i = 0; i < 4; i++) {
-                PositionImpactor.relativeMove(data, players[i], 0);
+                data.currentPlayerIndex = i;
+                data.setCurrentPlayer();
+                PositionImpactor.relativeMove(data, 0);
                 assertEquals(data.playerAtPosition.get(0).size(), 4);
                 for (int j = 1; j < 8; j++) {
-                    PositionImpactor.relativeMove(data, players[i], m + 1);
+                    PositionImpactor.relativeMove(data, m + 1);
                     assertTrue(data.playerAtPosition.get(data.getPositionFromId(100 + j)).contains(players[i]));
                 }
                 assertEquals(data.playerAtPosition.get(0).size(), 3);
-                PositionImpactor.absoluteMove(data, players[i], 100);
+                PositionImpactor.absoluteMove(data, 100);
             }
         }
 
@@ -71,16 +73,16 @@ class PositionImpactorTest {
     void absoluteMove() {
         for (int i = 0; i < 4; i++) {
             for (int j = 1; j < 8; j++) {
-                PositionImpactor.absoluteMove(data, players[i], 100 + j);
+                data.currentPlayerIndex = i;
+                data.setCurrentPlayer();
+                PositionImpactor.absoluteMove(data, 100 + j);
                 assertTrue(data.playerAtPosition.get(data.getPositionFromId(100 + j)).contains(players[i]));
             }
             assertEquals(data.playerAtPosition.get(data.getPositionFromId(100)).size(), 3-i);
         }
         try {
-            PositionImpactor.absoluteMove(data, players[0], 1000000);
+            PositionImpactor.absoluteMove(data, 1000000);
             fail();
-        } catch (RuntimeException ignored) {
-            ;
-        }
+        } catch (RuntimeException ignored) {}
     }
 }
