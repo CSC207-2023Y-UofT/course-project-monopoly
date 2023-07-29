@@ -11,24 +11,27 @@ public class PositionImpactor {
 
     /**
      * moves the player by distance
-     * @param player the player to move
+     * @param data Game data
      * @param distance distance of move, positive front, negative back
      */
-    public static void relativeMove(GameData data, Player player, int distance) {
+    public static boolean relativeMove(GameData data, int distance) {
         // delete player from the list
-        int oldPosId = player.getPosition();
+        boolean isPassStartingpoint = false;
+        int oldPosId = data.currentPlayer.getPosition();
         int oldPos = data.getPositionFromId(oldPosId);
         if (oldPos == -1) {
             throw new RuntimeException("No such block");
         }
-        data.playerAtPosition.get(oldPos).remove(player);
+        data.playerAtPosition.get(oldPos).remove(data.currentPlayer);
         // find new block
+        if (oldPos + distance >= data.blocks.size()) isPassStartingpoint = true;
         int newPos = Math.floorMod(oldPos + distance, data.blocks.size());
         int newBlockId = data.blocks.get(newPos).getId();
         // add player on the block
-        data.playerAtPosition.get(newPos).add(player);
+        data.playerAtPosition.get(newPos).add(data.currentPlayer);
         // change player's block
-        player.setPosition(newBlockId);
+        data.currentPlayer.setPosition(newBlockId);
+        return isPassStartingpoint;
     }
 
 
@@ -37,14 +40,14 @@ public class PositionImpactor {
      * @param player player to move
      * @param blockId id of the new block
      */
-    public static void absoluteMove(GameData data, Player player, int blockId) {
-        int oldBlockPos = data.getPositionFromId(player.getPosition());
+    public static void absoluteMove(GameData data, int blockId) {
+        int oldBlockPos = data.getPositionFromId(data.currentPlayer.getPosition());
         if (data.playerAtPosition.get(oldBlockPos) == null) {
             throw new RuntimeException("Block with id " + blockId + " does not exist");
         }
-        data.playerAtPosition.get(oldBlockPos).remove(player);
+        data.playerAtPosition.get(oldBlockPos).remove(data.currentPlayer);
         int newBlockPos = data.getPositionFromId(blockId);
-        data.playerAtPosition.get(newBlockPos).add(player);
-        player.setPosition(blockId);
+        data.playerAtPosition.get(newBlockPos).add(data.currentPlayer);
+        data.currentPlayer.setPosition(blockId);
     }
 }
