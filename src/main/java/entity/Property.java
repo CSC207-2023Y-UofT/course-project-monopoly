@@ -83,7 +83,7 @@ public class Property extends Block {
         return "Property{" +
                 "name='" + name + '\'' +
                 ", level=" + level +
-                ", owner=" + owner +
+                ", owner=" + (owner == null ? null: owner.getUserId()) +
                 ", price=" + price +
                 ", tax=" + tax +
                 ", priceList=" + priceList +

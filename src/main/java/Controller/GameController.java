@@ -56,6 +56,16 @@ public class GameController {
         data.gameRounds += 1;
         StatusImpactor.changeStatus(data.currentPlayer);
         data.currentPlayerIndex = (data.currentPlayerIndex + 1) % data.playerNum;
+        data.setCurrentPlayer();
+        // some summary for each round
+        if (data.gameRounds % 4 == 0) {
+            System.out.println("\n=====================================" +
+                    "\nRound " + data.gameRounds / 4);
+            for (Player player: data.currentPlayers) {
+                System.out.println("Player: " + player.getUserId() + " Tbucks: " + player.getMoney());
+            }
+            System.out.println();
+        }
     }
     public int randomDice()
     {
