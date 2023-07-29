@@ -58,7 +58,7 @@ public class GameController {
         data.currentPlayerIndex = (data.currentPlayerIndex + 1) % data.playerNum;
         data.setCurrentPlayer();
         // some summary for each round
-        if (data.gameRounds % 4 == 0) {
+        if (data.gameRounds % data.currentPlayers.size() == 0) {
             System.out.println("\n=====================================" +
                     "\nRound " + data.gameRounds / 4);
             for (Player player: data.currentPlayers) {
