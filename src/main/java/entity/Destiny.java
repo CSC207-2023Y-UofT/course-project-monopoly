@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public class Destiny extends Block {
 
-    private final ArrayList<DestinyCard> destinyCardPool = new ArrayList<>();
+    private final ArrayList<DestinyCard> destinyCardPool;
     /**
      * Constructor to create a Destiny block with the given ID.
      *
@@ -17,6 +17,7 @@ public class Destiny extends Block {
      */
     public Destiny(int ID) {
         super(ID);
+        this.destinyCardPool = new ArrayList<>();
     }
 
     /**
