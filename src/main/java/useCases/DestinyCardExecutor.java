@@ -1,11 +1,11 @@
-package usecase;
+package useCases;
 
 import entity.DestinyCard;
 import entity.GameData;
 import entity.Player;
-import usecase.impactor.MoneyImpactor;
-import usecase.impactor.PositionImpactor;
-import usecase.impactor.StatusImpactor;
+import useCases.impactor.MoneyImpactor;
+import useCases.impactor.PositionImpactor;
+import useCases.impactor.StatusImpactor;
 
 import java.util.ArrayList;
 

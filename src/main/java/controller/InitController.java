@@ -1,9 +1,9 @@
-package Controller;
+package controller;
 
 import entity.*;
-import usecase.generator.DestinyCardPoolGenerator;
-import usecase.generator.PropertyGenerator;
-import usecase.impactor.StatusImpactor;
+import useCases.generator.DestinyCardPoolGenerator;
+import useCases.generator.PropertyGenerator;
+import useCases.impactor.StatusImpactor;
 
 import java.io.*;
 import java.util.*;

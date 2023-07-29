@@ -1,10 +1,7 @@
-import Controller.GameController;
-import Controller.InitController;
+import controller.GameController;
+import controller.InitController;
 import entity.*;
-import usecase.*;
-import usecase.impactor.PropertyImpactor;
-
-import java.util.ArrayList;
+import useCases.*;
 
 
 public class Main {

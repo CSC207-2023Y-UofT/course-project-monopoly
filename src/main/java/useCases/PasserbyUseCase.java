@@ -1,6 +1,6 @@
-package usecase;
+package useCases;
 import entity.*;
-import usecase.impactor.MoneyImpactor;
+import useCases.impactor.MoneyImpactor;
 /**
  * Represent the use case when a player arrives at a property
  * owned by others.
