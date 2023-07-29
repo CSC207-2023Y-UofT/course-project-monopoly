@@ -26,6 +26,11 @@ public class Property extends Block {
         this.priceList = priceList; // priceList sample: [15, 30, 45, 0]
         this.taxList = taxList; // taxList sample: [0, 10, 20, 30]
     }
+    public String getBlockName()
+    {
+        return "property";
+    }
+
 
     public String getName() {
         return name;
@@ -41,6 +46,12 @@ public class Property extends Block {
 
     public void upgradeLevel() {
         this.level ++ ;
+        this.price = this.priceList.get(this.level);
+        this.tax = this.taxList.get(this.level);
+    }
+
+    public void downgradeToZero() {
+        this.level = 0;
         this.price = this.priceList.get(this.level);
         this.tax = this.taxList.get(this.level);
     }
@@ -78,7 +89,7 @@ public class Property extends Block {
         return "Property{" +
                 "name='" + name + '\'' +
                 ", level=" + level +
-                ", owner=" + owner +
+                ", owner=" + (owner == null ? null: owner.getUserId()) +
                 ", price=" + price +
                 ", tax=" + tax +
                 ", priceList=" + priceList +

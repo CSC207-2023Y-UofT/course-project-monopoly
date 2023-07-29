@@ -30,7 +30,8 @@ public class DestinyCardPoolGenerator {
                 // generate the actions
                 actions.set(0, Integer.parseInt(values[1]));
                 actions.set(1, Integer.parseInt(values[2]));
-                actions.set(2, Integer.parseInt(values[3]));
+                if (!values[3].equals("N/A"))
+                    actions.set(2, Integer.parseInt(values[3]));
 
                 // remove the "" in the content
                 String message = values[0].replace("\"", "");

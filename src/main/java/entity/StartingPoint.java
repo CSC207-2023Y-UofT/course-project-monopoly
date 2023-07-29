@@ -4,18 +4,23 @@ package entity;
  *  Represents the starting point block
  */
 public class StartingPoint extends Block {
-    private int bonus;
+    private static int bonus;
 
     public StartingPoint(int ID, int bonus) {
         super(ID);
-        this.bonus = bonus;
+        StartingPoint.bonus = bonus;
+    }
+    public String getBlockName()
+    {
+        return "startingpoint";
     }
 
-    public int getBonus() {
+
+    public static int getBonus() {
         return bonus;
     }
 
-    public void setBonus(int bonus) {
-        this.bonus = bonus;
+    public static void setBonus(int bonus) {
+        StartingPoint.bonus = bonus;
     }
 }

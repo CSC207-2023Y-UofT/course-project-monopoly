@@ -21,9 +21,9 @@ public class DestinyCardExecutor {
         int position = (int)actions.get(1);
 
         if (position > 100){
-            PositionImpactor.absoluteMove(data, player, position);
+            PositionImpactor.absoluteMove(data, position);
         } else {
-            PositionImpactor.relativeMove(data, player, position);
+            PositionImpactor.relativeMove(data, position);
         }
 
         StatusImpactor.changeStatus(player, "movable", (int)actions.get(2));

@@ -1,27 +1,43 @@
 package Controller;
 
-import entity.GameData;
-import entity.Player;
-import usecase.StatusChecker;
+import entity.*;
+import usecase.*;
 import usecase.impactor.PositionImpactor;
+import usecase.impactor.PropertyImpactor;
 import usecase.impactor.StatusImpactor;
 
+import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 public class GameController {
 
 
     private final GameData data;
-    GameController(GameData data)
+    public GameController(GameData data)
     {
         this.data = data;
     }
     public void updatePlayablePlayer()
             /**
-             * removev not playable players;
+             * remove not playable players;
             * */
-    {
-        data.currentPlayers.removeIf(player -> !StatusChecker.isPlayable(player));
+    {   for(int i = 0; i < data.currentPlayers.size(); i++)
+        {
+            Player player = data.currentPlayers.get(i);
+            if(!StatusChecker.isPlayable(player))
+            {
+                i--;
+                data.playerNum -= 1;
+                data.currentPlayers.remove(player);
+                ArrayList<Property> properties = player.getProperties();
+                for (Property property: properties) {
+                    PropertyImpactor.changeOwner(null,property);
+                    PropertyImpactor.downgradeToZero(property);
+                }
+            }
+        }
+
     }
     public Player getMaxMoneyPlayer()
     {
@@ -37,7 +53,7 @@ public class GameController {
     }
     public boolean isGameOver()
     {
-        if(data.currentPlayers.size()==1)
+        if(data.currentPlayers.size() <= 1)
         {
             return true;
         }
@@ -47,18 +63,36 @@ public class GameController {
     }
     public boolean isCurrentMovable()
     {
-        Player player = data.currentPlayers.get(data.currentPlayerIndex);
-        if(!StatusChecker.isMovable(player))
-        {
-            StatusImpactor.changeStatus(player);
-            return false;
-        }
-        return true;
+
+        return StatusChecker.isMovable(data.currentPlayer);
     }
     public void settleOneRound()
     {
         data.gameRounds += 1;
-        data.currentPlayerIndex = (data.currentPlayerIndex + 1) % data.playerNum;
+        StatusImpactor.changeStatus(data.currentPlayer);
+
+        for(int i =1 ;i<= data.currentPlayers.size();i++)
+        {
+            data.currentPlayerIndex = (data.currentPlayerIndex + 1) % data.currentPlayers.size();
+            data.currentPlayer = data.currentPlayers.get(data.currentPlayerIndex);
+            if (StatusChecker.isPlayable(data.currentPlayer))
+                break;
+        }
+
+        updatePlayablePlayer();
+        if (data.currentPlayers.size() ==0) return;
+        data.currentPlayerIndex = data.currentPlayers.indexOf(data.currentPlayer);
+
+
+
+        // some summary for each round
+        System.out.println("\n======================================");
+        System.out.println("Round " + data.gameRounds);
+        for (Player player: data.currentPlayers) {
+            System.out.println("Player: " + player.getUserId() + " Tbucks: " + player.getMoney());
+        }
+        System.out.println("======================================\n");
+
     }
     public int randomDice()
     {
@@ -69,14 +103,108 @@ public class GameController {
         int max = 6;
         return random.nextInt(max - min + 1) + min;
     }
-    public void playerRelativeWalk()
+    public boolean playerRelativeWalk()
     {
-        Player player = data.currentPlayers.get(data.currentPlayerIndex);
-        PositionImpactor.relativeMove(data, player, randomDice());
+
+        boolean flag = PositionImpactor.relativeMove(data, randomDice());
+        System.out.println("Player " + data.currentPlayer.getUserId() + " moved to " + data.currentPlayer.getPosition());
+        return flag;
     }
     public void playerAbsoluteWalk(int BlockId)
     {
-        Player player = data.currentPlayers.get(data.currentPlayerIndex);
-        PositionImpactor.absoluteMove(data, player, BlockId);
+
+        PositionImpactor.absoluteMove(data, BlockId);
+        System.out.println("Player " + data.currentPlayer.getUserId() + " moved to " + data.currentPlayer.getPosition());
     }
+
+
+    public void interactWithPPT(Property currentBlock)
+    {
+
+        // player is owner
+        if (OwnerIdentifier.isOwner(data.currentPlayer, (Property) currentBlock)) {
+            OwnerPropertyUseCase.run(data.currentPlayer, (Property) currentBlock);
+        }
+        // player is not owner
+        else {
+            PasserbyUseCase.PasserbyArrival(data.currentPlayer, (Property) currentBlock, ((Property) currentBlock).getOwner());
+            System.out.println("Player" + data.currentPlayer.getUserId() + " passed by property "
+                    + currentBlock.getId() + " and paid tax, current tbucks " + data.currentPlayer.getMoney());
+        }
+    }
+    public  void  interactWithEC(ExamCenter currentBlock)
+    {
+        // player will be stopped for 2 rounds
+        StatusImpactor.changeStatus(data.currentPlayer,"movable",-2);
+        System.out.println("Player " + data.currentPlayer.getUserId() + " is in the exam center");
+        //UI: update current player movable status
+    }
+    public  void  interactWithTTC(TTCStation currentBlock)
+    {
+        System.out.println("Enter a block id: ");
+        Scanner scanner = new Scanner(System.in);
+        int blockID;
+        while (true) {
+            try {
+                blockID = scanner.nextInt();
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid id, try again: ");
+                continue;
+            }
+            if (data.getBlockFromId(blockID).getBlockName().equals("ttcstation")) {
+                System.out.println("Invalid move, try again: ");
+                continue;
+            }
+            break;
+        }
+
+        PositionImpactor.absoluteMove(data,blockID);
+        //UI: absoluteMove
+        System.out.println("Player " + data.currentPlayer.getUserId() + " moved to " + data.currentPlayer.getPosition());
+        Block newBlock = data.getBlockFromId(blockID);
+        switch (newBlock.getBlockName()) {
+            case "property":
+                interactWithPPT((Property) newBlock);
+                break;
+            case "destiny":
+                interactWithDestiny((Destiny) newBlock);
+                break;
+            case "examcenter":
+                interactWithEC((ExamCenter) newBlock);
+                break;
+        }
+    }
+    public void interactWithDestiny(Destiny currentBlock)
+    {
+        DestinyCard card = DestinyCardChooser.chooseCard(currentBlock);
+        System.out.println(DestinyCardExecutor.executeCard(data, data.currentPlayer, card));
+        // UI: display message
+    }
+
+    public void finish() {
+        if (data.currentPlayers.size() == 0) {
+            System.out.println("All player has broken up, there is no winner!");
+        }
+
+        if (data.currentPlayers.size() == 1) {
+            System.out.println("Game over! Winner is Player " + data.currentPlayers.get(0).getUserId());
+            return;
+        }
+
+        Player winner = data.currentPlayers.get(0);
+        for (int i = 0; i < data.currentPlayers.size(); i++) {
+            if (data.currentPlayers.get(i).getMoney() > winner.getMoney()) {
+                winner = data.currentPlayers.get(i);
+            }
+        }
+        StringBuilder message = new StringBuilder("Game over! winner is ");
+        for (Player player: data.currentPlayers) {
+            if (player.getMoney() == winner.getMoney())
+                message.append("Player ").append(player.getUserId()).append(" and ");
+        }
+        message.delete(message.length()-5, message.length());
+        message.append("!");
+        System.out.println(message);
+    }
+
 }

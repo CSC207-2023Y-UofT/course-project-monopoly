@@ -3,7 +3,7 @@ package entity;
 /**
  * Represents the blocks of the map
  */
-public class Block {
+public abstract class Block {
     protected int id;
 
     /**
@@ -29,5 +29,14 @@ public class Block {
     public void setId(int id) {
         this.id = id;
     }
+
+    public String getBlockName()
+    {
+        return null;
+    }
+    /**
+     * use State Pattern
+
+     */
 
 }
