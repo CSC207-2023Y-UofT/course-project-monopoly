@@ -3,7 +3,7 @@ package entity;
 /**
  * Represents the blocks of the map
  */
-public class Block {
+public abstract class Block {
     protected int id;
 
     /**

@@ -50,6 +50,12 @@ public class Property extends Block {
         this.tax = this.taxList.get(this.level);
     }
 
+    public void downgradeToZero() {
+        this.level = 0;
+        this.price = this.priceList.get(this.level);
+        this.tax = this.taxList.get(this.level);
+    }
+
     public Player getOwner() {
         return owner;
     }

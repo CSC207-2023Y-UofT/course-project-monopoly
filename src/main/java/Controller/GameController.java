@@ -86,14 +86,13 @@ public class GameController {
 
 
         // some summary for each round
-        if (data.gameRounds % data.currentPlayers.size() == 0) {
-            System.out.println("\n=====================================" +
-                    "\nRound " + data.gameRounds / 4);
-            for (Player player: data.currentPlayers) {
-                System.out.println("Player: " + player.getUserId() + " Tbucks: " + player.getMoney());
-            }
-            System.out.println();
+        System.out.println("\n======================================");
+        System.out.println("Round " + data.gameRounds);
+        for (Player player: data.currentPlayers) {
+            System.out.println("Player: " + player.getUserId() + " Tbucks: " + player.getMoney());
         }
+        System.out.println("======================================\n");
+
     }
     public int randomDice()
     {
@@ -183,6 +182,10 @@ public class GameController {
     }
 
     public void finish() {
+        if (data.currentPlayers.size() == 0) {
+            System.out.println("All player has broken up, there is no winner!");
+        }
+
         if (data.currentPlayers.size() == 1) {
             System.out.println("Game over! Winner is Player " + data.currentPlayers.get(0).getUserId());
             return;
