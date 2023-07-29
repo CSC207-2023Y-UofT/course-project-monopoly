@@ -4,6 +4,7 @@ import entity.Destiny;
 import entity.DestinyCard;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,7 +26,6 @@ public class DestinyCardPoolGenerator {
      * It matches a comma (`,`), but only if it is followed by an even number of double quotes
      * (meaning the comma is not within double quotes) until the end of the line.
      * This allows CSV content enclosed within double quotes to be treated as a single token.
-     *
      * Example:
      * Input CSV String: "John,Doe","New York, NY",25
      * Resulting Tokens: "John,Doe", "New York, NY", 25
@@ -34,7 +34,6 @@ public class DestinyCardPoolGenerator {
 
     /**
      * Generate the destiny card pool based on the information file.
-     *
      * This method reads the specified information file containing destiny card data in CSV format.
      * Each line in the file represents a single destiny card with its associated actions.
      * The destiny cards are created and added to the card pool, which is then added to the given Destiny instance.
@@ -44,6 +43,10 @@ public class DestinyCardPoolGenerator {
      * @param destiny  The Destiny instance to which the generated card pool will be added.
      */
     public static void generateDestinyCardPool(String fileName, Destiny destiny){
+        if (destiny == null) {
+            throw new NullPointerException("The Destiny instance must not be null.");
+        }
+
         ArrayList<DestinyCard> cardPool = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))){
             String line;
@@ -51,11 +54,20 @@ public class DestinyCardPoolGenerator {
             while ((line = br.readLine()) != null){
                 String[] values = line.split(DELIMITER);
 
+                if (values.length < 4) {
+                    // Handle the case where there are missing values in the CSV line
+                    throw new IllegalArgumentException("Invalid data in the CSV file: " + line);
+                }
+
                 // Generate the actions
-                actions.set(0, Integer.parseInt(values[1]));
-                actions.set(1, Integer.parseInt(values[2]));
-                if (!values[3].equals("N/A"))
+                try {
+                    actions.set(0, Integer.parseInt(values[1]));
+                    actions.set(1, Integer.parseInt(values[2]));
                     actions.set(2, Integer.parseInt(values[3]));
+                } catch (NumberFormatException e) {
+                    // Handle the case where action values are not in the expected numeric format
+                    throw new NumberFormatException("Invalid action value in the CSV file: " + line);
+                }
 
                 // Remove the "" in the content
                 String message = values[0].replace("\"", "");
@@ -67,9 +79,12 @@ public class DestinyCardPoolGenerator {
             // Add the generated destiny card pool to the Destiny instance
             destiny.addDestinyCardPool(cardPool);
 
-        } catch (IOException e){
-            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            System.err.println("The specified file '" + fileName + "' does not exist or cannot be found.");
+        } catch (IOException e) {
+            System.err.println("Error occurred while reading the file: " + e.getMessage());
         }
+
     }
 
 }
