@@ -128,7 +128,12 @@ class DestinyCardPoolGeneratorTest {
     }
 
 
-    // Helper methods to create and delete test data file
+    /**
+     * Helper method to create a test data file with the given content.
+     *
+     * @param fileName The name of the test data file to create.
+     * @param content The content to write into the test data file.
+     */
     private void createTestDataFile(String fileName, String content) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(fileName))) {
             writer.println(content);
@@ -137,6 +142,11 @@ class DestinyCardPoolGeneratorTest {
         }
     }
 
+    /**
+     * Helper method to delete the test data file with the given name.
+     *
+     * @param fileName The name of the test data file to delete.
+     */
     private void deleteTestDataFile(String fileName) {
         File file = new File(fileName);
         if (file.exists()) {
