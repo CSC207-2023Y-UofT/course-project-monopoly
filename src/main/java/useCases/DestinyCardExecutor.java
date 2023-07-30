@@ -25,13 +25,19 @@ public class DestinyCardExecutor {
      */
     public static String executeCard(GameData data, Player player, DestinyCard card){
         try {
-            if (data == null || player == null || card == null) {
-                throw new NullPointerException("Data, player, and card must not be null.");
-            }
+//            if (data == null || player == null || card == null) {
+//                throw new NullPointerException("Data, player, and card must not be null.");
+//            }
             ArrayList<Object> actions = card.getActions();
 
             if (actions.size() != 3) {
                 throw new IllegalArgumentException("Invalid action data in the destiny card.");
+            }
+
+            for(Object action: actions){
+                if (! (action instanceof Integer)){
+                    throw new IllegalArgumentException("Invalid action data in the destiny card.");
+                }
             }
 
             int moneyChange = -((int) actions.get(0));
@@ -44,7 +50,8 @@ public class DestinyCardExecutor {
             if (position >= 100) {
                 PositionImpactor.absoluteMove(data, position);
             } else if (position != 0){
-                PositionImpactor.relativeMove(data, position);
+                boolean isPassStartingPoint = PositionImpactor.relativeMove(data, position);
+                if (isPassStartingPoint) StartingPointUseCase.giveBonus(player);
             }
 
             int statusChange = (int) actions.get(2);
@@ -53,10 +60,10 @@ public class DestinyCardExecutor {
             }
 
             return card.getMessage();
-        } catch (NullPointerException e) {
-            // Handle NullPointerException (data, player, or card is null)
-            System.err.println("Data, player, and card must not be null.");
-            return "Choose card again";
+//        } catch (NullPointerException e) {
+//            // Handle NullPointerException (data, player, or card is null)
+//            System.err.println("Data, player, and card must not be null.");
+//            return "Choose card again";
         } catch (IllegalArgumentException e) {
             // Handle IllegalArgumentException (invalid action data in destiny card)
             System.err.println("Invalid action data in the destiny card.");
