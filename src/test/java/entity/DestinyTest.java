@@ -9,6 +9,10 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for {@link Destiny}.
+ * This class contains test cases to verify the behavior of the {@link Destiny} class methods.
+ */
 class DestinyTest {
 
     Destiny destiny;
@@ -17,6 +21,10 @@ class DestinyTest {
 
     ArrayList<DestinyCard> destinyCardListToAdd;
 
+    /**
+     * Set up the test environment before each test case.
+     * Creates a new {@link Destiny} instance and prepares two lists of {@link DestinyCard}.
+     */
     @BeforeEach
     void setup(){
         destiny = new Destiny(101);
@@ -29,11 +37,18 @@ class DestinyTest {
         ));
     }
 
+    /**
+     * Test the {@link Destiny#getBlockName()} method to ensure it correctly returns the name of the destiny block.
+     */
     @Test
     void testGetBlockName() {
         assertEquals("destiny", destiny.getBlockName());
     }
 
+    /**
+     * Test the {@link Destiny#addDestinyCardPool(ArrayList)} method to ensure it adds destiny cards to the pool correctly.
+     * Also, verify if the pool contains all the added destiny cards.
+     */
     @Test
     void testAddDestinyCardPool() {
         destiny.addDestinyCardPool(destinyCardList);
@@ -44,6 +59,10 @@ class DestinyTest {
         assertTrue(destiny.getDestinyCardPool().containsAll(destinyCardListToAdd));
     }
 
+    /**
+     * Test the {@link Destiny#getDestinyCardPool()} method to ensure it returns the destiny card pool correctly.
+     * Verify if the pool is initially empty, and after adding destiny cards, it contains the correct cards.
+     */
     @Test
     void testGetDestinyCardPool() {
         assertTrue(destiny.getDestinyCardPool().isEmpty());
