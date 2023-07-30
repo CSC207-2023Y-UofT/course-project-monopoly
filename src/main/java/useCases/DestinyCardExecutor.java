@@ -25,9 +25,9 @@ public class DestinyCardExecutor {
      */
     public static String executeCard(GameData data, Player player, DestinyCard card){
         try {
-//            if (data == null || player == null || card == null) {
-//                throw new NullPointerException("Data, player, and card must not be null.");
-//            }
+            if (data == null || player == null || card == null) {
+                throw new NullPointerException("Data, player, and card must not be null.");
+            }
             ArrayList<Object> actions = card.getActions();
 
             if (actions.size() != 3) {
@@ -60,10 +60,10 @@ public class DestinyCardExecutor {
             }
 
             return card.getMessage();
-//        } catch (NullPointerException e) {
-//            // Handle NullPointerException (data, player, or card is null)
-//            System.err.println("Data, player, and card must not be null.");
-//            return "Choose card again";
+        } catch (NullPointerException e) {
+            // Handle NullPointerException (data, player, or card is null)
+            System.err.println("Data, player, and card must not be null.");
+            return "Choose card again";
         } catch (IllegalArgumentException e) {
             // Handle IllegalArgumentException (invalid action data in destiny card)
             System.err.println("Invalid action data in the destiny card.");
