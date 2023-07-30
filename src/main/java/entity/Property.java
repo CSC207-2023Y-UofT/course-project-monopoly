@@ -1,6 +1,8 @@
 package entity;
 
 
+import controller.PPTInteractor;
+
 import java.util.ArrayList;
 
 /**
@@ -96,5 +98,11 @@ public class Property extends Block {
                 ", taxList=" + taxList +
                 ", id=" + id +
                 '}';
+    }
+
+    @Override
+    public void run(GameData data) {
+        UseCaseInteractor interactor = new PPTInteractor();
+        interactor.interact(this, data);
     }
 }

@@ -23,4 +23,7 @@ public class StartingPoint extends Block {
     public static void setBonus(int bonus) {
         StartingPoint.bonus = bonus;
     }
+
+    @Override
+    public void run(GameData data) {}
 }

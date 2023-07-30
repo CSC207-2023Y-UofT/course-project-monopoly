@@ -1,5 +1,7 @@
 package entity;
 
+import controller.TTCInteractor;
+
 /**
  * Represents the TTC station block
  */
@@ -12,4 +14,9 @@ public class TTCStation extends Block {
         return "ttcstation";
     }
 
+    @Override
+    public void run(GameData data) {
+        UseCaseInteractor interactor = new TTCInteractor();
+        interactor.interact(this, data);
+    }
 }
