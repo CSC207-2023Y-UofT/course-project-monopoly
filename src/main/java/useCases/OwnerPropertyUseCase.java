@@ -12,6 +12,11 @@ import java.util.Scanner;
 public class OwnerPropertyUseCase {
 
     public static void run(Player owner, Property property) {
+        /**
+         * when player step on a property block. (terminal version)
+         * @param  Player owner
+         * @param  Property property
+         */
         // ask for user input
         Scanner scanner = new Scanner(System.in);
         String verb = "upgrade";

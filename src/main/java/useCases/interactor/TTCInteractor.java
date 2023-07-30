@@ -9,6 +9,11 @@ import java.util.Scanner;
 public class TTCInteractor implements UseCaseInteractor {
     @Override
     public void interact(Block block, GameData data) {
+        /**
+         *  when player step on TTC
+         * @param  Block block
+         * @param  GameData data
+         */
         System.out.println("Enter a block id: ");
         Scanner scanner = new Scanner(System.in);
         int blockID;

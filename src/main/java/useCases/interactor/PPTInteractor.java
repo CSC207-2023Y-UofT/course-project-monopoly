@@ -6,6 +6,11 @@ import useCases.*;
 public class PPTInteractor implements UseCaseInteractor {
     @Override
     public void interact(Block block, GameData data) {
+        /**
+         *  when player step on a property
+         * @param  Block block
+         * @param  GameData data
+         */
         // player is owner
         if (OwnerIdentifier.isOwner(data.currentPlayer, (Property) block)) {
             OwnerPropertyUseCase.run(data.currentPlayer, (Property) block);
