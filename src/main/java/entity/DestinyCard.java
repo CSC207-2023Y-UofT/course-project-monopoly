@@ -64,7 +64,7 @@ public class DestinyCard {
     public String toString() {
         return "DestinyCard{" +
                 "message='" + message + '\'' +
-                ", actions= " + "money: " + actions.get(0) + " position: " + actions.get(1) + " rounds: " + actions.get(2) +
-                '}';
+                ", actions=" + "[money: " + actions.get(0) + ", position: " + actions.get(1) + ", rounds: " + actions.get(2) +
+                "]}";
     }
 }
