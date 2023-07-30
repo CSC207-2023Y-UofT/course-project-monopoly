@@ -19,11 +19,11 @@ public class GameController {
         this.data = data;
     }
 
+
     /**
      * remove not playable players;
      **/
     public void updatePlayablePlayer()
-
     {   for(int i = 0; i < data.currentPlayers.size(); i++)
         {
             Player player = data.currentPlayers.get(i);
@@ -119,68 +119,6 @@ public class GameController {
         System.out.println("Player " + data.currentPlayer.getUserId() + " moved to " + data.currentPlayer.getPosition());
     }
 
-//    public void interactWithPPT(Property currentBlock)
-//    {
-//
-//        // player is owner
-//        if (OwnerIdentifier.isOwner(data.currentPlayer, (Property) currentBlock)) {
-//            OwnerPropertyUseCase.run(data.currentPlayer, (Property) currentBlock);
-//        }
-//        // player is not owner
-//        else {
-//            PasserbyUseCase.PasserbyArrival(data.currentPlayer, (Property) currentBlock, ((Property) currentBlock).getOwner());
-//            System.out.println("Player" + data.currentPlayer.getUserId() + " passed by property "
-//                    + currentBlock.getId() + " and paid tax, current tbucks " + data.currentPlayer.getMoney());
-//        }
-//    }
-//    public  void  interactWithEC(ExamCenter currentBlock)
-//    {
-//        // player will be stopped for 2 rounds
-//        StatusImpactor.changeStatus(data.currentPlayer,"movable",-2);
-//        System.out.println("Player " + data.currentPlayer.getUserId() + " is in the exam center");
-//        //UI: update current player movable status
-//    }
-//    public  void  interactWithTTC(TTCStation currentBlock)
-//    {
-//        System.out.println("Enter a block id: ");
-//        Scanner scanner = new Scanner(System.in);
-//        int blockID;
-//        while (true) {
-//            try {
-//                blockID = scanner.nextInt();
-//            } catch (NumberFormatException e) {
-//                System.out.println("Invalid id, try again: ");
-//                continue;
-//            }
-//            if (data.getBlockFromId(blockID).getBlockName().equals("ttcstation")) {
-//                System.out.println("Invalid move, try again: ");
-//                continue;
-//            }
-//            break;
-//        }
-//
-//        PositionImpactor.absoluteMove(data,blockID);
-//        //UI: absoluteMove
-//        System.out.println("Player " + data.currentPlayer.getUserId() + " moved to " + data.currentPlayer.getPosition());
-//        Block newBlock = data.getBlockFromId(blockID);
-//        switch (newBlock.getBlockName()) {
-//            case "property":
-//                interactWithPPT((Property) newBlock);
-//                break;
-//            case "destiny":
-//                interactWithDestiny((Destiny) newBlock);
-//                break;
-//            case "examcenter":
-//                interactWithEC((ExamCenter) newBlock);
-//                break;
-//        }
-//    }
-//    public void interactWithDestiny(Destiny currentBlock)
-//    {
-//        DestinyCard card = DestinyCardChooser.chooseCard(currentBlock);
-//        System.out.println(DestinyCardExecutor.executeCard(data, data.currentPlayer, card));
-//        // UI: display message
-//    }
 
     public void finish() {
         if (data.currentPlayers.size() == 0) {
