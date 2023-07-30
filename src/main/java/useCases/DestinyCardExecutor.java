@@ -62,6 +62,7 @@ public class DestinyCardExecutor {
             return card.getMessage();
         } catch (NullPointerException e) {
             // Handle NullPointerException (data, player, or card is null)
+            e.printStackTrace();
             System.err.println("Data, player, and card must not be null.");
             return "Choose card again";
         } catch (IllegalArgumentException e) {
