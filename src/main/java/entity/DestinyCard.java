@@ -29,7 +29,8 @@ public class DestinyCard {
      */
     public DestinyCard(String message, ArrayList<Object> actions) {
         this.message = message;
-        this.actions = actions;
+        this.actions = new ArrayList<>();
+        this.actions.addAll(actions);
     }
 
     /**
