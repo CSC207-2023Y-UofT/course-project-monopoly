@@ -47,9 +47,9 @@ public class Main {
 
             Block currentBlock = data.getBlockFromId(data.currentPlayer.getPosition()); // current BlockId
 
-
             currentBlock.run(data);
             // use Strategy pattern to avoid using switch case
+
 
             controller.settleOneRound();
         }

@@ -19,11 +19,11 @@ public class GameController {
         this.data = data;
     }
 
-
     /**
      * remove not playable players;
      **/
     public void updatePlayablePlayer()
+
     {   for(int i = 0; i < data.currentPlayers.size(); i++)
         {
             Player player = data.currentPlayers.get(i);
@@ -118,7 +118,6 @@ public class GameController {
         PositionImpactor.absoluteMove(data, BlockId);
         System.out.println("Player " + data.currentPlayer.getUserId() + " moved to " + data.currentPlayer.getPosition());
     }
-
 
 //    public void interactWithPPT(Property currentBlock)
 //    {

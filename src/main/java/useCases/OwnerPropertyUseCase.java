@@ -17,6 +17,7 @@ public class OwnerPropertyUseCase {
          * @param  Player owner
          * @param  Property property
          */
+
         // ask for user input
         Scanner scanner = new Scanner(System.in);
         String verb = "upgrade";

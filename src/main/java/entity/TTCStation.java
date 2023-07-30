@@ -19,4 +19,5 @@ public class TTCStation extends Block {
         UseCaseInteractor interactor = new TTCInteractor();
         interactor.interact(this, data);
     }
+
 }

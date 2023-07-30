@@ -14,6 +14,7 @@ public class OwnerIdentifier {
          * @param  Property property
          * @return a boolean value represent the result
          */
+
         return property.getOwner() == null || player.equals(property.getOwner());
     }
 }

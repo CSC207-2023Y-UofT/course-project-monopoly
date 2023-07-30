@@ -34,10 +34,6 @@ public class StatusImpactor {
          * @param Integer status
          *
          */
-        /*
-
-         * */
-
         HashMap<String, Integer> original = player.getStatus();
         original.replace(name,status);
         player.setStatus(original);
@@ -50,7 +46,6 @@ public class StatusImpactor {
          *   (for counting the rounds in exam center)
          * @param  Player player
          */
-        //
         HashMap<String, Integer> original = player.getStatus();
         if(original.get("movable") <0)
         {
