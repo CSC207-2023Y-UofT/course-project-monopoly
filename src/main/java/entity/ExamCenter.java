@@ -1,6 +1,6 @@
 package entity;
 
-import controller.ECInteractor;
+import useCases.interactor.ECInteractor;
 
 /**
  * Represents the exam center block

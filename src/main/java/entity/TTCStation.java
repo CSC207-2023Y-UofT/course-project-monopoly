@@ -1,6 +1,6 @@
 package entity;
 
-import controller.TTCInteractor;
+import useCases.interactor.TTCInteractor;
 
 /**
  * Represents the TTC station block

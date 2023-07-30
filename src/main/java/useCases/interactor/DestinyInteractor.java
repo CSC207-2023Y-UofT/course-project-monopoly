@@ -1,4 +1,4 @@
-package controller;
+package useCases.interactor;
 
 import entity.*;
 import useCases.*;

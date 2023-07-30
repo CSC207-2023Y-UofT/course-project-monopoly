@@ -1,7 +1,7 @@
 package entity;
 
 
-import controller.PPTInteractor;
+import useCases.interactor.PPTInteractor;
 
 import java.util.ArrayList;
 

@@ -1,6 +1,6 @@
 package entity;
 
-import controller.DestinyInteractor;
+import useCases.interactor.DestinyInteractor;
 
 import java.util.ArrayList;
 
