@@ -1,15 +1,15 @@
-package Controller;
+package controller;
 
 import entity.*;
-import usecase.generator.DestinyCardPoolGenerator;
-import usecase.generator.PropertyGenerator;
-import usecase.impactor.StatusImpactor;
+import useCases.generator.DestinyCardPoolGenerator;
+import useCases.generator.PropertyGenerator;
+import useCases.impactor.StatusImpactor;
 
 import java.io.*;
 import java.util.*;
 
 public class InitController {
-    private static final String DELIMITER = ",(?=([^\\\"]*\\\"[^\\\"]*\\\")*[^\\\"]*$)";
+    private static final String DELIMITER = ",(?=([^\"]*\"[^\"]*\")*[^\"]*$)";
     private static final int INITMONEY = 1000;
 
     public static GameData init(String propertiesFile, String extraBlocksFile, String[] destinyFiles) {

@@ -1,9 +1,7 @@
-package usecase.impactor;
+package useCases.impactor;
 
 import entity.Player;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 
 /**

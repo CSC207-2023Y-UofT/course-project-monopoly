@@ -1,10 +1,10 @@
-package Controller;
+package controller;
 
 import entity.*;
-import usecase.*;
-import usecase.impactor.PositionImpactor;
-import usecase.impactor.PropertyImpactor;
-import usecase.impactor.StatusImpactor;
+import useCases.*;
+import useCases.impactor.PositionImpactor;
+import useCases.impactor.PropertyImpactor;
+import useCases.impactor.StatusImpactor;
 
 import java.util.ArrayList;
 import java.util.Random;

@@ -1,8 +1,8 @@
-package usecase;
+package useCases;
 
 import entity.Player;
 import entity.StartingPoint;
-import usecase.impactor.MoneyImpactor;
+import useCases.impactor.MoneyImpactor;
 
 /**
  * Represent the use case when the player passing through the starting point

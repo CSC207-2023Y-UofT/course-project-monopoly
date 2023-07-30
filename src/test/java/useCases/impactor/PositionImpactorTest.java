@@ -1,14 +1,13 @@
-package usecase.impactor;
+package useCases.impactor;
 
 import entity.*;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
+
 import entity.GameData;
 
 import static org.junit.jupiter.api.Assertions.*;
