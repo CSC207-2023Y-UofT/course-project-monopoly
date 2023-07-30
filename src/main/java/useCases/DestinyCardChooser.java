@@ -4,6 +4,7 @@ import entity.Destiny;
 import entity.DestinyCard;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * A class for choosing destiny cards from the destiny block.
@@ -19,13 +20,11 @@ public class DestinyCardChooser {
     public static DestinyCard chooseCard(Destiny destiny){
         ArrayList<DestinyCard> cardPool = destiny.getDestinyCardPool();
 
-        try {
-            int index = (int) (Math.random() * cardPool.size());
-            return cardPool.get(index);
-        } catch (IndexOutOfBoundsException e){
-            // Handle the case where the card pool is empty or has an invalid index.
-            // For simplicity, we return null to indicate no valid card was chosen.
+        if (cardPool.isEmpty()) {
             return null;
         }
+
+        int index = new Random().nextInt(cardPool.size());
+        return cardPool.get(index);
     }
 }
