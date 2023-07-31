@@ -15,6 +15,9 @@ public class PropertyImpactorTest {
     private static Player player1;
     private static Player player2;
 
+    /**
+     * setup method for this test
+     */
     @BeforeAll
     public static void setUp() {
         property = new Property(1,
@@ -25,6 +28,9 @@ public class PropertyImpactorTest {
         player2 = new Player(2, 2);
     }
 
+    /**
+     * test change owner for three situations: null -> owner, owner -> owner, owner -> null
+     */
     @Test
     public void changeOwner() {
         assertNull(property.getOwner());

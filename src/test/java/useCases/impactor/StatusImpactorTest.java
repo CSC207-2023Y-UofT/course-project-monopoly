@@ -14,6 +14,9 @@ class StatusImpactorTest {
     private static Player player;
     private static HashMap<String, Integer> initStatusMap;
 
+    /**
+     * setup function for this test
+     */
     @BeforeAll
     public static void setup() {
         player = new Player(1, 1);
@@ -23,11 +26,17 @@ class StatusImpactorTest {
     }
 
     @Test
+    /**
+     * check if init sets the right statuses
+     */
     public void initStatus() {
         StatusImpactor.initStatus(player);
         assertEquals(initStatusMap, player.getStatus());
     }
 
+    /**
+     * check for correctness of change status
+     */
     @Test
     public void changeStatusNormal() {
         for (int i = -1000; i < 1000; i++) {
@@ -38,6 +47,11 @@ class StatusImpactorTest {
         }
     }
 
+    /**
+     * check for correctness for change status for single argument
+     * check if it correctly adds 1 to movable status if it's negative,
+     * and does nothing otherwise
+     */
     @Test
     public void changeStatusSingle() {
         StatusImpactor.changeStatus(player, "movable", -1000);

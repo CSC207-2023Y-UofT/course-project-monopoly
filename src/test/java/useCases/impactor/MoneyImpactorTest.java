@@ -13,6 +13,9 @@ public class MoneyImpactorTest {
     static Player giver;
     static Player receiver;
 
+    /**
+     * set up method for the test
+     */
     @BeforeAll
     static void setup() {
         giver = new Player(1, 1000);
@@ -21,6 +24,10 @@ public class MoneyImpactorTest {
         StatusImpactor.initStatus(receiver);
     }
 
+
+    /**
+     * test correctness for deduct for all practical values we will be using
+     */
     @Test
     public void testDeductNormal() {
         for (int i = -1000; i < 1000; i++) {
@@ -30,6 +37,9 @@ public class MoneyImpactorTest {
         }
     }
 
+    /**
+     * test correctness for deduct when player doesn't have enough money
+     */
     @Test
     public void testDeductOverflow() {
         for (int i = 1001; i < 2000; i++) {
@@ -40,6 +50,10 @@ public class MoneyImpactorTest {
         StatusImpactor.initStatus(giver);
     }
 
+
+    /**
+     * Test for correctness for trade method for all values we will be using
+     */
     @Test
     public void testTradeNormal() {
         for (int i = -1000; i < 1000; i++) {
@@ -51,6 +65,10 @@ public class MoneyImpactorTest {
         }
     }
 
+
+    /**
+     * Test for correctness for trade method when the giver doesn't have enough money
+     */
     @Test
     public void testTradeLeftOverflow() {
         for (int i = 1001; i < 2000; i++) {
