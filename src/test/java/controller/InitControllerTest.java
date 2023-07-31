@@ -12,13 +12,13 @@ import static org.junit.jupiter.api.Assertions.*;
  * Test class for {@link InitController}.
  * This class contains test cases to verify the behavior of the {@link InitController} class methods.
  */
-class InitControllerTest {
+public class InitControllerTest {
     /**
      * Test the {@link InitController#init(String, String, String[])}} method to ensure
      * it correctly returns the GameData.
      */
     @Test
-    void testInit(){
+    public void testInit(){
         String propertiesFile = "data/test/properties_test.csv";
         String extraBlocksFile = "data/test/extra_blocks_test.csv";
         String[] destinyFiles = {"data/test/destiny_card_chest_test.csv",

@@ -47,9 +47,6 @@ public class OwnerPropertyUseCase {
             property.setOwner(owner);
             verb = "bought";
             ArrayList<Property> properties = owner.getProperties();
-            if (properties == null) {
-                properties = new ArrayList<>();
-            }
             properties.add(property);
             owner.setProperties(properties);
         } else {verb = "upgraded";}
