@@ -17,11 +17,8 @@ public class PropertyImpactor {
     }
 
     /**
-     * Upgrade the level of a property
-     * @param property the property whose level should be upgraded
+     * Downgrade a property's level to zero, remove its owner
+     * @param property the property to downgrade
      */
-    public static void upgrade(Property property){
-        property.upgradeLevel();
-    }
     public static void downgradeToZero(Property property){property.downgradeToZero();}
 }
