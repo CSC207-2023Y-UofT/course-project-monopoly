@@ -13,9 +13,9 @@ public class PasserbyUseCase {
     public static Object[] PasserbyArrival(Player passer, Property property, Player owner) {
         /**
          * Proceeds the event where a player arrives at the property owned by others.
-         * @param  Player passer: the player who passes the block.
-         *                property: the property on this block
-         *                owner: the player who owns this property
+         * @param  Player   passer: the player who passes the block.
+         * @param  Property property: the property on this block
+         * @param  Player   owner: the player who owns this property
          * @return an informational Object array with 5 elements.
          *         - index 0: Player, passerby player
          *         - index 1: int, tokens transferred

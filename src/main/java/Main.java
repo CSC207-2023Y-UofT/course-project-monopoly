@@ -47,32 +47,9 @@ public class Main {
 
             Block currentBlock = data.getBlockFromId(data.currentPlayer.getPosition()); // current BlockId
 
-            switch (currentBlock.getBlockName())
-            {
-                case "property":
-                {
-                    controller.interactWithPPT((Property) currentBlock);
-                    break;
-                }
-                case "ttcstation":
-                {
-                    assert currentBlock instanceof TTCStation;
-                    controller.interactWithTTC((TTCStation) currentBlock );
-                    break;
+            currentBlock.run(data);
+            // use Strategy pattern to avoid using switch case
 
-                }
-                case "destiny":
-                {
-                    assert currentBlock instanceof Destiny;
-                    controller.interactWithDestiny((Destiny) currentBlock);
-                    break;
-                }
-                case "examcenter":
-                {
-                    controller.interactWithEC((ExamCenter) currentBlock);
-                    break;
-                }
-            }
 
             controller.settleOneRound();
         }

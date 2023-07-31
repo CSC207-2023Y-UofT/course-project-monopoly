@@ -34,9 +34,13 @@ public abstract class Block {
     {
         return null;
     }
-    /**
-     * use State Pattern
 
+    /**
+     * Runs the corresponding usecase(s) to avoid switch case in the
+     * main loop
+     * @param data data structure for the game
      */
+    public abstract void run(GameData data);
+
 
 }

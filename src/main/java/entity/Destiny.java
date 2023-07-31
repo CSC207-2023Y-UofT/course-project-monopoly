@@ -1,5 +1,7 @@
 package entity;
 
+import useCases.interactor.DestinyInteractor;
+
 import java.util.ArrayList;
 
 /**
@@ -47,5 +49,11 @@ public class Destiny extends Block {
      */
     public void addDestinyCardPool(ArrayList<DestinyCard> destinyCardPool) {
         this.destinyCardPool.addAll(destinyCardPool);
+    }
+
+    @Override
+    public void run(GameData data) {
+        UseCaseInteractor interactor = new DestinyInteractor();
+        interactor.interact(this, data);
     }
 }

@@ -1,5 +1,7 @@
 package entity;
 
+import useCases.interactor.TTCInteractor;
+
 /**
  * Represents the TTC station block
  */
@@ -10,6 +12,12 @@ public class TTCStation extends Block {
     public String getBlockName()
     {
         return "ttcstation";
+    }
+
+    @Override
+    public void run(GameData data) {
+        UseCaseInteractor interactor = new TTCInteractor();
+        interactor.interact(this, data);
     }
 
 }
