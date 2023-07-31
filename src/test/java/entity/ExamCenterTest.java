@@ -21,6 +21,9 @@ class ExamCenterTest {
         examCenter = new ExamCenter(101);
     }
 
+    /**
+     * Test the {@link ExamCenter#getBlockName()} method to ensure it correctly returns the name of the ExamCenter block.
+     */
     @Test
     void testGetBlockName() {
         assertEquals("examcenter", examCenter.getBlockName());
