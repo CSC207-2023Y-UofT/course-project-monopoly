@@ -1,5 +1,7 @@
 package presenters;
 
+import controller.InteractivePanelAdapter;
+
 import java.util.Scanner;
 
 /**
@@ -13,11 +15,20 @@ public class InputPresenter {
      * Asks for and collect raw input from the user
      * when player chooses whether to invest / upgrade or ignore a property, if available.
      */
-    public static String ownerChooseAtProperty(String verb, String propName, int currPrice) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println(verb + " " +  propName + " for " + currPrice + " TBucks? (Y/N)");
-        String choiceIndicator = scanner.nextLine();
+    public static boolean ownerChooseAtProperty(String verb, String propName, int currPrice) {
+        while (true) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.printf("%s %s for %d TBucks? (Y/N)%n", verb, propName, currPrice);
+            String choiceIndicator = scanner.nextLine();
+            int choice = InteractivePanelAdapter.ownerChooseAtProperty(choiceIndicator);
 
-        return choiceIndicator;
+            if (choice == 1) {
+                return true;
+            } else if (choice == 0) {
+                return false;
+            } else {
+                continue;
+            }
+        }
     }
 }

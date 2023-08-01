@@ -13,9 +13,9 @@ public class OutputPresenter {
      */
     public static void notifyOwnerUpgraded(int playerId, String verb,
                                            String propName, int currPrice, int level) {
-        System.out.println("Player " + playerId + " " + verb + " " + propName +
-                " for " + currPrice + " TBucks.");
-        System.out.println(propName + " is now at level " + level + ".");
+        System.out.printf("Player %d %s %s for %d TBucks.%n",
+                playerId, verb, propName, currPrice);
+        System.out.printf("%s is now at level %d.%n", propName, level);
     }
 
     /**
@@ -23,7 +23,7 @@ public class OutputPresenter {
      * which announces that a player has ignored a property.
      */
     public static void notifyOwnerIgnored(int playerId, String propName) {
-        System.out.println("Player " + playerId + " ignored " + propName + ".");
+        System.out.printf("Player %d ignored %s.%n", playerId, propName);
     }
 
     /**
@@ -32,8 +32,8 @@ public class OutputPresenter {
      */
     public static void notifyPasserbyPaid(int passerId, int tax,
                                           int ownerId, String propName) {
-        System.out.println("PLayer " + passerId + " paid " + tax + " to Player " +
-                ownerId + " at " + propName + ".");
+        System.out.printf("Player %d paid %d to Player %d at %s.%n",
+                passerId, tax, ownerId, propName);
     }
 
     /**
@@ -51,6 +51,5 @@ public class OutputPresenter {
     public static void notifyInsufficientFund() {
         System.out.println("Insufficient Fund :(");
     }
-
 
 }

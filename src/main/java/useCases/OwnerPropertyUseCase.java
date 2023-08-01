@@ -35,9 +35,7 @@ public class OwnerPropertyUseCase {
         }
 
         // The player need to input 'Y' for property buy/upgrade, or 'N' for ignoring.
-        String choiceIndicator =
-                InputPresenter.ownerChooseAtProperty(verb, propName, currPrice);
-        boolean choice = InteractivePanelAdapter.ownerChooseAtProperty(choiceIndicator);
+        boolean choice = InputPresenter.ownerChooseAtProperty(verb, propName, currPrice);
 
         if (choice == true) {  // Inputted 'Y'.
             if (currSaving < currPrice) {  // Fail to proceed due to insufficient fund.

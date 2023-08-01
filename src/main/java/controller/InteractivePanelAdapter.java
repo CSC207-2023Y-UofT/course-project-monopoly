@@ -12,14 +12,14 @@ public class InteractivePanelAdapter {
      * at an unoccupied property or a property owned by him/her.
      * @param choiceIndicator raw input from InputPresenter.OwnerChooseAtProperty
      */
-    public static boolean ownerChooseAtProperty(String choiceIndicator) {
-        if (choiceIndicator.equals("Y")) {
-            return true;
-        } else if (choiceIndicator.equals("N")) {
-            return false;
+    public static int ownerChooseAtProperty(String choiceIndicator) {
+        if (choiceIndicator.equals("Y") || choiceIndicator.equals("y")) {
+            return 1;
+        } else if (choiceIndicator.equals("N") || choiceIndicator.equals("n")) {
+            return 0;
         } else {
-            System.out.println("Invalid input.");
-            return false;
+            System.out.println("[!] Invalid input, please try again. ");
+            return 2;
         }
     }
 }
