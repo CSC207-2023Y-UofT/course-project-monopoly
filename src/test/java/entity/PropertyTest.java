@@ -72,8 +72,8 @@ class PropertyTest {
         assertEquals(0, p.getLevel());
         p.upgradeLevel();
         assertEquals(1, p.getLevel());
-        assertEquals(p.getPrice(), 2);
-        assertEquals(p.getTax(), 1);
+        assertEquals(2, p.getPrice());
+        assertEquals(1, p.getTax());
     }
 
     /**
@@ -106,7 +106,7 @@ class PropertyTest {
         Player player = new Player(1, 1000);
         p.setOwner(player);
 
-        assertEquals(p.getOwner(), player);
+        assertEquals(player, p.getOwner());
     }
 
     /**
@@ -114,7 +114,7 @@ class PropertyTest {
      */
     @Test
     void testGetPrice() {
-        assertEquals(p.getPrice(), 1);
+        assertEquals(1, p.getPrice());
     }
 
     /**
@@ -122,7 +122,7 @@ class PropertyTest {
      */
     @Test
     void testGetTax() {
-        assertEquals(p.getTax(), 0);
+        assertEquals(0, p.getTax());
     }
 
     /**
@@ -130,7 +130,7 @@ class PropertyTest {
      */
     @Test
     void testGetPriceList() {
-        assertEquals(p.getPriceList(), priceList);
+        assertEquals(priceList, p.getPriceList());
     }
 
     /**
@@ -140,7 +140,7 @@ class PropertyTest {
     void testSetPriceList() {
         ArrayList<Integer> newPriceList = new ArrayList<>(List.of(4, 5, 6));
         p.setPriceList(newPriceList);
-        assertEquals(p.getPriceList(), newPriceList);
+        assertEquals(newPriceList, p.getPriceList());
     }
 
     /**
@@ -148,7 +148,7 @@ class PropertyTest {
      */
     @Test
     void testGetTaxList() {
-        assertEquals(p.getTaxList(), taxList);
+        assertEquals(taxList, p.getTaxList());
     }
 
     /**
@@ -158,7 +158,7 @@ class PropertyTest {
     void testSetTaxList() {
         ArrayList<Integer> newTaxList = new ArrayList<>(List.of(4, 5, 6));
         p.setPriceList(newTaxList);
-        assertEquals(p.getPriceList(), newTaxList);
+        assertEquals(newTaxList, p.getPriceList());
     }
 
 }
