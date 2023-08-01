@@ -2,7 +2,7 @@ package useCases.impactor;
 
 import entity.Player;
 import entity.Property;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,13 +18,13 @@ public class PropertyImpactorTest {
     /**
      * setup method for this test
      */
-    @BeforeAll
-    public static void setUp() {
+    @BeforeEach
+    public void setUp() {
         property = new Property(1,
                 "1",
                 new ArrayList<>(Arrays.asList(1, 2, 3, 0)),
                 new ArrayList<>(Arrays.asList(0, 1, 2, 3)));
-        player1 = new Player(1,1);
+        player1 = new Player(1, 1);
         player2 = new Player(2, 2);
     }
 
