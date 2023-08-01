@@ -47,7 +47,7 @@ public class MoneyImpactorTest {
      */
     @Test
     public void testDeductOverflow() {
-        for (int i = LOWER_LIMIT; i < UPPER_LIMIT; i++) {
+        for (int i = UPPER_LIMIT + 1; i < UPPER_LIMIT + UPPER_LIMIT; i++) {
             MoneyImpactor.deduct(i, giver);
             assertFalse(StatusChecker.isPlayable(giver));
         }
