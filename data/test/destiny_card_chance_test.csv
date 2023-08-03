@@ -1,0 +1,7 @@
+Move backward 2 steps.,0,-2,0
+Move backward 1 step.,0,-1,0
+Move forward 2 steps.,0,2,0
+Move forward 1 step.,0,1,0
+Miss a turn.,0,0,-1
+Miss 2 turns.,0,0,-2
+Lose 10$.,-10,0,0

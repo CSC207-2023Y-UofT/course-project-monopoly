@@ -13,17 +13,13 @@ public class StatusImpactor {
         /**
          *  set the initial value of the player
          * @param  Player player
-         *
+         * for playable : 0 for true and -1 for false
+         * for movable:  0 for true and negative number for rounds that the player cannot move
          */
-        if(player.getStatus() == null) {
-            /*
-             for playable : 0 for true and -1 for false
-             for movable:  0 for true and negative number for rounds that the player cannot move*/
-            HashMap<String, Integer> initialStatus = new HashMap<>();
-            initialStatus.put("movable", 0);
-            initialStatus.put("playable", 0);
-            player.setStatus(initialStatus);
-        }
+        HashMap<String, Integer> initialStatus = new HashMap<>();
+        initialStatus.put("movable", 0);
+        initialStatus.put("playable", 0);
+        player.setStatus(initialStatus);
         }
     public static void changeStatus(Player player, String name, Integer status)
     {

@@ -1,6 +1,5 @@
 package useCases;
 
-import controller.InteractivePanelAdapter;
 import entity.Player;
 import entity.Property;
 import presenters.GameMapPanel;
@@ -44,10 +43,10 @@ public class OwnerPropertyUseCase {
                 return;
             }
 
-            // Invest / upgrade proceeds.
+            // Invest / upgrade proceeds
             MoneyImpactor.deduct(currPrice, owner);
-            if (verb.equals("Invest")) {
-                verb = "invested";
+            if (currProperty.getLevel() == 0) {
+                verb = "bought";
                 currProperty.setOwner(owner);
                 ArrayList<Property> properties = owner.getProperties();
                 if (properties == null) {
@@ -64,11 +63,9 @@ public class OwnerPropertyUseCase {
             OutputPresenter.notifyOwnerUpgraded(playerId, verb,
                     propName, currPrice, currProperty.getLevel());
             GameMapPanel.GameMapModifier();
-            return;
 
         } else {  // Inputted 'N' or an invalid String.
             OutputPresenter.notifyOwnerIgnored(playerId, propName);
-            return;
         }
 
     }
