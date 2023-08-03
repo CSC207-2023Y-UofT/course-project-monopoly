@@ -10,7 +10,7 @@ import java.util.*;
 
 public class InitController {
     private static final String DELIMITER = ",(?=([^\"]*\"[^\"]*\")*[^\"]*$)";
-    private static final int INITMONEY = 1000;
+    private static final int INITMONEY = 1500;
 
     public static GameData init(String propertiesFile, String extraBlocksFile, String[] destinyFiles) {
         // blocks

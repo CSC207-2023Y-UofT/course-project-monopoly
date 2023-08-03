@@ -13,13 +13,12 @@ public class PPTInteractor implements UseCaseInteractor {
          */
         // player is owner
         if (OwnerIdentifier.isOwner(data.currentPlayer, (Property) block)) {
-            OwnerPropertyUseCase.run(data.currentPlayer, (Property) block);
+            OwnerPropertyUseCase.ownerUpgrade(data.currentPlayer, (Property) block);
         }
         // player is not owner
         else {
-            PasserbyUseCase.PasserbyArrival(data.currentPlayer, (Property) block, ((Property) block).getOwner());
-            System.out.println("Player" + data.currentPlayer.getUserId() + " passed by property "
-                    + block.getId() + " and paid tax, current tbucks " + data.currentPlayer.getMoney());
+            PasserbyUseCase.passerbyArrival(data.currentPlayer, (Property) block,
+                    ((Property) block).getOwner());
         }
     }
 }

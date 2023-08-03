@@ -1,14 +1,14 @@
 101,New College,60,50,50,2,10,30
-102,Sidney Smith,60,50,50,4,20,60
-103,Lash Miller,100,50,50,6,30,90
-104,Earth Science,100,50,50,6,30,90
-105,Mclennan,120,50,50,8,40,100
-107,Bahen Centre,140,100,100,10,50,150
-108,Myhal Centre,140,100,100,10,50,150
-109,Galbraith,160,100,100,12,60,180
-111,Medical Science,180,100,100,14,70,200
-112,Lassonde Mining,180,100,100,14,70,200
-113,Health Science,200,100,100,16,80,220
+102,Sidney Smith Hall,60,50,50,4,20,60
+103,Lash Miller Labs,100,50,50,6,30,90
+104,Earth Science Ctr,100,50,50,6,30,90
+105,Mclennan Labs,120,50,50,8,40,100
+107,Bahen Ctr,140,100,100,10,50,150
+108,Myhal Ctr,140,100,100,10,50,150
+109,Galbraith Building,160,100,100,12,60,180
+111,Medical Science Building,180,100,100,14,70,200
+112,Lassonde Mining Building,180,100,100,14,70,200
+113,Health Science Building,200,100,100,16,80,220
 115,Convocation Hall,220,150,150,18,90,250
 116,Knox College,220,150,150,18,90,250
 117,Canadiana Gallery,240,150,150,20,100,300
@@ -19,4 +19,4 @@
 123,Massey College,300,200,200,26,130,390
 124,Rotman,320,200,200,28,150,450
 126,Innis College,350,200,200,35,175,500
-127,John P. Roberts,400,200,200,50,200,600
+127,Roberts Library,400,200,200,50,200,600

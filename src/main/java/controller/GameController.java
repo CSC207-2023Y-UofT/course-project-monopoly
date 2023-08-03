@@ -114,13 +114,6 @@ public class GameController {
         System.out.println("Player " + data.currentPlayer.getUserId() + " moved to " + data.currentPlayer.getPosition());
         return flag;
     }
-    public void playerAbsoluteWalk(int BlockId)
-    {
-
-        PositionImpactor.absoluteMove(data, BlockId);
-        System.out.println("Player " + data.currentPlayer.getUserId() + " moved to " + data.currentPlayer.getPosition());
-    }
-
 
     public void finish() {
         if (data.currentPlayers.size() == 0) {
