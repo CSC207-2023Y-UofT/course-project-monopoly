@@ -1,63 +1,75 @@
 package useCases;
 
-import entity.*;
+import controller.InteractivePanelAdapter;
+import entity.Player;
+import entity.Property;
+import presenters.GameMapPanel;
+import presenters.InputPresenter;
+import presenters.OutputPresenter;
 import useCases.impactor.MoneyImpactor;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
- * Represent the use case when a player arrives at his property or an unowned property
+ * Represents the use case when a player arrives at his/her own property
+ * or an unoccupied property.
  */
 public class OwnerPropertyUseCase {
 
-    public static void run(Player owner, Property property) {
-        /**
-         * when player step on a property block. (terminal version)
-         * @param  Player owner
-         * @param  Property property
-         */
+    public static void ownerUpgrade(Player owner, Property currProperty) {
+        int playerId = owner.getUserId();
+        int currSaving = owner.getMoney();
 
-        // ask for user input
-        Scanner scanner = new Scanner(System.in);
-        String verb = "upgrade";
-        if (property.getLevel() == 0)
-            verb = "buy";
+        String propName = currProperty.getName();
+        int currLevel = currProperty.getLevel();
+        int currPrice = currProperty.getPrice();
 
-        System.out.println("Do you want to " + verb + " the property? (Y/n)");
-        String option = scanner.nextLine();
-        if (!(option.equals("Y")))
-            return;
+        String verb = "Upgrade";
+        if (currLevel == 0) { verb = "Invest"; }
 
-        if (property.getLevel() == 3) {
-            System.out.println("this property cannot be updated further, did nothing");
+        // If the property has reached maximum level, nothing can be done.
+        if (currLevel == 3) {
+            OutputPresenter.notifyMaxLevel(propName);
+            OutputPresenter.notifyOwnerIgnored(playerId, propName);
             return;
         }
 
+        // The player need to input 'Y' for property buy/upgrade, or 'N' for ignoring.
+        boolean choice = InputPresenter.ownerChooseAtProperty(verb, propName, currPrice);
 
-        int price = property.getPrice();
-        if (price > owner.getMoney()) {
-            System.out.println("the player doesn't have enough money to upgrade, did nothing");
-            return;
-        }
-
-        MoneyImpactor.deduct(price, owner);
-
-        if (property.getLevel() == 0) {
-            property.setOwner(owner);
-            verb = "bought";
-            ArrayList<Property> properties = owner.getProperties();
-            if (properties == null) {
-                properties = new ArrayList<>();
+        if (choice == true) {  // Inputted 'Y'.
+            if (currSaving < currPrice) {  // Fail to proceed due to insufficient fund.
+                OutputPresenter.notifyInsufficientFund();
+                OutputPresenter.notifyOwnerIgnored(playerId, propName);
+                return;
             }
-            properties.add(property);
-            owner.setProperties(properties);
-        } else {verb = "upgraded";}
 
-        property.upgradeLevel();
+            // Invest / upgrade proceeds.
+            MoneyImpactor.deduct(currPrice, owner);
+            if (verb.equals("Invest")) {
+                verb = "invested";
+                currProperty.setOwner(owner);
+                ArrayList<Property> properties = owner.getProperties();
+                if (properties == null) {
+                    properties = new ArrayList<>();
+                }
+                properties.add(currProperty);
+                owner.setProperties(properties);
 
-        System.out.println("Player " + owner.getUserId() + " " +  verb + " property "
-                + property.getId() + " Player money: " + owner.getMoney()
-                + " Property level: " + property.getLevel());
+            } else {
+                verb = "upgraded";
+            }
+
+            currProperty.upgradeLevel();
+            OutputPresenter.notifyOwnerUpgraded(playerId, verb,
+                    propName, currPrice, currProperty.getLevel());
+            GameMapPanel.GameMapModifier();
+            return;
+
+        } else {  // Inputted 'N' or an invalid String.
+            OutputPresenter.notifyOwnerIgnored(playerId, propName);
+            return;
+        }
+
     }
 }

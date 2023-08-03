@@ -1,4 +1,4 @@
-package UI;
+package presenters;
 
 import javax.swing.*;
 import java.awt.*;
