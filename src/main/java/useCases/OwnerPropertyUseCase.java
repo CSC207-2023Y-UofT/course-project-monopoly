@@ -27,7 +27,7 @@ public class OwnerPropertyUseCase {
         if (currLevel == 0) { verb = "Invest"; }
 
         // If the property has reached maximum level, nothing can be done.
-        if (currLevel == 3) {
+        if (currLevel == 5) {
             OutputPresenter.notifyMaxLevel(propName);
             OutputPresenter.notifyOwnerIgnored(playerId, propName);
             return;
@@ -36,7 +36,7 @@ public class OwnerPropertyUseCase {
         // The player need to input 'Y' for property buy/upgrade, or 'N' for ignoring.
         boolean choice = InputPresenter.ownerChooseAtProperty(verb, propName, currPrice);
 
-        if (choice == true) {  // Inputted 'Y'.
+        if (choice) {  // Inputted 'Y'.
             if (currSaving < currPrice) {  // Fail to proceed due to insufficient fund.
                 OutputPresenter.notifyInsufficientFund();
                 OutputPresenter.notifyOwnerIgnored(playerId, propName);
