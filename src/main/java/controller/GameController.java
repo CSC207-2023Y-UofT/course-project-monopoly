@@ -8,7 +8,6 @@ import useCases.impactor.StatusImpactor;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 
 public class GameController {
 
@@ -19,6 +18,9 @@ public class GameController {
         this.data = data;
     }
 
+    public GameData getData() {
+        return data;
+    }
 
     /**
      * remove not playable players;
@@ -73,7 +75,7 @@ public class GameController {
         data.gameRounds += 1;
         StatusImpactor.changeStatus(data.currentPlayer);
 
-        for(int i =1 ;i<= data.currentPlayers.size();i++)
+        for(int i = 1; i <= data.currentPlayers.size(); i++)
         {
             data.currentPlayerIndex = (data.currentPlayerIndex + 1) % data.currentPlayers.size();
             data.currentPlayer = data.currentPlayers.get(data.currentPlayerIndex);
@@ -82,7 +84,7 @@ public class GameController {
         }
 
         updatePlayablePlayer();
-        if (data.currentPlayers.size() ==0) return;
+        if (data.currentPlayers.size() == 0) return;
         data.currentPlayerIndex = data.currentPlayers.indexOf(data.currentPlayer);
 
 

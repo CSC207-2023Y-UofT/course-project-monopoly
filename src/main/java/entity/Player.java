@@ -21,6 +21,8 @@ public class Player {
         this.userId = userId;
         this.money = money;
         this.position = 0;
+        this.properties = new ArrayList<>();
+        this.status = new HashMap<>();
     }
 
     public int getUserId() {
@@ -59,7 +61,7 @@ public class Player {
         return status;
     }
 
-    public void setStatus(HashMap<String, Integer> status){this.status = status;};
+    public void setStatus(HashMap<String, Integer> status){this.status = status;}
 
 
     public boolean equals(Player player){
