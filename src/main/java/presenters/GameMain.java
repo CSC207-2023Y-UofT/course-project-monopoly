@@ -1,4 +1,4 @@
-package UI;
+package presenters;
 public class GameMain {
     private GameBoard gameBoard;
 
