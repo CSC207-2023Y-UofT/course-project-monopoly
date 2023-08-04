@@ -3,25 +3,34 @@ package useCases.generator;
 import entity.Property;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * It is a generator generating the property blocks
+ * The PropertyGenerator class represents an use case responsible for generating property blocks.
+ * It reads property information from a CSV file and creates a list of properties based on the data.
  */
-public class PropertyGenerator {
+public class PropertyGenerator{
 
+    /**
+     * The delimiter used to separate values in the CSV file.
+     */
     static final String DELIMITER = ",(?=([^\"]*\"[^\"]*\")*[^\"]*$)";
 
     /**
-     * Create properties based on the information file
+     * Creates properties based on the information in the specified CSV file.
+     *
+     * @param fileName The name of the CSV file containing property information.
+     * @return An ArrayList of Property objects generated from the CSV data.
+     * @throws IllegalArgumentException If there are missing values in the CSV line.
+     * @throws NumberFormatException    If action values are not in the expected numeric format in the CSV file.
      */
-
     public static ArrayList<Property> generateProperties(String fileName){
 
-        ArrayList<Property> propertyList = new ArrayList<>();
+        ArrayList<entity.Property> propertyList = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))){
             String line;
@@ -30,22 +39,34 @@ public class PropertyGenerator {
 
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(DELIMITER);
-                System.out.println(Arrays.toString(values));
 
-                // generate the priceList, length 6 with last element being 0.
-                for (int i = 0; i < 5; i++) {
-                    priceList.set(i, Integer.parseInt(values[i + 2]));
+                if (values.length < 12) {
+                    // Handle the case where there are missing values in the CSV line
+                    throw new IllegalArgumentException("Invalid data in the CSV file: " + line);
                 }
 
-                // generate the taxList, length 6 with first element being 0.
-                for (int i = 1; i < 6; i++) {
-                    taxList.set(i, Integer.parseInt(values[i + 6]));
+                try {
+                    // Generate the priceList, length 6 with last element being 0.
+                    for (int i = 0; i < 5; i++) {
+                        priceList.set(i, Integer.parseInt(values[i + 2]));
+                    }
+
+                    // Generate the taxList, length 6 with first element being 0.
+                    for (int i = 1; i < 6; i++) {
+                        taxList.set(i, Integer.parseInt(values[i + 6]));
+                    }
+                } catch (NumberFormatException e) {
+                    // Handle the case where action values are not in the expected numeric format
+                    throw new NumberFormatException("Invalid action value in the CSV file: " + line);
                 }
+
 
                 Property property = new Property(Integer.parseInt(values[0]), values[1], priceList, taxList);
                 propertyList.add(property);
             }
 
+        } catch (FileNotFoundException e) {
+            System.err.println("The specified file '" + fileName + "' does not exist or cannot be found.");
         } catch (IOException e){
             e.printStackTrace();
         }

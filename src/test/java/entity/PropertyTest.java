@@ -23,8 +23,8 @@ class PropertyTest {
      */
     @BeforeEach
     void setup(){
-        priceList = new ArrayList<>(List.of(1, 2, 3, 0));
-        taxList = new ArrayList<>(List.of(0, 1, 2, 3));
+        priceList = new ArrayList<>(List.of(1, 2, 3, 4, 5, 0));
+        taxList = new ArrayList<>(List.of(0, 1, 2, 3, 4, 5));
 
         p = new Property(1, "Test Property", priceList, taxList);
     }
@@ -138,7 +138,7 @@ class PropertyTest {
      */
     @Test
     void testSetPriceList() {
-        ArrayList<Integer> newPriceList = new ArrayList<>(List.of(4, 5, 6));
+        ArrayList<Integer> newPriceList = new ArrayList<>(List.of(4, 5, 6, 7, 8));
         p.setPriceList(newPriceList);
         assertEquals(newPriceList, p.getPriceList());
     }
@@ -156,9 +156,15 @@ class PropertyTest {
      */
     @Test
     void testSetTaxList() {
-        ArrayList<Integer> newTaxList = new ArrayList<>(List.of(4, 5, 6));
-        p.setPriceList(newTaxList);
-        assertEquals(newTaxList, p.getPriceList());
+        ArrayList<Integer> newTaxList = new ArrayList<>(List.of(4, 5, 6, 7, 8));
+        p.setTaxList(newTaxList);
+        assertEquals(newTaxList, p.getTaxList());
     }
 
+    @Test
+    void testToString(){
+        System.out.println(p.toString());
+        String expectedString = "Property{name='Test Property', level=0, owner=null, price=1, tax=0, priceList=[1, 2, 3, 4, 5, 0], taxList=[0, 1, 2, 3, 4, 5], id=1}";
+        assertEquals(expectedString, p.toString());
+    }
 }

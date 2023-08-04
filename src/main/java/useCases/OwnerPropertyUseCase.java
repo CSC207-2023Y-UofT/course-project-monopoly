@@ -11,10 +11,17 @@ import java.util.ArrayList;
 
 /**
  * Represents the use case when a player arrives at his/her own property
- * or an unoccupied property.
+ * or an unoccupied property. This class provides a method for the owner to
+ * upgrade their property, invest in unoccupied properties, and handle related actions.
  */
 public class OwnerPropertyUseCase {
 
+    /**
+     * Allows the owner to upgrade their property or invest in unoccupied properties.
+     *
+     * @param owner        The player who is the owner of the property or the one arriving at an unoccupied property.
+     * @param currProperty The current property the player is interacting with.
+     */
     public static void ownerUpgrade(Player owner, Property currProperty) {
         int playerId = owner.getUserId();
         int currSaving = owner.getMoney();

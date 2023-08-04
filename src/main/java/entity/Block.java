@@ -8,7 +8,7 @@ public abstract class Block {
 
     /**
      * Class constructor
-     * @param ID
+     * @param ID the id of the block
      */
     public Block(int ID){
         this.id = ID;
@@ -24,7 +24,7 @@ public abstract class Block {
 
     /**
      * Changes the id of the block
-     * @param id
+     * @param id the id of the block
      */
     public void setId(int id) {
         this.id = id;

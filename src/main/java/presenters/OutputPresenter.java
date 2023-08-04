@@ -32,7 +32,7 @@ public class OutputPresenter {
      */
     public static void notifyPasserbyPaid(int passerId, int tax,
                                           int ownerId, String propName) {
-        System.out.printf("Player %d paid %d to Player %d at %s.%n",
+        System.out.printf("Player %d paid %d TBucks to Player %d at %s.%n",
                 passerId, tax, ownerId, propName);
     }
 
@@ -41,7 +41,7 @@ public class OutputPresenter {
      * which informs that a property has reached max level.
      */
     public static void notifyMaxLevel(String propName) {
-        System.out.println(propName + " has reached maximum level (3). ");
+        System.out.println(propName + " has reached maximum level (5). ");
     }
 
     /**
