@@ -9,13 +9,10 @@ public class Main {
     public static GameData data;
 
 
-//    public static final String propertiesFile = "data/properties.csv";
-    public static final String propertiesFile = "data/develop/properties_example.csv";
+    public static final String propertiesFile = "data/develop/revised_properties.csv";
 
-//    public static final String extraBlocksFile = "data/extra_blocks.csv";
     public static final String extraBlocksFile = "data/develop/extra_blocks_example.csv";
 
-//    public static final String[] destinyFiles = {"data/test/destiny_card_test.csv", "data/test/destiny_card_test.csv", "data/test/destiny_card_test.csv"};
     public static final String[] destinyFiles = {"data/develop/destiny_card.csv", "data/develop/destiny_card.csv", "data/develop/destiny_card.csv"};
     public static void uploadData()
     {

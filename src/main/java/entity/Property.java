@@ -27,6 +27,7 @@ public class Property extends Block {
         this.tax = 0;
         this.priceList = priceList; // priceList sample: [15, 30, 45, 0]
         this.taxList = taxList; // taxList sample: [0, 10, 20, 30]
+        this.owner = null;
     }
     public String getBlockName()
     {
@@ -47,7 +48,7 @@ public class Property extends Block {
     }
 
     public void upgradeLevel() {
-        this.level ++ ;
+        this.level++;
         this.price = this.priceList.get(this.level);
         this.tax = this.taxList.get(this.level);
     }
