@@ -50,9 +50,9 @@ public class DestinyCardPoolGenerator{
                 throw new NumberFormatException("Invalid action value in the CSV file: " + Arrays.toString(values));
             }
 
-            DestinyCard card = new DestinyCard(values[0], actions);
+            String message = values[0].replace("\"", "");
+            DestinyCard card = new DestinyCard(message, actions);
             cardPool.add(card);
-            System.out.println(card);
         }
         destiny.addDestinyCardPool(cardPool);
     }
