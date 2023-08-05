@@ -12,6 +12,7 @@ import java.util.ArrayList;
  */
 public class PropertyDataManager implements DataManager{
 
+    private static final int FIELD_NUM = 12;
     /**
      * Creates properties based on the information in the specified CSV file.
      *
@@ -26,7 +27,7 @@ public class PropertyDataManager implements DataManager{
 
             while ((line = br.readLine()) != null) {
                 String[] values = line.split(DELIMITER);
-                if (values.length < 12){
+                if (values.length < FIELD_NUM){
                     // Handle the case where there are missing values in the CSV line
                     throw new IllegalArgumentException("Invalid data in the CSV file: " + line);
                 }

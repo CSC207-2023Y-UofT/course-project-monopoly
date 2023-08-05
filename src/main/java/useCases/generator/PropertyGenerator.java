@@ -28,6 +28,11 @@ public class PropertyGenerator{
         ArrayList<Integer> priceList = new ArrayList<>(Arrays.asList(0, 0, 0, 0, 0, 0));
         ArrayList<Integer> taxList = new ArrayList<>(Arrays.asList(0, 0, 0, 0, 0, 0));
 
+        // The values array contains the following elements:
+        //   values[0]: Represents the ID of the property.
+        //   values[1]: Represents the name of the property.
+        //   values[2]-values[6]: Represents the prices for 0-4 level respectively
+        //   values[7]-values[11]: Represents the texes for 1-5 level respectively
         for(String[] values: data){
             try {
                 // Generate the priceList, length 6 with last element being 0.

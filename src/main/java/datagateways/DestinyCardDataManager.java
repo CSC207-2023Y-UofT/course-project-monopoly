@@ -11,6 +11,8 @@ import java.util.ArrayList;
  */
 public class DestinyCardDataManager implements DataManager{
 
+    private static final int FIELD_NUM = 4;
+
     /**
      * Creates destiny cards based on the information in the specified CSV file.
      *
@@ -26,14 +28,13 @@ public class DestinyCardDataManager implements DataManager{
 
             while ((line = br.readLine()) != null){
                 String[] values = line.split(DELIMITER);
-                if (values.length < 4) {
+                if (values.length < FIELD_NUM) {
                     // Handle the case where there are missing values in the CSV line
                     throw new IllegalArgumentException("Invalid data in the CSV file: " + line);
                 }
                 lines.add(values);
             }
-        } catch (
-                FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             System.err.println("The specified file '" + fileName + "' does not exist or cannot be found.");
         } catch (IOException e) {
             System.err.println("Error occurred while reading the file: " + e.getMessage());

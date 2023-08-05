@@ -35,6 +35,11 @@ public class DestinyCardPoolGenerator{
         DestinyCardDataManager dataManager = new DestinyCardDataManager();
         ArrayList<String[]> data = dataManager.readData(fileName);
 
+        // The values array contains the following elements:
+        //   values[0]: Represents the message of the destiny card.
+        //   values[1]: Represents the amount of money the player can get when the card is played.
+        //   values[2]: Represents the distance the player can move or the ID of a block when the card is played.
+        //   values[3]: Represents the number of rounds the player should stop when the card is played.
         for(String[] values: data){
             try {
                 actions.set(0, Integer.parseInt(values[1]));
@@ -45,11 +50,9 @@ public class DestinyCardPoolGenerator{
                 throw new NumberFormatException("Invalid action value in the CSV file: " + Arrays.toString(values));
             }
 
-            // Remove the "" in the content
-            String message = values[0].replace("\"", "");
-
-            DestinyCard card = new DestinyCard(message, actions);
+            DestinyCard card = new DestinyCard(values[0], actions);
             cardPool.add(card);
+            System.out.println(card);
         }
         destiny.addDestinyCardPool(cardPool);
     }
