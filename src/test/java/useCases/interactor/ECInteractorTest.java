@@ -2,7 +2,6 @@ package useCases.interactor;
 
 import controller.InitController;
 import entity.GameData;
-import entity.Player;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
