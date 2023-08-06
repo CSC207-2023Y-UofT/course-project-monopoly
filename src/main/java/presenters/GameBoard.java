@@ -2,6 +2,8 @@ package presenters;
 
 import javax.swing.*;
 import java.awt.*;
+import presenters.OutputPresenter;
+import javax.swing.JTextArea;
 
 public class GameBoard extends JFrame {
     public GameBoard() {
@@ -28,6 +30,10 @@ public class GameBoard extends JFrame {
 
         // Make the window visible
         setVisible(true);
+
+        // Set the JTextArea in the OutputPresenter for the Game Thread
+        JTextArea gameThreadTextArea = ((LeftSidebar) leftSidebar).getGameThreadTextArea();
+        OutputPresenter.setGameThreadTextArea(gameThreadTextArea);
     }
 
     private class GameBoardPanel extends JPanel {
@@ -198,8 +204,35 @@ public class GameBoard extends JFrame {
 
     private class LeftSidebar extends JPanel {
         private static final int SIDEBAR_WIDTH = 250;
-        private static final int THREAD_SECTION_HEIGHT = 900 / 2;  // bottom half of the sidebar
+        private static final int THREAD_SECTION_HEIGHT = 900 / 2 - 100;  // bottom half of the sidebar
         private static final int THREAD_TITLE_PADDING = 20;  // distance from the top of the thread section
+        private int threadStartY = THREAD_SECTION_HEIGHT;
+
+        private JTextArea gameThreadTextArea;
+
+
+        public JTextArea getGameThreadTextArea() {
+            return gameThreadTextArea;
+        }
+
+
+        public LeftSidebar() {
+            setLayout(null);
+
+            // Initialize the JTextArea for the Game Thread
+            gameThreadTextArea = new JTextArea();
+            gameThreadTextArea.setFont(new Font("Arial", Font.PLAIN, 14));
+            gameThreadTextArea.setForeground(Color.WHITE);
+            gameThreadTextArea.setBounds(10, 390, SIDEBAR_WIDTH - 20, THREAD_SECTION_HEIGHT + 50);
+            gameThreadTextArea.setEditable(false); // Make it read-only
+            gameThreadTextArea.setLineWrap(true); // Enable line wrapping
+            gameThreadTextArea.setBackground(Color.BLUE); // Set background color to Blue
+
+            // Set a JScrollPane to add scroll functionality to the JTextArea
+            JScrollPane scrollPane = new JScrollPane(gameThreadTextArea);
+            scrollPane.setBounds(10, 390, SIDEBAR_WIDTH - 20, THREAD_SECTION_HEIGHT + 50);
+            add(scrollPane); // Add the JScrollPane to the LeftSidebar
+        }
 
         @Override
         protected void paintComponent(Graphics g) {
@@ -209,22 +242,23 @@ public class GameBoard extends JFrame {
             g.setColor(Color.BLUE);
             g.fillRect(0, 0, SIDEBAR_WIDTH, getHeight());
 
-            // Isolate and draw the game thread section at the bottom
-            int threadStartY = getHeight() - THREAD_SECTION_HEIGHT;
-            g.setColor(Color.WHITE);
-            g.drawRect(0, threadStartY, SIDEBAR_WIDTH, THREAD_SECTION_HEIGHT);
-
-            // Font
-            Font titleFont = new Font("Arial", Font.BOLD, 18); // "Arial" font, bold style, size 18
-            g.setFont(titleFont);
-
-            // Draw "Game thread" title
-            g.setColor(Color.WHITE); // Set color to white
-            g.drawString("Game thread", SIDEBAR_WIDTH / 4, threadStartY + THREAD_TITLE_PADDING);
-
             // Draw "Players' Details" title
-            g.setColor(Color.WHITE); // Set color to white for better contrast against the blue background
+            Font titleFont = new Font("Arial", Font.BOLD, 18);
+            g.setFont(titleFont);
+            g.setColor(Color.WHITE);
             g.drawString("Players' Details", SIDEBAR_WIDTH / 4, THREAD_TITLE_PADDING);
+
+            // Draw the game thread section at the bottom
+            g.setColor(Color.WHITE);
+            g.drawRect(0, threadStartY, SIDEBAR_WIDTH, THREAD_SECTION_HEIGHT + 100);
+
+            // Draw "Game Thread" title
+            g.setColor(Color.WHITE);
+            g.drawString("Game Thread", SIDEBAR_WIDTH / 4, threadStartY + THREAD_TITLE_PADDING);
+
+
+//            // Example game progress information to display in the Game Thread
+
         }
 
         @Override
@@ -253,8 +287,6 @@ public class GameBoard extends JFrame {
             // Draw "Interactive Panel" title
             g.setColor(Color.WHITE); // Set color to white for better contrast against the blue background
             g.drawString("Interactive Panel", SIDEBAR_WIDTH / 4, TITLE_PADDING);
-
-
         }
 
         @Override
@@ -268,9 +300,36 @@ public class GameBoard extends JFrame {
         // Create an instance of GameBoard class
         javax.swing.SwingUtilities.invokeLater(() -> {
             new GameBoard();
+
+            //These are just for testing, remember to use javax.swing.SwingUtilities.invokeLater(() ->
+            // in the main loop
+            int currentPlayerId = 1;
+            String blockName = "BA";
+            int currentPrice = 50;
+            int currentLevel = 3;
+            String propName = "Boardwalk";
+            int tax = 150;
+            int ownerId = 2;
+            String message = "You received a Destiny card!";
+
+            //Note from Noah:
+            // Example method calls from the OutputPresenter class
+            OutputPresenter.notifyStartOfRound();
+            OutputPresenter.notifyTurn(currentPlayerId);
+            OutputPresenter.notifyMovement(currentPlayerId, blockName);
+            OutputPresenter.notifyOwnerUpgraded(currentPlayerId, "invested", propName, currentPrice, currentLevel);
+            OutputPresenter.notifyOwnerIgnored(currentPlayerId, propName);
+            OutputPresenter.notifyPasserbyPaid(currentPlayerId, tax, ownerId, propName);
+            OutputPresenter.notifyMaxLevel(propName);
+            OutputPresenter.notifyInsufficientFund();
+            OutputPresenter.notifyPassingGO(currentPlayerId);
+            OutputPresenter.notifyGoToExam(currentPlayerId);
+            OutputPresenter.notifyRemainingStopRounds(currentPlayerId, 2);
+            OutputPresenter.notifyDestiny(message);
         });
     }
 
 }
+
 
 
