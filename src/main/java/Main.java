@@ -1,7 +1,7 @@
-import controllers.GameController;
-import controllers.InitController;
-import entities.*;
-import usecases.*;
+import controller.GameController;
+import controller.InitController;
+import entity.*;
+import useCases.*;
 
 
 public class Main {

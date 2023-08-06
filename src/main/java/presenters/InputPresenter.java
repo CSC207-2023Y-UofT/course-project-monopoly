@@ -1,6 +1,6 @@
 package presenters;
 
-import controllers.InteractivePanelAdapter;
+import controller.InteractivePanelAdapter;
 
 import java.util.Scanner;
 
