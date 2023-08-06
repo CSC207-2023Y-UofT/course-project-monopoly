@@ -63,6 +63,10 @@ public class OutputPresenter {
         gameThreadTextArea.append("[Player " + playerId + " " + verb + " the property named " +
                 propName + " with " + currPrice + " T-Bucks." + "]\n");
         gameThreadTextArea.append("[" + propName + " is now at level " + level + "." + "]\n");
+
+        System.out.printf("Player %d %s %s for %d TBucks.%n",
+                playerId, verb, propName, currPrice);
+        System.out.printf("%s is now at level %d.%n", propName, level);
     }
 
     /**
@@ -74,6 +78,8 @@ public class OutputPresenter {
      */
     public static void notifyOwnerIgnored(int playerId, String propName) {
         gameThreadTextArea.append("[Player " + playerId + " ignored " + propName + "." + "]\n");
+
+        System.out.printf("Player %d ignored %s.%n", playerId, propName);
     }
 
     /**
@@ -90,6 +96,9 @@ public class OutputPresenter {
                                           int ownerId, String propName) {
         gameThreadTextArea.append("[Player " + passerId + " paid " + tax + " T-Bucks to Player " +
                 ownerId + " at " + propName + "." + "]\n");
+
+        System.out.printf("Player %d paid %d TBucks to Player %d at %s.%n",
+                passerId, tax, ownerId, propName);
     }
 
     /**
@@ -100,6 +109,8 @@ public class OutputPresenter {
      */
     public static void notifyMaxLevel(String propName) {
         gameThreadTextArea.append("[" + propName + " has reached maximum level (5)." + "]\n");
+
+        System.out.println(propName + " has reached maximum level (5). ");
     }
 
     /**
@@ -108,6 +119,8 @@ public class OutputPresenter {
      */
     public static void notifyInsufficientFund() {
         gameThreadTextArea.append("[Insufficient Fund :(" +  "]\n");
+
+        System.out.println("Insufficient Fund :(");
     }
 
     /**
