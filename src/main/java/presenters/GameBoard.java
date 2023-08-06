@@ -1,5 +1,5 @@
-package presenters;
 
+package presenters;
 import javax.swing.*;
 import java.awt.*;
 
@@ -62,79 +62,47 @@ public class GameBoard extends JFrame {
         }
 
         private void drawBoard(Graphics g) {
-            // This will be the length of one side of the outer square (board)
-            int boardSize = 630;
+            int boardSize = Math.min(getWidth(), getHeight());
             // Calculate the starting point to make the board centered
+
             int x = (getWidth() - boardSize) / 2;
             int y = (getHeight() - boardSize) / 2 + 30; // lower it for the title placement
 
-            // Draw the outer rectangle of the board
+            // Draw the outer path of the Monopoly board
             g.setColor(Color.BLACK);
-            g.drawRect(x, y, boardSize, boardSize);
+            g.drawRect(x, y, 630, 630);
 
-            // Draw the GO square on the top middle of the board
-            int gridWidth = boardSize / 4 ;
-            int goStartX = x + 3 * boardSize / 8;
-            drawCornerSpace(g, goStartX, y, "GO"); // Top middle
+            // Draw the four corners of the board (Go, Jail, Free Parking, Go to Jail)
+            drawCornerSpace(g, x, y, "GO"); // Top left corner
+            drawCornerSpace(g, x + 630, y, "EXAM CENTER"); // Top right corner
+            drawCornerSpace(g, x, y + 630, "TTC STATION"); // Bottom left corner
+            drawCornerSpace(g, x + 630, y + 630, "EXAM CENTER"); // Bottom right corner
 
-            // two special grids - top
-            //Left
-            g.setColor(Color.YELLOW);
-            g.fillRect(x, y, 3 * boardSize / 8, boardSize / 5);  // Left side
-            // Right
-            g.fillRect(goStartX + boardSize / 4, y, 3 * boardSize / 8, boardSize / 5);  // Right side
 
-            int segmentHeight = 4 * boardSize / 60;
-            for (int i = 0; i < 11; i++) {  // Start from 1 because the 0th segment is for the GO square
-                g.setColor(Color.LIGHT_GRAY);
-                int y1 = y + i * segmentHeight + boardSize / 5;
-                g.fillRect(x, y1, gridWidth, segmentHeight);  // Left side
-
-                // Adjusted starting point for the right side properties
-                g.fillRect(x + gridWidth + boardSize/ 2, y1, gridWidth, segmentHeight);  // Right side
-
-                // Draw separating lines
-                g.setColor(Color.BLACK);
-                g.drawLine(x, y1, x + gridWidth, y1);  // Left side separators
-
-                // Adjusted starting and ending points for the right side separators
-                g.drawLine(x + gridWidth + boardSize / 2, y1, x + boardSize, y1);  // Right side separators
-            }
-
-            // Draw the middle rectangle
-            int innerRectMargin = boardSize / 5;  // The margin from the top and bottom of the board
-            g.setColor(new Color(238, 232, 205));  // A light beige color
-            g.fillRect(x + gridWidth, y + innerRectMargin, boardSize / 2, boardSize - boardSize / 5 - 2 * segmentHeight);
-            g.setColor(Color.BLACK);
-            g.drawRect(x + gridWidth, y + innerRectMargin, boardSize / 2, boardSize - boardSize / 5 - 2 * segmentHeight);
-
-            // two special grids - bottom
-            //Left
-            g.setColor(Color.YELLOW);
-            g.fillRect(x, y + boardSize - 2 * segmentHeight, boardSize / 2, 2 * segmentHeight);  // Left side
-            // Right
-            g.fillRect(x + boardSize / 2, y + boardSize - 2 * segmentHeight, boardSize / 2, 2 * segmentHeight);  // Right side
-            g.setColor(Color.BLACK);
-            g.drawLine(x + boardSize / 2, y + boardSize - 2 * segmentHeight, x + boardSize / 2, y + boardSize);
-
+            // Draw the properties and destiny card spaces on the board
+            drawProperties(g, x, y);
+            drawDestinyCard(g, x, y);
         }
-
         private void drawCornerSpace(Graphics g, int x, int y, String label) {
-            int gridSizeWidth = (label.equals("GO")) ? 630 / 4 : 70;  // Adjust the width based on the label
-            int gridSizeHeight = (label.equals("GO")) ? 630 / 5 : 70;  // Adjust the height; reduced height for GO
-
+            int corner_grid_size = 70;
             g.setColor(Color.WHITE);
-            g.fillRect(x, y, gridSizeWidth, gridSizeHeight);
+            g.fillRect(x, y, corner_grid_size, corner_grid_size);
             g.setColor(Color.BLACK);
-            g.drawRect(x, y, gridSizeWidth, gridSizeHeight);
+            g.drawRect(x, y, corner_grid_size, corner_grid_size);
 
             Font titleFont = new Font("Arial", Font.BOLD, 18);
             g.setFont(titleFont);
-            int textX = x + (gridSizeWidth - g.getFontMetrics().stringWidth(label)) / 2;  // Center the label
-            int textY = y + (gridSizeHeight + g.getFontMetrics().getAscent() - g.getFontMetrics().getDescent()) / 2;
-            g.drawString(label, textX, textY);
+            g.drawString(label, x + corner_grid_size / 5, y + 3 * corner_grid_size / 5);
         }
 
+        private final Color[] propertyColors = new Color[40];
+
+        // Initializer block to set default colors for properties
+        {
+            for (int i = 0; i < propertyColors.length; i++) {
+                propertyColors[i] = Color.LIGHT_GRAY; // default color
+            }
+        }
 
         private void drawProperties(Graphics g, int x, int y) {
             // Calculate the width of each segment (excluding corners)
@@ -167,6 +135,12 @@ public class GameBoard extends JFrame {
             }
         }
 
+        public void setColorForProperty(int propertyIndex, Color newColor) {
+            if (propertyIndex >= 0 && propertyIndex < propertyColors.length) {
+                propertyColors[propertyIndex] = newColor;
+                repaint();  // redraw the board to reflect the color change
+            }
+        }
 
         private void drawDestinyCard(Graphics g, int x, int y) {
             // Calculate the width of each segment (excluding corners)
@@ -198,8 +172,7 @@ public class GameBoard extends JFrame {
 
     private class LeftSidebar extends JPanel {
         private static final int SIDEBAR_WIDTH = 250;
-        private static final int THREAD_SECTION_HEIGHT = 900 / 2;  // bottom half of the sidebar
-        private static final int THREAD_TITLE_PADDING = 20;  // distance from the top of the thread section
+        private static final int TITLE_PADDING = 20;  // distance from the top of the sidebar
 
         @Override
         protected void paintComponent(Graphics g) {
@@ -207,6 +180,35 @@ public class GameBoard extends JFrame {
 
             // Draw the left sidebar
             g.setColor(Color.BLUE);
+            g.fillRect(0, 0, SIDEBAR_WIDTH, getHeight());
+
+            // Set a new font with the desired size for the title
+            Font titleFont = new Font("Arial", Font.BOLD, 18); // "Arial" font, bold style, size 18
+            g.setFont(titleFont);
+
+            // Draw "Players' Details" title
+            g.setColor(Color.WHITE); // Set color to white for better contrast against the blue background
+            g.drawString("Players' Details", SIDEBAR_WIDTH / 4, TITLE_PADDING);
+        }
+
+        @Override
+        public Dimension getPreferredSize() {
+            return new Dimension(SIDEBAR_WIDTH, getHeight());
+        }
+    }
+
+
+    private class RightSidebar extends JPanel {
+        private static final int SIDEBAR_WIDTH = 250;
+        private static final int THREAD_SECTION_HEIGHT = 900 / 2;  // bottom half of the sidebar
+        private static final int THREAD_TITLE_PADDING = 20;  // distance from the top of the thread section
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+
+            // Draw the right sidebar
+            g.setColor(Color.MAGENTA);
             g.fillRect(0, 0, SIDEBAR_WIDTH, getHeight());
 
             // Isolate and draw the game thread section at the bottom
@@ -221,34 +223,6 @@ public class GameBoard extends JFrame {
             // Draw "Game thread" title
             g.setColor(Color.WHITE); // Set color to white
             g.drawString("Game thread", SIDEBAR_WIDTH / 4, threadStartY + THREAD_TITLE_PADDING);
-        }
-
-        @Override
-        public Dimension getPreferredSize() {
-            return new Dimension(SIDEBAR_WIDTH, getHeight());
-        }
-    }
-
-
-    private class RightSidebar extends JPanel {
-        private static final int SIDEBAR_WIDTH = 250;
-        private static final int TITLE_PADDING = 20;  // distance from the top of the sidebar
-
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-
-            // Draw the right sidebar
-            g.setColor(Color.MAGENTA);
-            g.fillRect(0, 0, SIDEBAR_WIDTH, getHeight());
-
-            // Set a new font with the desired size for the title
-            Font titleFont = new Font("Arial", Font.BOLD, 18); // "Arial" font, bold style, size 18
-            g.setFont(titleFont);
-
-            // Draw "Players' Details" title
-            g.setColor(Color.WHITE); // Set color to white for better contrast against the blue background
-            g.drawString("Players' Details", SIDEBAR_WIDTH / 4, TITLE_PADDING);
         }
 
         @Override
