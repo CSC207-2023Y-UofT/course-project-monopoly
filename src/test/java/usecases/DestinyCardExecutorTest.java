@@ -63,8 +63,6 @@ class DestinyCardExecutorTest {
         data = new GameData(1, blocks, players, position);
     }
 
-    // Test methods
-
     /**
      * Test the execution of a destiny card with null game data.
      * The method should handle the null data and return an appropriate message.

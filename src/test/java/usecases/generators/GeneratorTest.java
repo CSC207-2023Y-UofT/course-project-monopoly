@@ -5,7 +5,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-
+/**
+ * The GeneratorTest interface provides helper methods for creating and deleting test data files.
+ */
 public interface GeneratorTest {
 
     /**

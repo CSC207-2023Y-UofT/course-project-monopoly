@@ -51,6 +51,11 @@ public class Destiny extends Block {
         this.destinyCardPool.addAll(destinyCardPool);
     }
 
+    /**
+     * Executes the actions associated with a Destiny block.
+     *
+     * @param data The data structure representing the game state.
+     */
     @Override
     public void run(GameData data) {
         UseCaseInteractor interactor = new DestinyInteractor();

@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test;
 import usecases.*;
 import entities.*;
 
+/**
+ * Test class for {@link MoneyImpactor}.
+ */
 public class MoneyImpactorTest {
 
     static final int LOWER_LIMIT = -1000;
@@ -15,7 +18,8 @@ public class MoneyImpactorTest {
     static Player receiver;
 
     /**
-     * set up method for the test
+     * Set up method for the test.
+     * Initializes the giver and receiver players with upper limit money and sets their status to playable.
      */
     @BeforeEach
     public void setup() {
@@ -31,7 +35,8 @@ public class MoneyImpactorTest {
 
 
     /**
-     * test correctness for deduct for all practical values we will be using
+     * Tests the {@link MoneyImpactor#deduct(int, Player)}} method for various practical money values.
+     * It verifies that the method correctly deducts the specified amount from the player's money.
      */
     @Test
     public void testDeductNormal() {
@@ -43,7 +48,8 @@ public class MoneyImpactorTest {
     }
 
     /**
-     * test correctness for deduct when player doesn't have enough money
+     * Tests the {@link MoneyImpactor#deduct(int, Player)}} method when the player doesn't have enough money to deduct.
+     * It verifies that the player's status is updated correctly when they do not have sufficient funds.
      */
     @Test
     public void testDeductOverflow() {
@@ -57,7 +63,8 @@ public class MoneyImpactorTest {
 
 
     /**
-     * Test for correctness for trade method for all values we will be using
+     * Tests the {@link MoneyImpactor#trade(int, Player, Player)} method for various practical money values.
+     * It verifies that the method correctly transfers money between the giver and receiver players.
      */
     @Test
     public void testTradeNormal() {
@@ -72,7 +79,8 @@ public class MoneyImpactorTest {
 
 
     /**
-     * Test for correctness for trade method when the giver doesn't have enough money
+     * Tests the {@link MoneyImpactor#trade(int, Player, Player)} method when the giver doesn't have enough money to trade.
+     * It verifies that the giver's status is updated correctly when they do not have sufficient funds.
      */
     @Test
     public void testTradeLeftOverflow() {

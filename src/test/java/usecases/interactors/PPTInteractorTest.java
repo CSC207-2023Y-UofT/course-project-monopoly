@@ -19,6 +19,9 @@ import java.io.InputStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for {@link PPTInteractor}.
+ */
 class PPTInteractorTest {
     public static final String propertiesFile = "data/test/properties_test.csv";
     public static final String extraBlocksFile = "data/test/extra_blocks_test.csv";
@@ -37,7 +40,7 @@ class PPTInteractorTest {
     static InputStream originalSystemIn;
 
     /**
-     * creates a new game data
+     * Creates a new game data before each test.
      */
     @BeforeEach
     void setup() {
@@ -54,8 +57,9 @@ class PPTInteractorTest {
     }
 
     /**
-     * resets all the property level to 0 and owner to null
-     * @param data data to reset
+     * Helper function to resets all the property levels to 0 and owners to null.
+     *
+     * @param data The game data to reset.
      */
     private static void resetProperty(GameData data) {
         for (Block block: data.blocks) {
@@ -67,7 +71,7 @@ class PPTInteractorTest {
     }
 
     /**
-     * test for all the player to buy and upgrade all the properties for all the levels
+     * Test the interaction of players buying and upgrading properties for all levels.
      */
     @Test
     void testBuyProperty() {
@@ -93,7 +97,7 @@ class PPTInteractorTest {
     }
 
     /**
-     * test for all the players to pay tax for all properties for all owners at all levels
+     * Test the interaction of players paying tax for properties with different owners at different levels.
      */
     @Test
     void testPayTax() {

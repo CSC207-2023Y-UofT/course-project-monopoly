@@ -9,6 +9,9 @@ import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for {@link StatusImpactor}.
+ */
 class StatusImpactorTest {
     private static Player player;
     private static HashMap<String, Integer> initStatusMap;
@@ -17,7 +20,8 @@ class StatusImpactorTest {
     static final int UPPER_LIMIT = 1000;
 
     /**
-     * setup function for this test
+     * Set up function for this test.
+     * Initializes a player and the initial status map.
      */
     @BeforeEach
     public void setup() {
@@ -30,19 +34,20 @@ class StatusImpactorTest {
     }
 
     /**
-     * check if init sets the right statuses
+     * Test the {@link StatusImpactor#initStatus(Player player)} method to check if it correctly sets the initial statuses for a player.
      */
     @Test
-    public void initStatus() {
+    public void testInitStatus() {
         StatusImpactor.initStatus(player);
         assertEquals(initStatusMap, player.getStatus());
     }
 
     /**
-     * check for correctness of change status
+     * Test the {@link StatusImpactor#changeStatus(Player, String, Integer)} method to check for correctness of changing the status attributes.
+     * It covers normal cases where the statuses are set to various practical values.
      */
     @Test
-    public void changeStatusNormal() {
+    public void testChangeStatusNormal() {
         for (int i = LOWER_LIMIT; i < UPPER_LIMIT; i++) {
             StatusImpactor.changeStatus(player, "playable", i);
             StatusImpactor.changeStatus(player, "movable", i);
@@ -52,12 +57,11 @@ class StatusImpactorTest {
     }
 
     /**
-     * check for correctness for change status for single argument
-     * check if it correctly adds 1 to movable status if it's negative,
-     * and does nothing otherwise
+     * Test the {@link StatusImpactor#changeStatus(Player)} method with a single argument.
+     * It checks if the method correctly adds 1 to the movable status if it's negative, and does nothing otherwise.
      */
     @Test
-    public void changeStatusSingle() {
+    public void testChangeStatusSingle() {
         StatusImpactor.changeStatus(player, "movable", -1000);
         for (int i = 0; i < UPPER_LIMIT; i++) {
             assertFalse(StatusChecker.isMovable(player));

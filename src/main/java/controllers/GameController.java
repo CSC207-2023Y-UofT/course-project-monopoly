@@ -9,22 +9,37 @@ import usecases.impactors.StatusImpactor;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * GameController class handles the game logic and manages the game state.
+ */
 public class GameController {
 
 
     private final GameData data;
+
+
+    /**
+     * Constructor to initialize the GameController with the given GameData.
+     *
+     * @param data The GameData instance containing game-related information.
+     */
     public GameController(GameData data)
     {
         this.data = data;
     }
 
+    /**
+     * Get the current GameData instance.
+     *
+     * @return The GameData instance.
+     */
     public GameData getData() {
         return data;
     }
 
     /**
-     * remove not playable players;
-     **/
+     * Removes not playable players from the game.
+     */
     public void updatePlayablePlayer()
     {   for(int i = 0; i < data.currentPlayers.size(); i++)
         {
@@ -43,6 +58,12 @@ public class GameController {
         }
 
     }
+
+    /**
+     * Get the player with the maximum amount of money.
+     *
+     * @return The Player with the maximum money.
+     */
     public Player getMaxMoneyPlayer()
     {
         Player MaxMoneyPlayer = data.currentPlayers.get(0);
@@ -55,21 +76,37 @@ public class GameController {
         }
         return MaxMoneyPlayer;
     }
+
+    /**
+     * Check if the game is over based on certain conditions.
+     *
+     * @return True if the game is over, otherwise false.
+     */
     public boolean isGameOver()
     {
         if(data.currentPlayers.size() <= 1)
         {
             return true;
         }
-        if(getMaxMoneyPlayer().getMoney() >= data.MAXMONEY)
+        if(getMaxMoneyPlayer().getMoney() >= data.MAX_MONEY)
             return true;
-        return data.gameRounds > data.MAXROUNDS;
+        return data.gameRounds > data.MAX_ROUNDS;
     }
+
+    /**
+     * Check if the current player can make a move.
+     *
+     * @return True if the current player is movable, otherwise false.
+     */
     public boolean isCurrentMovable()
     {
 
         return StatusChecker.isMovable(data.currentPlayer);
     }
+
+    /**
+     * Progress the game by settling one round of player turns.
+     */
     public void settleOneRound()
     {
         data.gameRounds += 1;
@@ -98,6 +135,12 @@ public class GameController {
         System.out.println("======================================\n");
 
     }
+
+    /**
+     * Simulate rolling a dice and return the result.
+     *
+     * @return A random integer representing the result of the dice roll.
+     */
     public int randomDice()
     {
         Random random = new Random();
@@ -107,6 +150,12 @@ public class GameController {
         int max = 6;
         return random.nextInt(max - min + 1) + min;
     }
+
+    /**
+     * Move the current player relative to their current position based on a dice roll.
+     *
+     * @return True if the movement was successful, otherwise false.
+     */
     public boolean playerRelativeWalk()
     {
 
@@ -115,6 +164,10 @@ public class GameController {
         return flag;
     }
 
+
+    /**
+     * Finish the game and display the winner or a message if no winner is found.
+     */
     public void finish() {
         if (data.currentPlayers.size() == 0) {
             System.out.println("All player has broken up, there is no winner!");

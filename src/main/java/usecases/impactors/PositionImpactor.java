@@ -2,17 +2,20 @@ package usecases.impactors;
 import entities.GameData;
 
 /**
- * It is an impactor impacting the position of the player
+ * Represents an impactor that affects the position of a player in the game.
  */
 public class PositionImpactor {
 
     /**
-     * moves the player by distance
-     * @param data Game data
-     * @param distance distance of move, positive front, negative back
+     * Moves the player by the specified distance.
+     *
+     * @param data     The game data containing the current state of the game.
+     * @param distance The distance of the move. Positive distance moves the player forward, negative distance moves the player backward.
+     * @return true if the player passes the starting point during the move, false otherwise.
+     * @throws RuntimeException if there is no block corresponding to the player's old position.
      */
     public static boolean relativeMove(GameData data, int distance) {
-        // delete player from the list
+        // Delete player from the old block
         boolean isPassStartingpoint = false;
         int oldPosId = data.currentPlayer.getPosition();
         int oldPos = data.getPositionFromId(oldPosId);
@@ -20,21 +23,28 @@ public class PositionImpactor {
             throw new RuntimeException("No such block");
         }
         data.playerAtPosition.get(oldPos).remove(data.currentPlayer);
-        // find new block
+
+        // Find new block position
         if (oldPos + distance >= data.blocks.size()) isPassStartingpoint = true;
         int newPos = Math.floorMod(oldPos + distance, data.blocks.size());
         int newBlockId = data.blocks.get(newPos).getId();
-        // add player on the block
+
+        // Add player to the new block
         data.playerAtPosition.get(newPos).add(data.currentPlayer);
-        // change player's block
+
+        // Update player's block position
         data.currentPlayer.setPosition(newBlockId);
+
         return isPassStartingpoint;
     }
 
 
     /**
-     * change the distance of the player directly
-     * @param blockId id of the new block
+     * Changes the player's position directly to the specified block.
+     *
+     * @param data    The game data containing the current state of the game.
+     * @param blockId The id of the new block to which the player's position is changed.
+     * @throws RuntimeException if the block with the specified id does not exist.
      */
     public static void absoluteMove(GameData data, int blockId) {
         int oldBlockPos = data.getPositionFromId(data.currentPlayer.getPosition());

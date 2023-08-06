@@ -4,9 +4,8 @@ import entities.Player;
 import entities.Property;
 
 /**
- * The PropertyImpactor class represents an use case that impacts the attributes of a property.
- * It provides methods to change the owner of a property and to downgrade a property's level to zero
- * and remove its owner.
+ * The PropertyImpactor class represents a use case that impacts the attributes of a property in the game.
+ * It provides methods to change the owner of a property and to downgrade a property's level to zero and remove its owner.
  */
 public class PropertyImpactor {
     /**

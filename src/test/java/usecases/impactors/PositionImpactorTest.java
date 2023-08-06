@@ -12,13 +12,18 @@ import entities.GameData;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for {@link PropertyImpactor}.
+ */
 class PositionImpactorTest {
-
     Block[] blocks;
     Player[] players;
 
     GameData data;
 
+    /**
+     * Sets up the test environment by initializing the game data with blocks and players.
+     */
     @BeforeEach
     void setUp() {
         blocks = new Block[] {
@@ -48,9 +53,12 @@ class PositionImpactorTest {
         data = new GameData(4, new ArrayList<>(Arrays.asList(blocks)), new ArrayList<>(Arrays.asList(players)), position);
     }
 
-
+    /**
+     * Test the {@link PositionImpactor#relativeMove(GameData, int)} method.
+     * It verifies that the player's position is correctly updated when moving relative to the current position.
+     */
     @Test
-    void relativeMove() {
+    void testRelativeMove() {
         for (int m = -1000; m <= 1000; m += 1000) {
             for (int i = 0; i < 4; i++) {
                 data.currentPlayerIndex = i;
@@ -68,8 +76,13 @@ class PositionImpactorTest {
 
     }
 
+    /**
+     * Test the {@link PositionImpactor#absoluteMove(GameData, int)} method.
+     * It verifies that the player's position is correctly updated when moving to an absolute position.
+     * It also tests the handling of an invalid block ID.
+     */
     @Test
-    void absoluteMove() {
+    void testAbsoluteMove() {
         for (int i = 0; i < 4; i++) {
             for (int j = 1; j < 8; j++) {
                 data.currentPlayerIndex = i;

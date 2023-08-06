@@ -8,10 +8,21 @@ import usecases.impactors.StatusImpactor;
 import java.io.*;
 import java.util.*;
 
+/**
+ * The InitController class is responsible for initializing the game data, including blocks, players, positions, and destiny cards.
+ */
 public class InitController {
     private static final String DELIMITER = ",(?=([^\"]*\"[^\"]*\")*[^\"]*$)";
-    private static final int INITMONEY = 1500;
+    private static final int INIT_MONEY = 1500;
 
+    /**
+     * Initializes the GameData based on the provided files and user input.
+     *
+     * @param propertiesFile  The file containing properties information for the game.
+     * @param extraBlocksFile The file containing additional blocks information.
+     * @param destinyFiles    An array of files containing destiny card information.
+     * @return The initialized GameData instance.
+     */
     public static GameData init(String propertiesFile, String extraBlocksFile, String[] destinyFiles) {
         // blocks
         ArrayList<Block> blocks = new ArrayList<>(PropertyGenerator.generateProperties(propertiesFile));
@@ -38,14 +49,13 @@ public class InitController {
         }
         blocks.sort(Comparator.comparing(Block::getId));
 
-
         // player
         Scanner scanner = new Scanner(System.in);
         ArrayList<Player> players = new ArrayList<>();
         System.out.println("Enter the number of players: ");
         int num = scanner.nextInt();
         for (int i = 0; i < num; i++) {
-            Player player = new Player(i, INITMONEY);
+            Player player = new Player(i, INIT_MONEY);
             StatusImpactor.initStatus(player);
             players.add(player);
         }

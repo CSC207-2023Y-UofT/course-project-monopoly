@@ -5,17 +5,18 @@ import entities.StartingPoint;
 import usecases.impactors.MoneyImpactor;
 
 /**
- * Represent the use case when the player passing through the starting point
+ * The StartingPointUseCase class represents a use case when the player passes through the starting point.
+ * It provides a method to give a bonus to the player when they pass the starting point.
  */
 public class StartingPointUseCase {
+
+    /**
+     * Gives a bonus to the player when they pass the starting point.
+     *
+     * @param player The player to whom the bonus should be given.
+     */
     public static void giveBonus(Player player){
-        /**
-         * give bonus to the player when he/she passes the starting point
-         * @param  Player player
-         */
         int bonus = StartingPoint.getBonus();
         MoneyImpactor.deduct(bonus * -1, player);
     }
-
-
 }

@@ -16,6 +16,9 @@ import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Test class for {@link TTCInteractor}.
+ */
 class TTCInteractorTest {
     public static final String propertiesFile = "data/test/properties_test.csv";
     public static final String extraBlocksFile = "data/test/extra_blocks_test.csv";
@@ -36,7 +39,7 @@ class TTCInteractorTest {
     Player player;
 
     /**
-     * creates a new gamedata
+     * Creates a new game data before each test.
      */
     @BeforeEach
     void setup() {
@@ -49,25 +52,28 @@ class TTCInteractorTest {
     }
 
     /**
-     * test for all the players to move at all ttc station, if the move is correct
+     * Test for all the players to move at all TTC stations, if the move is correct.
      */
     @Test
     void testRegularMove() {
-        //player
+        // Players
         for (int i = 0; i < 4; i++) {
             data.currentPlayerIndex = i;
             data.setCurrentPlayer();
             player = data.currentPlayer;
-            // ttc station
+
+            // TTC stations
             for (int j = 0; j < data.blocks.size(); j++) {
                 if (!(data.blocks.get(j) instanceof TTCStation))
                     continue;
-                // other blocks
+
+                // Other blocks
                 for (int k = 0; k < data.blocks.size(); k++) {
-                    // cannot test for destiny block because it changes position
+                    // Cannot test for destiny block because it changes position
                     if (data.blocks.get(k) instanceof Destiny)
                         continue;
-                    // is not ttc station
+
+                    // If not ttc station
                     if (!(data.blocks.get(k) instanceof TTCStation)) {
                         try {
                             String message = 100 + k + "\nN\n";
@@ -80,7 +86,7 @@ class TTCInteractorTest {
                             assertTrue(data.playerAtPosition.get(k).contains(player));
                         }
                     }
-                    // is ttc station
+                    // If ttc station
                     else {
                         try {
                             String message = 100 + k + "\n100\n";

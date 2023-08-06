@@ -4,16 +4,16 @@ import entities.Player;
 import presenters.PlayerInfoPanel;
 
 /**
- * It is an impactor impacting the money attribute of the player
+ * Represents an impactor that affects the money attribute of a player in the game.
  */
 public class MoneyImpactor {
 
     /**
-     * change the money of a player
-     * (Update panel) Print the resultant savings of the player.
-     * @param price the amount of money to change, positive if it is deduction,
-     *              negative if it is increase
-     * @param giver the player to give money
+     * Deducts the specified amount of money from the player.
+     * Updates the player's money and the player info panel with the resultant savings.
+     *
+     * @param price The amount of money to deduct. Positive value represents deduction, negative value represents increase.
+     * @param giver The player from whom the money is deducted.
      */
     public static void deduct(int price, Player giver){
         giver.setMoney(giver.getMoney() - price);
@@ -25,11 +25,13 @@ public class MoneyImpactor {
     }
 
     /**
-     * change the money of two players
-     * (Update panel) Print the resultant savings of both players.
-     * @param price the amount of money to change
-     * @param giver the player to give money
-     * @param receiver the player to receive money
+     * Trades the specified amount of money between two players.
+     * Deducts the money from the giver and adds it to the receiver.
+     * Updates the player info panels of both players with the resultant savings.
+     *
+     * @param price    The amount of money to trade.
+     * @param giver    The player from whom the money is deducted.
+     * @param receiver The player who receives the money.
      */
     public static void trade(int price, Player giver, Player receiver) {
         MoneyImpactor.deduct(price, giver);

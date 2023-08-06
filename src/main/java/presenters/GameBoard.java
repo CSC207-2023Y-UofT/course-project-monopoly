@@ -3,7 +3,15 @@ package presenters;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Represents the main game board window that displays the game interface.
+ * The game board contains a center panel representing the game board area and left and right sidebars.
+ */
 public class GameBoard extends JFrame {
+
+    /**
+     * Class constructor to create the game board window.
+     */
     public GameBoard() {
         // Set basic properties of the window
         setTitle("My Game Board");
@@ -30,7 +38,11 @@ public class GameBoard extends JFrame {
         setVisible(true);
     }
 
-    private class GameBoardPanel extends JPanel {
+    /**
+     * Represents the game board area where the game elements will be displayed.
+     * This class is an inner class of the GameBoard and extends JPanel to create the game board panel.
+     */
+    private static class GameBoardPanel extends JPanel {
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -44,7 +56,11 @@ public class GameBoard extends JFrame {
         }
     }
 
-    private class LeftSidebar extends JPanel {
+    /**
+     * Represents the left sidebar of the game board.
+     * This class is an inner class of the GameBoard and extends JPanel to create the left sidebar panel.
+     */
+    private static class LeftSidebar extends JPanel {
         private static final int SIDEBAR_WIDTH = 250;
 
         @Override
@@ -62,7 +78,11 @@ public class GameBoard extends JFrame {
         }
     }
 
-    private class RightSidebar extends JPanel {
+    /**
+     * Represents the right sidebar of the game board.
+     * This class is an inner class of the GameBoard and extends JPanel to create the right sidebar panel.
+     */
+    private static class RightSidebar extends JPanel {
         private static final int SIDEBAR_WIDTH = 250;
 
         @Override
@@ -80,10 +100,14 @@ public class GameBoard extends JFrame {
         }
     }
 
+    /**
+     * The main method to launch the game board application.
+     * It creates an instance of the GameBoard class and sets up the GUI.
+     *
+     * @param args Command-line arguments (not used in this application).
+     */
     public static void main(String[] args) {
         // Create an instance of GameBoard class
-        javax.swing.SwingUtilities.invokeLater(() -> {
-            new GameBoard();
-        });
+        javax.swing.SwingUtilities.invokeLater(GameBoard::new);
     }
 }

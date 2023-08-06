@@ -1,6 +1,7 @@
 package usecases.interactors;
 
 import controllers.InitController;
+import entities.Block;
 import entities.GameData;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,6 +13,9 @@ import java.io.InputStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * The ECInteractorTest class contains test cases for the ECInteractor class.
+ */
 class ECInteractorTest {
 
     public static final int PLAYER_NUM = 4;
@@ -47,6 +51,10 @@ class ECInteractorTest {
         data.setCurrentPlayer();
     }
 
+    /**
+     * Test the {@link ECInteractor#interact(Block, GameData)} method to check if it correctly impacts the movable status of the player
+     * when the player steps on the exam center block.
+     */
     @Test
     void testInteract() {
         for (int i = 0; i < data.playerNum; i++) {

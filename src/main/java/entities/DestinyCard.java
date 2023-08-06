@@ -7,6 +7,7 @@ import java.util.ArrayList;
  * Destiny cards are used to determine various outcomes and events during the game.
  */
 public class DestinyCard {
+
     /**
      * The message or content of the destiny card.
      */
