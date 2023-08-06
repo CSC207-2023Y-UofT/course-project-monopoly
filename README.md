@@ -18,9 +18,9 @@ where users can log in to the application and start recording bill entries into 
 - Folder `data` contains the csv data files.
 - Package `entities` contains all the entities we designed.
 - Package `usecases` contains different use cases. To make the code easier to search, there are three sub-package in `usecases` .
-  - The `generator` package contains use cases that are responsible for generating entities or attributes of entities.
-  - The `impactor` package contains use cases that are responsible for changing the attributes of the `player` and the `property`
-  - The `interactor` package contains use cases that refers to the actions taken for each subclass of block.
+  - The `generators` package contains use cases that are responsible for generating entities or attributes of entities.
+  - The `impactors` package contains use cases that are responsible for changing the attributes of the `player` and the `property`
+  - The `interactors` package contains use cases that refers to the actions taken for each subclass of block.
 
 - Package `controllers` contains the controllers that are responsible for initializing every details of the game and generating game logics.
 - The `Main` class is the entry point of our program. This function calls all the functions in the `controllers` to initialize the game, interact with the human players in a loop, and detect the winner when the loop ends. 
