@@ -13,7 +13,7 @@ public class PlayerInfoPanel {
      * @param currSaving the saving of the player after the change.
      */
     public static void updatePanel(int playerId, int currSaving) {
-//        System.out.println("[INFO PANEL] Current saving for Player " + playerId + ": " + currSaving + " TBucks. ");
+        System.out.println("[INFO PANEL] Current saving for Player " + playerId + ": " + currSaving + " TBucks. ");
 
         // TODO
     }

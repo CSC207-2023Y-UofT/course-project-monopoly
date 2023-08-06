@@ -52,9 +52,9 @@ public class OutputPresenter {
      */
     public static void notifyOwnerUpgraded(int playerId, String verb,
                                            String propName, int currPrice, int level) {
-//        System.out.printf("Player %d %s %s for %d TBucks.%n",
-//                playerId, verb, propName, currPrice);
-//        System.out.printf("%s is now at level %d.%n", propName, level);
+        System.out.printf("Player %d %s %s for %d TBucks.%n",
+                playerId, verb, propName, currPrice);
+        System.out.printf("%s is now at level %d.%n", propName, level);
         // TODO
     }
 
@@ -66,7 +66,7 @@ public class OutputPresenter {
      * @param propName eg. BA
      */
     public static void notifyOwnerIgnored(int playerId, String propName) {
-//        System.out.printf("Player %d ignored %s.%n", playerId, propName);
+        System.out.printf("Player %d ignored %s.%n", playerId, propName);
         // TODO
     }
 
@@ -82,8 +82,8 @@ public class OutputPresenter {
      */
     public static void notifyPasserbyPaid(int passerId, int tax,
                                           int ownerId, String propName) {
-//        System.out.printf("Player %d paid %d TBucks to Player %d at %s.%n",
-//                passerId, tax, ownerId, propName);
+        System.out.printf("Player %d paid %d TBucks to Player %d at %s.%n",
+                passerId, tax, ownerId, propName);
         // TODO
     }
 
@@ -94,7 +94,7 @@ public class OutputPresenter {
      * @param propName eg. BA
      */
     public static void notifyMaxLevel(String propName) {
-//        System.out.println(propName + " has reached maximum level (5). ");
+        System.out.println(propName + " has reached maximum level (5). ");
         // TODO
     }
 
@@ -103,7 +103,7 @@ public class OutputPresenter {
      * which says " Insufficient Fund :( ".
      */
     public static void notifyInsufficientFund() {
-//        System.out.println("Insufficient Fund :(");
+        System.out.println("Insufficient Fund :(");
         // TODO
     }
 
