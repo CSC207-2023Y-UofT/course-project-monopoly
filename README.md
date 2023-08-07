@@ -170,9 +170,32 @@ Currently, the up-to-date test coverage is:
 
 # Design Patterns
 
+## Strategy - `DataManager`
 
+- The `DataManager` class is an interface that contains methods that can be implemented by specific instances of `DataManager`
+- Currently, we have implemented `DataManager` using CSV files, but it can easily be changed into other forms, such as databases
+
+## State - `Player`
+
+- The `Player` class that we have is an entity class that contains method to interact with it given the "status" of the player. 
+- The `Player.getStatus()` method is used to obtain the status of the `Player` class, which alters the behavior of the class in different contexts
+
+## Composite - `InitController`, the entities
+
+- The `InitController` class contains the base code to "compose" all of the different parts of the program together
+- Using this design pattern allows for the different subparts to be modified separately, and still compose up to the whole setup
+
+## Singleton - `GameBoard`
+
+- The `GameBoard` class will only have 1 valid instance throughout the whole lifetime of the application
+- Although we did not implement the singleton pattern specifically, it still serves this purpose, as we do not have any way to start another instance of it 
 
 # Clean Architecture
+
+- We have followed "Clean Architecture" strictly when writing up our code
+- The code is laid out accordingly to the different layers of "Clean Architecture"
+- By adhering to "Clean Architecture", this allows for easy extension and modification of the program as a whole
+- We have implemented the `MVC` pattern in managing the UI display, where the user interacts with the UI, then the UI interacts with the controller in response
 
 # SOLID
 
