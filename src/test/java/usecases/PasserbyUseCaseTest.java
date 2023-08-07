@@ -2,8 +2,12 @@ package usecases;
 
 import entities.Player;
 import entities.Property;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import presenters.OutputPresenter;
+
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +36,13 @@ class PasserbyUseCaseTest {
         owner = new Player(1, 1000);
 
         property.setOwner(owner);
+
+        OutputPresenter.setGameThreadTextArea(new JTextArea());
+    }
+
+    @AfterEach
+    void teardown() {
+        OutputPresenter.setGameThreadTextArea(null);
     }
 
     /**

@@ -11,9 +11,11 @@ import org.junit.jupiter.api.AfterEach;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import presenters.OutputPresenter;
 import usecases.impactors.PositionImpactor;
 
 
+import javax.swing.*;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
@@ -54,6 +56,7 @@ class PPTInteractorTest {
             player.setMoney(1000000000);
         data.currentPlayerIndex = 0;
         data.setCurrentPlayer();
+        OutputPresenter.setGameThreadTextArea(new JTextArea());
     }
 
     /**
@@ -143,6 +146,7 @@ class PPTInteractorTest {
     @AfterEach
     void teardown() {
         System.setIn(originalSystemIn);
+        OutputPresenter.setGameThreadTextArea(null);
     }
 
 }
