@@ -9,7 +9,11 @@ import java.util.ArrayList;
 /**
  * The DestinyCardDataManager class is responsible for reading destiny card data from a CSV file and providing it as an ArrayList of String arrays.
  */
-public class DestinyCardDataManager implements DataManager{
+public class DestinyCardDataManager implements DataManager<String>{
+    /**
+     * The delimiter used to separate values in the CSV file.
+     */
+    String DELIMITER = ",(?=([^\"]*\"[^\"]*\")*[^\"]*$)";
 
     private static final int FIELD_NUM = 4;
 
