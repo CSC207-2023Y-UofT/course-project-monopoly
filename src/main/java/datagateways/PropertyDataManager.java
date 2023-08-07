@@ -10,7 +10,11 @@ import java.util.ArrayList;
 /**
  * The PropertyDataManager class is responsible for reading property data from a CSV file and providing it as an ArrayList of String arrays.
  */
-public class PropertyDataManager implements DataManager{
+public class PropertyDataManager implements DataManager<String>{
+    /**
+     * The delimiter used to separate values in the CSV file.
+     */
+    String DELIMITER = ",(?=([^\"]*\"[^\"]*\")*[^\"]*$)";
 
     private static final int FIELD_NUM = 12;
     /**
