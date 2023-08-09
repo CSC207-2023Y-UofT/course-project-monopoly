@@ -5,7 +5,9 @@ import entities.Property;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import presenters.OutputPresenter;
 
+import javax.swing.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -51,6 +53,8 @@ class OwnerPropertyUseCaseTest {
 
         // Create test Players with initial money.
         player = new Player(0, 1000);
+
+        OutputPresenter.setGameThreadTextArea(new JTextArea());
     }
 
     /**
@@ -61,6 +65,7 @@ class OwnerPropertyUseCaseTest {
     void teardown(){
         System.setOut(printStream);
         System.setIn(inputStream);
+        OutputPresenter.setGameThreadTextArea(null);
     }
 
     /**
