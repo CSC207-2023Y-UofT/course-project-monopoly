@@ -27,11 +27,14 @@ public class GameBoard extends JFrame {
      * Initializes the background image and sets up the main frame, game thread text area, and player text areas.
      */
     public GameBoard() {
+        // Set the frame size
+        setSize(1440, 810);
+        // Center the frame on the screen
+        setLocationRelativeTo(null);
         loadBackgroundImage();
 
         // Set up the main frame
         setUndecorated(true); // Remove window decorations
-        setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximize the frame to full screen
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Add the custom panel with the background image
