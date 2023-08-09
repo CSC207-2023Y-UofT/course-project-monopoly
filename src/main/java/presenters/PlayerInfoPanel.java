@@ -24,6 +24,7 @@ public class PlayerInfoPanel {
     public static void updatePanel(int playerId, int currSaving) {
         System.out.println("[INFO PANEL] Current saving for Player " + playerId + ": " + currSaving + " TBucks. ");
 
-        allplayerTextAreas.get(playerId - 1).setText(currSaving + " TBucks");
+        if (!(allplayerTextAreas == null))
+            allplayerTextAreas.get(playerId - 1).setText(currSaving + " TBucks");
     }
 }
