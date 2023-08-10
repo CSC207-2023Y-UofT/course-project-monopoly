@@ -37,6 +37,11 @@ public class GameBoard extends JFrame {
 
     // Second Hash Map: For Block ID : Location
     private HashMap<Integer, ArrayList<Integer>> blocklocations;
+    // Player and their locations rightnow
+    private HashMap<Integer, ArrayList<Integer>> playerLocations;
+    //blockID and the image there
+    private HashMap<Integer, BufferedImage> currentBlocks;
+
 
     /**
      * Constructor for GameBoard.
@@ -75,6 +80,7 @@ public class GameBoard extends JFrame {
                         e.printStackTrace();
                     }
                 }
+
             }
         }
 
@@ -109,18 +115,18 @@ public class GameBoard extends JFrame {
             }
         };
 
-        imagess = new ArrayList<>();
-        add(new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
-                drawBlocks(g);
-                for (ImageHolder holder : imagess) {
-                    g.drawImage(holder.image, holder.x, holder.y, this);
-                }
-            }
-        });
+//        imagess = new ArrayList<>();
+//        add(new JPanel() {
+//            @Override
+//            protected void paintComponent(Graphics g) {
+//                super.paintComponent(g);
+//                g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+//                drawBlocks(g);
+//                for (ImageHolder holder : imagess) {
+//                    g.drawImage(holder.image, holder.x, holder.y, this);
+//                }
+//            }
+//        });
 
         setContentPane(panel);
 
@@ -358,16 +364,23 @@ public class GameBoard extends JFrame {
 
 
             frame.blockReplace(101, 1, 3);
+
         });
     }
     public void blockReplace(int blockId, int currLevel, int nextLevel) {
         // Modify the GameBoard instance as needed
-        images.replace(blockId + "_" + currLevel, images.get(blockId + "_" + nextLevel));
+        // Better use blockStatus or hashmap for blockID : image; Thi is cleaner
+//        images.replace(blockId + "_" + currLevel, images.get(blockId + "_" + nextLevel));
+        images.replace("103_0", images.get("104_0"));
         repaint();
     }
 
-    public static void playerMove(GameBoard gameBoard, int blockId, int playerId, int currBlockId, int nextBlockId) {
+    public void playerMove(int blockId, int playerId, int currBlockId, int nextBlockId) {
         // Modify the GameBoard instance as needed
+        // 1) add playerlocation hashmap: player ID: ArrayList<Integers>
+        // 2)
+        playerLocations.replace(playerId, playerLocations.)
+        repaint();
     }
 }
 
