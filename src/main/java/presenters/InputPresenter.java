@@ -1,8 +1,6 @@
 package presenters;
 
 import controllers.InteractivePanelAdapter;
-import entities.Player;
-
 import java.util.Scanner;
 
 /**
@@ -28,17 +26,8 @@ public class InputPresenter {
             } else if (choice == 0) {
                 return false;
             } else {
-                System.out.print("Invalid Input! Please try again.\n");
+                continue;
             }
         }
     }
-
-    public static int playerChooseBlock() {
-        return 0;
-    }
-    public static void notifyWinner(int playerId)
-    {}
-    public static void notifyWinner()
-    {}
-    public static void detiny(Player currentPlayer, String message) {}
 }
