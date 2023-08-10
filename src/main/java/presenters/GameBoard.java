@@ -7,6 +7,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
 
 
 /**
@@ -15,43 +16,127 @@ import java.util.List;
  * and game-related drawings.
  */
 public class GameBoard extends JFrame {
+    private List<ImageHolder> imagess;
+
+    public HashMap<String, BufferedImage> getImages() {
+        return images;
+    }
+
+    public HashMap<Integer, ArrayList<Integer>> getBlockLocations() {
+        return blocklocations;
+    }
+
     private BufferedImage backgroundImage;
-    private static final int SIDEBAR_WIDTH = 320;
-    private static final int THREAD_SECTION_HEIGHT = 200;  // bottom half of the sidebar
+    private static final int SIDEBAR_WIDTH = 400;
+    private static final int THREAD_SECTION_HEIGHT = 280;  // bottom half of the sidebar
 
     private List<JTextArea> playerTextAreas;
 
+    // The first Hash Map: For file name : image
+    public HashMap<String, BufferedImage> images;
+
+    // Second Hash Map: For Block ID : Location
+    private HashMap<Integer, ArrayList<Integer>> blocklocations;
 
     /**
      * Constructor for GameBoard.
      * Initializes the background image and sets up the main frame, game thread text area, and player text areas.
      */
     public GameBoard() {
+
+
         // Set the frame size
-        setSize(1440, 810);
+        setSize(1920, 1080);
         // Center the frame on the screen
         setLocationRelativeTo(null);
         loadBackgroundImage();
 
         // Set up the main frame
-        setUndecorated(true); // Remove window decorations
+//        setUndecorated(true); // Remove window decorations
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Add the custom panel with the background image
+        // two hash maps
+        images = new HashMap<String, BufferedImage>();
+        blocklocations = new HashMap<>();
+
+
+        File folder = new File("data/images/blocks (test)"); // Replace with your directory path
+        File[] listOfFiles = folder.listFiles();
+
+        if (listOfFiles != null) {
+            for (File file : listOfFiles) {
+                if (file.isFile() && (file.getName().endsWith(".png") || file.getName().endsWith(".jpg"))) { // Add more extensions if needed
+                    try {
+                        BufferedImage img = ImageIO.read(file);
+                        String nameWithoutExtension = file.getName().substring(0, file.getName().lastIndexOf('.'));
+                        images.put(nameWithoutExtension, img);
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+        File folderPlayers = new File("data/images/players"); // Replace with your directory path
+        File[] listOfFilesplayers = folderPlayers.listFiles();
+
+        if (listOfFilesplayers != null) {
+            for (File file : listOfFiles) {
+                if (file.isFile() && (file.getName().endsWith(".png") || file.getName().endsWith(".jpg"))) { // Add more extensions if needed
+                    try {
+                        BufferedImage img = ImageIO.read(file);
+                        String nameWithoutExtension = file.getName().substring(0, file.getName().lastIndexOf('.'));
+                        images.put(nameWithoutExtension, img);
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        
+        
+
+        // Paint the board
         JPanel panel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
-                drawGameTitle(g);
+//              drawGameTitle(g);
                 drawBlocks(g);
             }
         };
+
+        imagess = new ArrayList<>();
+        add(new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+                drawBlocks(g);
+                for (ImageHolder holder : imagess) {
+                    g.drawImage(holder.image, holder.x, holder.y, this);
+                }
+            }
+        });
+
         setContentPane(panel);
 
+        // Add the Text Area
         setLayout(null);
         setUpGameThreadTextArea();
         setUpPlayerTextAreas();
+
+    }
+
+
+    private void putBlockLocation(int id, int x, int y) {
+        ArrayList<Integer> location = new ArrayList<>();
+        location.add(x);
+        location.add(y);
+        blocklocations.put(id, location);
     }
 
     /**
@@ -73,16 +158,16 @@ public class GameBoard extends JFrame {
         JTextArea gameThreadTextArea = new JTextArea();
         OutputPresenter.setGameThreadTextArea(gameThreadTextArea); // Set the JTextArea in OutputPresenter
 
-        gameThreadTextArea.setFont(new Font("Arial", Font.PLAIN, 14));
+        gameThreadTextArea.setFont(new Font("Arial", Font.PLAIN, 20));
         gameThreadTextArea.setForeground(Color.WHITE);
-        gameThreadTextArea.setBounds(18, 525, SIDEBAR_WIDTH - 35, THREAD_SECTION_HEIGHT + 75);
+        gameThreadTextArea.setBounds(25, 684, SIDEBAR_WIDTH - 35, THREAD_SECTION_HEIGHT + 75);
         gameThreadTextArea.setEditable(false);
         gameThreadTextArea.setLineWrap(true);
         gameThreadTextArea.setOpaque(false); // Set the opaque property to false
         gameThreadTextArea.setBackground(new Color(0, 0, 0, 0)); // Transparent background
 
         JScrollPane scrollPane = new JScrollPane(gameThreadTextArea);
-        scrollPane.setBounds(18, 525, SIDEBAR_WIDTH - 35, THREAD_SECTION_HEIGHT + 75);
+        scrollPane.setBounds(25, 684, SIDEBAR_WIDTH - 35, THREAD_SECTION_HEIGHT + 75);
         scrollPane.setOpaque(false); // Make the scroll pane non-opaque
         scrollPane.getViewport().setOpaque(false); // Make the viewport non-opaque
         scrollPane.setBorder(null); // Remove the border
@@ -104,7 +189,7 @@ public class GameBoard extends JFrame {
             playerTextArea.setFont(new Font("Arial", Font.PLAIN, 20));
             playerTextArea.setEditable(false);
             playerTextArea.setLineWrap(true);
-            playerTextArea.setBounds(18, 30 + i * 120, 160, 100); // Adjust positions as needed
+            playerTextArea.setBounds(40, 80 + i * 160, 160, 60); // Adjust positions as needed
             add(playerTextArea);
             playerTextAreas.add(playerTextArea);
         }
@@ -126,16 +211,63 @@ public class GameBoard extends JFrame {
     /**
      * Draws an image on the Graphics context at specified coordinates.
      */
-    private void drawImage(Graphics g, BufferedImage image, int x, int y) {
+    public void drawImage(Graphics g, BufferedImage image, int x, int y) {
         g.drawImage(image, x, y, this); // Draw the image at the specified coordinates
     }
 
 
     /**
      * Draws blocks on the Graphics context.
+     * at the same time fill in a hash map for later application
      */
     private void drawBlocks(Graphics g) {
+
+        //at the same time create
         // Draw the blocks
+
+        putBlockLocation(100, 888, 13);
+        drawImage(g, images.get("100_go"), 888, 13);
+
+
+        // Top right
+        putBlockLocation(101, 960, 13);
+        drawImage(g, images.get("101_0"), 960, 13);
+
+//      //Right side
+        for (int i = 102; i <= 112; i ++) {
+            drawImage(g, images.get(i + "_0"), 960, 90 + (i - 102) * 80);
+            putBlockLocation(i, 960, 90 + (i - 102) * 80);
+        }
+
+        //Bottom right
+        drawImage(g, images.get("113_0"), 960, 90 + (112 - 102) * 80);
+        putBlockLocation(113, 960, 90 + (113 - 102) * 80);
+
+        //Bottom Middle
+        drawImage(g, images.get("114_ex"), 888, 90 + (112 - 102) * 80);
+        putBlockLocation(114, 888, 90 + (112 - 102) * 80);
+
+        //Bottom left
+        drawImage(g, images.get("115_0"), 438, 90 + (112 - 102) * 80);
+        putBlockLocation(114, 438, 90 + (112 - 102) * 80);
+
+
+        //Left side
+        for (int i = 126; i >= 116; i --) {
+            drawImage(g, images.get(i + "_0"), 438, 90 + (126 - i) * 80);
+            putBlockLocation(114, 438, 90 + (126 - i) * 80);
+        }
+
+        //Top left
+        drawImage(g, images.get("127_0"), 438, 13);
+        putBlockLocation(127, 438, 13);
+
+        //special ones
+        drawImage(g, images.get("106_ttc"), 960, 90 + (106 - 102) * 80);
+        drawImage(g, images.get("110_des"), 960, 90 + (110 - 102) * 80);
+        drawImage(g, images.get("118_des"), 438, 90 + (126 - 118) * 80);
+        drawImage(g, images.get("125_des"), 438, 90 + (126 - 125) * 80);
+
     }
 
     /**
@@ -182,6 +314,7 @@ public class GameBoard extends JFrame {
         g.drawString("Game Thread", x, y);
     }
 
+
     /**
      * Main method to run the GameBoard; Just for testing
      */
@@ -220,9 +353,23 @@ public class GameBoard extends JFrame {
             PlayerInfoPanel.updatePanel(1, 1000);
             PlayerInfoPanel.updatePanel(2, 1000);
             PlayerInfoPanel.updatePanel(2, 3000);
+            PlayerInfoPanel.updatePanel(3, 3000);
+            PlayerInfoPanel.updatePanel(4, 3000);
 
+
+            frame.blockReplace(101, 1, 3);
         });
     }
+    public void blockReplace(int blockId, int currLevel, int nextLevel) {
+        // Modify the GameBoard instance as needed
+        images.replace(blockId + "_" + currLevel, images.get(blockId + "_" + nextLevel));
+        repaint();
+    }
 
+    public static void playerMove(GameBoard gameBoard, int blockId, int playerId, int currBlockId, int nextBlockId) {
+        // Modify the GameBoard instance as needed
+    }
 }
+
+
 
