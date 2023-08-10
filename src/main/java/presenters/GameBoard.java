@@ -56,6 +56,8 @@ public class GameBoard extends JFrame {
 
         // Set the frame size
         setSize(1920, 1080);
+        setResizable(false); // Disable window resizing
+
         // Center the frame on the screen
         setLocationRelativeTo(null);
         loadBackgroundImage();
@@ -208,6 +210,7 @@ public class GameBoard extends JFrame {
                 drawPlayers(g);
             }
         };
+        panel.setPreferredSize(new Dimension(1920, 1080));
 
 //        imagess = new ArrayList<>();
 //        add(new JPanel() {
