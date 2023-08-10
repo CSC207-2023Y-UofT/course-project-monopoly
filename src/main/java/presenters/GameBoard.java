@@ -1,305 +1,195 @@
 package presenters;
-
 import javax.swing.*;
 import java.awt.*;
-import presenters.OutputPresenter;
-import javax.swing.JTextArea;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import java.util.ArrayList;
+import java.util.List;
 
+
+/**
+ * GameBoard class for managing and rendering the game GUI.
+ * This class extends JFrame and handles the main game board display, background images, player text areas,
+ * and game-related drawings.
+ */
 public class GameBoard extends JFrame {
+    private BufferedImage backgroundImage;
+    private static final int SIDEBAR_WIDTH = 320;
+    private static final int THREAD_SECTION_HEIGHT = 200;  // bottom half of the sidebar
+
+    private List<JTextArea> playerTextAreas;
+
+
+    /**
+     * Constructor for GameBoard.
+     * Initializes the background image and sets up the main frame, game thread text area, and player text areas.
+     */
     public GameBoard() {
-        // Set basic properties of the window
-        setTitle("My Game Board");
+        // Set the frame size
+        setSize(1440, 810);
+        // Center the frame on the screen
+        setLocationRelativeTo(null);
+        loadBackgroundImage();
+
+        // Set up the main frame
+        setUndecorated(true); // Remove window decorations
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1200, 900); // Adjust the size according to game's needs
-        setLocationRelativeTo(null); // Center the window on the screen
 
-        // Add game board components or other GUI elements here
+        // Add the custom panel with the background image
+        JPanel panel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+                drawGameTitle(g);
+                drawBlocks(g);
+            }
+        };
+        setContentPane(panel);
 
-        // Create left and right sidebars
-        JPanel leftSidebar = new LeftSidebar();
-        JPanel gameBoardPanel = new GameBoardPanel();
-        JPanel rightSidebar = new RightSidebar();
-
-        // Use BorderLayout to arrange the components
-        setLayout(new BorderLayout());
-
-        // Add the sidebars and the game board to the frame
-        add(leftSidebar, BorderLayout.WEST);
-        add(gameBoardPanel, BorderLayout.CENTER);
-        add(rightSidebar, BorderLayout.EAST);
-
-        // Make the window visible
-        setVisible(true);
-
-        // Set the JTextArea in the OutputPresenter for the Game Thread
-        JTextArea gameThreadTextArea = ((LeftSidebar) leftSidebar).getGameThreadTextArea();
-        OutputPresenter.setGameThreadTextArea(gameThreadTextArea);
+        setLayout(null);
+        setUpGameThreadTextArea();
+        setUpPlayerTextAreas();
     }
 
-    private class GameBoardPanel extends JPanel {
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-
-            // Draw the title "Monopoly" at the top middle
-            drawGameTitle(g);
-
-            // Draw the overall Monopoly board layout
-            drawBoard(g);
-        }
-
-        private void drawGameTitle(Graphics g) {
-            // Set the title font, style and size
-            Font titleFont = new Font("Arial", Font.BOLD, 30);
-            g.setFont(titleFont);
-
-            // Get the width and height of the string with the current font to position it correctly
-            FontMetrics fm = g.getFontMetrics();
-            int titleWidth = fm.stringWidth("Monopoly: Adventure at UofT");
-            int titleHeight = fm.getAscent();  // This gives the height from base to top of the font
-
-            // Calculate the position to center the title
-            int x = (getWidth() - titleWidth) / 2;
-            int y = titleHeight + 20;  // A little padding from the top
-
-            // Set color for the title
-            g.setColor(new Color(173, 216, 230));  // Light blue color
-            g.drawString("Monopoly: Adventure at UofT", x, y);
-        }
-
-        private void drawBoard(Graphics g) {
-            // This will be the length of one side of the outer square (board)
-            int boardSize = 630;
-            // Calculate the starting point to make the board centered
-            int x = (getWidth() - boardSize) / 2;
-            int y = (getHeight() - boardSize) / 2 + 30; // lower it for the title placement
-
-            // Draw the outer rectangle of the board
-            g.setColor(Color.BLACK);
-            g.drawRect(x, y, boardSize, boardSize);
-
-            // Draw the GO square on the top middle of the board
-            int gridWidth = boardSize / 4 ;
-            int goStartX = x + 3 * boardSize / 8;
-            drawCornerSpace(g, goStartX, y, "GO"); // Top middle
-
-            // two special grids - top
-            //Left
-            g.setColor(Color.YELLOW);
-            g.fillRect(x, y, 3 * boardSize / 8, boardSize / 5);  // Left side
-            // Right
-            g.fillRect(goStartX + boardSize / 4, y, 3 * boardSize / 8, boardSize / 5);  // Right side
-
-            int segmentHeight = 4 * boardSize / 60;
-            for (int i = 0; i < 11; i++) {  // Start from 1 because the 0th segment is for the GO square
-                g.setColor(Color.LIGHT_GRAY);
-                int y1 = y + i * segmentHeight + boardSize / 5;
-                g.fillRect(x, y1, gridWidth, segmentHeight);  // Left side
-
-                // Adjusted starting point for the right side properties
-                g.fillRect(x + gridWidth + boardSize/ 2, y1, gridWidth, segmentHeight);  // Right side
-
-                // Draw separating lines
-                g.setColor(Color.BLACK);
-                g.drawLine(x, y1, x + gridWidth, y1);  // Left side separators
-
-                // Adjusted starting and ending points for the right side separators
-                g.drawLine(x + gridWidth + boardSize / 2, y1, x + boardSize, y1);  // Right side separators
-            }
-
-            // Draw the middle rectangle
-            int innerRectMargin = boardSize / 5;  // The margin from the top and bottom of the board
-            g.setColor(new Color(238, 232, 205));  // A light beige color
-            g.fillRect(x + gridWidth, y + innerRectMargin, boardSize / 2, boardSize - boardSize / 5 - 2 * segmentHeight);
-            g.setColor(Color.BLACK);
-            g.drawRect(x + gridWidth, y + innerRectMargin, boardSize / 2, boardSize - boardSize / 5 - 2 * segmentHeight);
-
-            // two special grids - bottom
-            //Left
-            g.setColor(Color.YELLOW);
-            g.fillRect(x, y + boardSize - 2 * segmentHeight, boardSize / 2, 2 * segmentHeight);  // Left side
-            // Right
-            g.fillRect(x + boardSize / 2, y + boardSize - 2 * segmentHeight, boardSize / 2, 2 * segmentHeight);  // Right side
-            g.setColor(Color.BLACK);
-            g.drawLine(x + boardSize / 2, y + boardSize - 2 * segmentHeight, x + boardSize / 2, y + boardSize);
-
-        }
-
-        private void drawCornerSpace(Graphics g, int x, int y, String label) {
-            int gridSizeWidth = (label.equals("GO")) ? 630 / 4 : 70;  // Adjust the width based on the label
-            int gridSizeHeight = (label.equals("GO")) ? 630 / 5 : 70;  // Adjust the height; reduced height for GO
-
-            g.setColor(Color.WHITE);
-            g.fillRect(x, y, gridSizeWidth, gridSizeHeight);
-            g.setColor(Color.BLACK);
-            g.drawRect(x, y, gridSizeWidth, gridSizeHeight);
-
-            Font titleFont = new Font("Arial", Font.BOLD, 18);
-            g.setFont(titleFont);
-            int textX = x + (gridSizeWidth - g.getFontMetrics().stringWidth(label)) / 2;  // Center the label
-            int textY = y + (gridSizeHeight + g.getFontMetrics().getAscent() - g.getFontMetrics().getDescent()) / 2;
-            g.drawString(label, textX, textY);
-        }
-
-
-        private void drawProperties(Graphics g, int x, int y) {
-            // Calculate the width of each segment (excluding corners)
-            int segmentWidth = 560 / 9;
-
-            // Draw the properties spaces on the top and bottom sides of the board
-            for (int i = 0; i < 9; i++) {
-                g.setColor(Color.LIGHT_GRAY);
-                g.fillRect(x + 70 + i * segmentWidth, y, segmentWidth, 70); // Top side
-                g.fillRect(x + 70 + i * segmentWidth, y + 630, segmentWidth, 70); // Bottom side
-            }
-
-            // Draw the properties spaces on the left and right sides of the board
-            for (int i = 0; i < 9; i++) {
-                g.setColor(Color.LIGHT_GRAY);
-                g.fillRect(x, y + 70 + i * segmentWidth, 70, segmentWidth); // Left side
-                g.fillRect(x + 630, y + 70 + i * segmentWidth, 70, segmentWidth); // Right side
-            }
-
-            // Drawing the separating lines for the properties
-            g.setColor(Color.BLACK);
-            for (int i = 1; i < 9; i++) {
-                // Top and bottom separating lines
-                g.drawLine(x + 70 + i * segmentWidth, y, x + 70 + i * segmentWidth, y + 70);
-                g.drawLine(x + 70 + i * segmentWidth, y + 630, x + 70 + i * segmentWidth, y + 700);
-
-                // Left and right separating lines
-                g.drawLine(x, y + 70 + i * segmentWidth, x + 70, y + 70 + i * segmentWidth);
-                g.drawLine(x + 630, y + 70 + i * segmentWidth, x + 700, y + 70 + i * segmentWidth);
-            }
-        }
-
-
-        private void drawDestinyCard(Graphics g, int x, int y) {
-            // Calculate the width of each segment (excluding corners)
-            int segmentWidth = 560 / 9;
-
-            // Draw the destiny card space at the center of each side of the board
-            g.setColor(Color.BLUE);
-            g.fillRect(x + 70 + 4 * segmentWidth, y, segmentWidth, 70); // Top side
-            g.fillRect(x + 70 + 4 * segmentWidth, y + 630, segmentWidth, 70); // Bottom side
-            g.fillRect(x, y + 70 + 4 * segmentWidth, 70, segmentWidth); // Left side
-            g.fillRect(x + 630, y + 70 + 4 * segmentWidth, 70, segmentWidth); // Right side
-
-            g.setColor(Color.WHITE);
-            FontMetrics fm = g.getFontMetrics();
-            int textWidth = fm.stringWidth("Destiny");
-            int textHeight = fm.getAscent();
-
-            // Centered coordinates for each "Destiny" text
-            int xCentered = (segmentWidth - textWidth) / 2;
-            int yCentered = (70 + textHeight) / 2;
-
-            g.drawString("Destiny", x + 70 + 4 * segmentWidth + xCentered, y + yCentered); // Top side
-            g.drawString("Destiny", x + 70 + 4 * segmentWidth + xCentered, y + 630 + yCentered); // Bottom side
-            g.drawString("Destiny", x + xCentered, y + 70 + 4 * segmentWidth + yCentered - fm.getDescent()); // Left side
-            g.drawString("Destiny", x + 630 + xCentered, y + 70 + 4 * segmentWidth + yCentered - fm.getDescent()); // Right side
-        }
-
-    }
-
-    private class LeftSidebar extends JPanel {
-        private static final int SIDEBAR_WIDTH = 250;
-        private static final int THREAD_SECTION_HEIGHT = 900 / 2 - 100;  // bottom half of the sidebar
-        private static final int THREAD_TITLE_PADDING = 20;  // distance from the top of the thread section
-        private int threadStartY = THREAD_SECTION_HEIGHT;
-
-        private JTextArea gameThreadTextArea;
-
-
-        public JTextArea getGameThreadTextArea() {
-            return gameThreadTextArea;
-        }
-
-
-        public LeftSidebar() {
-            setLayout(null);
-
-            // Initialize the JTextArea for the Game Thread
-            gameThreadTextArea = new JTextArea();
-            gameThreadTextArea.setFont(new Font("Arial", Font.PLAIN, 14));
-            gameThreadTextArea.setForeground(Color.WHITE);
-            gameThreadTextArea.setBounds(10, 390, SIDEBAR_WIDTH - 20, THREAD_SECTION_HEIGHT + 50);
-            gameThreadTextArea.setEditable(false); // Make it read-only
-            gameThreadTextArea.setLineWrap(true); // Enable line wrapping
-            gameThreadTextArea.setBackground(Color.BLUE); // Set background color to Blue
-
-            // Set a JScrollPane to add scroll functionality to the JTextArea
-            JScrollPane scrollPane = new JScrollPane(gameThreadTextArea);
-            scrollPane.setBounds(10, 390, SIDEBAR_WIDTH - 20, THREAD_SECTION_HEIGHT + 50);
-            add(scrollPane); // Add the JScrollPane to the LeftSidebar
-        }
-
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-
-            // Draw the left sidebar
-            g.setColor(Color.BLUE);
-            g.fillRect(0, 0, SIDEBAR_WIDTH, getHeight());
-
-            // Draw "Players' Details" title
-            Font titleFont = new Font("Arial", Font.BOLD, 18);
-            g.setFont(titleFont);
-            g.setColor(Color.WHITE);
-            g.drawString("Players' Details", SIDEBAR_WIDTH / 4, THREAD_TITLE_PADDING);
-
-            // Draw the game thread section at the bottom
-            g.setColor(Color.WHITE);
-            g.drawRect(0, threadStartY, SIDEBAR_WIDTH, THREAD_SECTION_HEIGHT + 100);
-
-            // Draw "Game Thread" title
-            g.setColor(Color.WHITE);
-            g.drawString("Game Thread", SIDEBAR_WIDTH / 4, threadStartY + THREAD_TITLE_PADDING);
-
-
-//            // Example game progress information to display in the Game Thread
-
-        }
-
-        @Override
-        public Dimension getPreferredSize() {
-            return new Dimension(SIDEBAR_WIDTH, getHeight());
+    /**
+     * Loads the background image from the file system.
+     */
+    private void loadBackgroundImage() {
+        try {
+            backgroundImage = ImageIO.read(new File("data/images/background/background.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
+    /**
+     * Sets up the game thread text area with custom styling.
+     */
+    private void setUpGameThreadTextArea() {
+        // Code to set up gameThreadTextArea and its scrollPane
+        JTextArea gameThreadTextArea = new JTextArea();
+        OutputPresenter.setGameThreadTextArea(gameThreadTextArea); // Set the JTextArea in OutputPresenter
 
-    private class RightSidebar extends JPanel {
-        private static final int SIDEBAR_WIDTH = 250;
-        private static final int TITLE_PADDING = 20;  // distance from the top of the sidebar
+        gameThreadTextArea.setFont(new Font("Arial", Font.PLAIN, 14));
+        gameThreadTextArea.setForeground(Color.WHITE);
+        gameThreadTextArea.setBounds(18, 525, SIDEBAR_WIDTH - 35, THREAD_SECTION_HEIGHT + 75);
+        gameThreadTextArea.setEditable(false);
+        gameThreadTextArea.setLineWrap(true);
+        gameThreadTextArea.setOpaque(false); // Set the opaque property to false
+        gameThreadTextArea.setBackground(new Color(0, 0, 0, 0)); // Transparent background
 
-        @Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
+        JScrollPane scrollPane = new JScrollPane(gameThreadTextArea);
+        scrollPane.setBounds(18, 525, SIDEBAR_WIDTH - 35, THREAD_SECTION_HEIGHT + 75);
+        scrollPane.setOpaque(false); // Make the scroll pane non-opaque
+        scrollPane.getViewport().setOpaque(false); // Make the viewport non-opaque
+        scrollPane.setBorder(null); // Remove the border
+        scrollPane.getViewport().setBackground(new Color(0, 0, 0, 0)); // Set viewport background to transparent
 
-            // Draw the right sidebar
-            g.setColor(Color.MAGENTA);
-            g.fillRect(0, 0, SIDEBAR_WIDTH, getHeight());
+        add(scrollPane);
+    }
 
-            // Set a new font with the desired size for the title
-            Font titleFont = new Font("Arial", Font.BOLD, 18); // "Arial" font, bold style, size 18
-            g.setFont(titleFont);
+    /**
+     * Initializes and configures the JTextAreas for each player.
+     */
+    private void setUpPlayerTextAreas() {
+        // Code to initialize and configure the JTextAreas for each player
+        playerTextAreas = new ArrayList<>();
 
-            // Draw "Interactive Panel" title
-            g.setColor(Color.WHITE); // Set color to white for better contrast against the blue background
-            g.drawString("Interactive Panel", SIDEBAR_WIDTH / 4, TITLE_PADDING);
+        // Initialize and configure the JTextAreas for each player
+        for (int i = 0; i < 4; i++) {
+            JTextArea playerTextArea = new JTextArea();
+            playerTextArea.setFont(new Font("Arial", Font.PLAIN, 20));
+            playerTextArea.setEditable(false);
+            playerTextArea.setLineWrap(true);
+            playerTextArea.setBounds(18, 30 + i * 120, 160, 100); // Adjust positions as needed
+            add(playerTextArea);
+            playerTextAreas.add(playerTextArea);
         }
+        PlayerInfoPanel.setallplayerTextAreas(playerTextAreas);
 
-        @Override
-        public Dimension getPreferredSize() {
-            return new Dimension(SIDEBAR_WIDTH, getHeight());
-        }
+        // Create a new panel for the buttons
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT)); // Set the FlowLayout to align to the right
+        buttonPanel.setBounds(getWidth() - 200, 10, 180, 40); // Increase the width
     }
 
 
+    /**
+     * Sets up the button panel
+     */
+    private void setUpButtonPanel() {
+        // Code to set up the button panel if needed
+    }
+
+    /**
+     * Draws an image on the Graphics context at specified coordinates.
+     */
+    private void drawImage(Graphics g, BufferedImage image, int x, int y) {
+        g.drawImage(image, x, y, this); // Draw the image at the specified coordinates
+    }
+
+
+    /**
+     * Draws blocks on the Graphics context.
+     */
+    private void drawBlocks(Graphics g) {
+        // Draw the blocks
+    }
+
+    /**
+     * Draws the game title on the Graphics context.
+     */
+    private void drawGameTitle(Graphics g) {
+        // Set the title font, style and size
+        Font titleFont = new Font("Arial", Font.BOLD, 30);
+        g.setFont(titleFont);
+
+        // Get the width and height of the string with the current font to position it correctly
+        FontMetrics fm = g.getFontMetrics();
+        int titleWidth = fm.stringWidth("Monopoly: Adventure at UofT");
+        int titleHeight = fm.getAscent();  // This gives the height from base to top of the font
+
+        // Calculate the position to center the title
+        int x = (getWidth() - titleWidth) / 2;
+        int y = titleHeight + 20;  // A little padding from the top
+
+        // Set color for the title
+        g.setColor(new Color(173, 216, 230));  // Light blue color
+        g.drawString("Monopoly: Adventure at UofT", x, y);
+    }
+
+
+    /**
+     * Draws the game thread title on the Graphics context.
+     */
+    private void drawGameThreadTitle(Graphics g) {
+        // Set the title font, style and size
+        Font titleFont = new Font("Arial", Font.BOLD, 15);
+        g.setFont(titleFont);
+
+        // Get the width and height of the string with the current font to position it correctly
+        FontMetrics fm = g.getFontMetrics();
+        int titleWidth = fm.stringWidth("Game Thread");
+
+        // Calculate the position to center the title
+        int x = 150 - titleWidth / 2 ;
+        int y = 525;  // A little padding from the top
+
+        // Set color for the title
+        g.setColor(new Color(173, 216, 230));  // Light blue color
+        g.drawString("Game Thread", x, y);
+    }
+
+    /**
+     * Main method to run the GameBoard; Just for testing
+     */
     public static void main(String[] args) {
         // Create an instance of GameBoard class
         javax.swing.SwingUtilities.invokeLater(() -> {
-            new GameBoard();
+            GameBoard frame = new GameBoard();
+            frame.setVisible(true);
 
             //These are just for testing, remember to use javax.swing.SwingUtilities.invokeLater(() ->
             // in the main loop
@@ -326,10 +216,13 @@ public class GameBoard extends JFrame {
             OutputPresenter.notifyGoToExam(currentPlayerId);
             OutputPresenter.notifyRemainingStopRounds(currentPlayerId, 2);
             OutputPresenter.notifyDestiny(message);
+
+            PlayerInfoPanel.updatePanel(1, 1000);
+            PlayerInfoPanel.updatePanel(2, 1000);
+            PlayerInfoPanel.updatePanel(2, 3000);
+
         });
     }
 
 }
-
-
 

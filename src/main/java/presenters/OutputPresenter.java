@@ -163,5 +163,6 @@ public class OutputPresenter {
     public static void notifyDestiny(String message) {
         gameThreadTextArea.append("Destiny: " + message + "\n");
     }
-
 }
+
+
