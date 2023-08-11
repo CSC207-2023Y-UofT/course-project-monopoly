@@ -6,10 +6,14 @@ import entities.GameData;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import presenters.PlayerInfoPanel;
 import usecases.impactors.PositionImpactor;
 
+import javax.swing.*;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -49,6 +53,12 @@ class ECInteractorTest {
     void beforeEach() {
         data.currentPlayerIndex = 0;
         data.setCurrentPlayer();
+        PlayerInfoPanel.setallplayerTextAreas(new ArrayList<>(Arrays.asList(
+                new JTextArea(),
+                new JTextArea(),
+                new JTextArea(),
+                new JTextArea()
+        )));
     }
 
     /**
