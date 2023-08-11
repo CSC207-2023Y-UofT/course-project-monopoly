@@ -6,7 +6,6 @@ import entities.Property;
 import usecases.StatusChecker;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -23,19 +22,8 @@ import java.util.HashMap;
  * and game-related drawings.
  */
 public class GameBoard extends JFrame{
-    // Some configurations
-
-    // Replace with your directory path
-    private final String BLOCK_PATH = "data/images/blocks";
-    private final String PLAYER_PATH = "data/images/players";
-    private final String ROLL_PATH = "data/images/interactive";
-    private final String INTERACTIVE_PATH = "data/images/infopanel";
-    private final String BACKGROUND_IMAGE_PATH = "data/images/background/background.png";
     private final String DEFAULT_FONT = "Arial";
     private final int DEFAULT_FONT_SIZE = 20;
-
-    // Add more extensions if needed
-    private final List<String> VALID_IMAGE_FORMAT = List.of(new String[]{".png", ".jpg"});
 
     private BufferedImage backgroundImage;
     private BufferedImage interactivePanelImage;
@@ -59,6 +47,17 @@ public class GameBoard extends JFrame{
      * Initializes the background image and sets up the main frame, game thread text area, and player text areas.
      */
     public GameBoard() {
+        // Some configurations
+
+        // Replace with your directory path
+        final String BLOCK_PATH = "data/images/blocks";
+        final String PLAYER_PATH = "data/images/players";
+        final String ROLL_PATH = "data/images/interactive";
+        final String INTERACTIVE_PATH = "data/images/infopanel";
+        final String BACKGROUND_IMAGE_PATH = "data/images/background/background.png";
+
+        // Add more extensions if needed
+        final List<String> VALID_IMAGE_FORMAT = List.of(new String[]{".png", ".jpg"});
 
         // Set the frame size
         setSize(1920, 1080);
@@ -66,13 +65,19 @@ public class GameBoard extends JFrame{
 
         // Center the frame on the screen
         setLocationRelativeTo(null);
-        loadBackgroundImage();
+
+        try {
+            backgroundImage = ImageIO.read(new File(BACKGROUND_IMAGE_PATH));
+        } catch (java.io.IOException e) {
+            e.printStackTrace();
+        }
 
         // Set up the main frame
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Setup two hash maps
-        blocks = new HashMap<String, BufferedImage>();
+        // Mapping from String to BufferedImage
+        blocks = new HashMap<>();
         blockLocations = new HashMap<>();
 
         // Initialize player location.
@@ -276,17 +281,6 @@ public class GameBoard extends JFrame{
         location.add(x);
         location.add(y);
         blockLocations.put(id, location);
-    }
-
-    /**
-     * Loads the background image from the file system.
-     */
-    private void loadBackgroundImage() {
-        try {
-            backgroundImage = ImageIO.read(new File(BACKGROUND_IMAGE_PATH));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
