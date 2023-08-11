@@ -42,19 +42,26 @@ Currently, the up-to-date test coverage is:
 
 - https://github.com/CSC207-2023Y-UofT/course-project-monopoly/pull/60
 
+### data gateways
+
+| Element                  | Class, %  | Method, %  | Line, %     |
+| ------------------------ | --------- | ---------- | ----------- |
+| `DestinyCardDataManager` | 100%(1/1) | 100% (1/1) | 86% (13/15) |
+| `PropertyDataManager`    | 100%(1/1) | 100% (1/1) | 86% (13/15) |
+
 ### entities
 
-| Element         | Class, %  | Method, %   | Line, %     |
-| --------------- | --------- | ----------- | ----------- |
-| `Block`         | 100%(1/1) | 80% (8/10)  | 81% (53/65) |
-| `Destiny`       | 100%(1/1) | 80% (4/5)   | 71% (5/7)   |
-| `DestinyCard`   | 100%(1/1) | 100% (4/4)  | 100% (8/8)  |
-| `ExamCenter`    | 100%(1/1) | 66% (2/3)   | 50% (2/4)   |
-| `GameData`      | 100%(1/1) | 75% (3/4)   | 75% (15/20) |
-| `Player`        | 100%(1/1) | 76% (10/13) | 83% (5/6)   |
-| `Property`      | 100%(1/1) | 94% (16/17) | 93% (28/30) |
-| `StartingPoint` | 100%(1/1) | 80% (4/5)   | 83% (5/6)   |
-| `TTCStation`    | 100%(1/1) | 66% (2/3)   | 50% (2/4)   |
+| Element         | Class, %  | Method, %    | Line, %      |
+| --------------- | --------- | ------------ | ------------ |
+| `Block`         | 100%(1/1) | 50% (2/4)    | 60% (3/5)    |
+| `Destiny`       | 100%(1/1) | 80% (4/5)    | 71% (5/7)    |
+| `DestinyCard`   | 100%(1/1) | 100% (4/4)   | 100% (8/8)   |
+| `ExamCenter`    | 100%(1/1) | 100% (3/3)   | 100% (4/4)   |
+| `GameData`      | 100%(1/1) | 100% (4/4)   | 95% (19/20)  |
+| `Player`        | 100%(1/1) | 100% (12/12) | 100% (17/17) |
+| `Property`      | 100%(1/1) | 100% (17/17) | 100% (30/30) |
+| `StartingPoint` | 100%(1/1) | 100% (5/5)   | 100% (6/6)   |
+| `TTCStation`    | 100%(1/1) | 66% (2/3)    | 50% (2/4)    |
 
 ##### related pull request
 
@@ -64,10 +71,10 @@ Currently, the up-to-date test coverage is:
 
 ### use cases - generator
 
-| Element                    | Class, %  | Method, % | Line, %     |
-| -------------------------- | --------- | --------- | ----------- |
-| `DestinyCardPoolGenerator` | 100%(1/1) | 100%(1/1) | 92% (23/25) |
-| `PropertyGenerator`        | 100%(1/1) | 100%(1/1) | 91% (22/24) |
+| Element                    | Class, %  | Method, % | Line, %      |
+| -------------------------- | --------- | --------- | ------------ |
+| `DestinyCardPoolGenerator` | 100%(1/1) | 100%(1/1) | 100% (18/18) |
+| `PropertyGenerator`        | 100%(1/1) | 100%(1/1) | 100% (17/17) |
 
 ##### related pull request
 
@@ -89,16 +96,16 @@ Currently, the up-to-date test coverage is:
 
 ### use cases - interactor
 
-| Element             | Class, % | Method, % | Line, % |
-| ------------------- | -------- | --------- | ------- |
-| `DestinyInteractor` |          |           |         |
-| `ECInteractor`      |          |           |         |
-| `PPTinteractor`     |          |           |         |
-| `TTCInteractor`     |          |           |         |
+| Element             | Class, %   | Method, %  | Line, %     |
+| ------------------- | ---------- | ---------- | ----------- |
+| `DestinyInteractor` |            |            |             |
+| `ECInteractor`      | 100% (1/1) | 100% (1/1) | 100% (3/3)  |
+| `PPTinteractor`     | 100% (1/1) | 100% (1/1) | 100% (5/5)  |
+| `TTCInteractor`     | 100% (1/1) | 100% (1/1) | 75% (12/16) |
 
 ##### related pull request
 
-- 
+- https://github.com/CSC207-2023Y-UofT/course-project-monopoly/pull/74
 
 ### other use cases
 
@@ -107,8 +114,7 @@ Currently, the up-to-date test coverage is:
 | `DestinyCardChooser`   | 100% (1/1) | 100% (1/1) | 100% (5/5)   |
 | `DestomuCardExecutor`  | 100% (1/1) | 100% (1/1) | 100% (29/29) |
 | `OwnerIdentifier`      | 100% (1/1) | 100% (1/1) | 100% (1/1)   |
-| `OwnerPropertyUseCase` | 100% (1/1) | 100% (1/1) | 95% (44/46)  |
-| `OwnerPropertyUseCase` | 100% (1/1) | 100% (1/1) | 100% (1/1)   |
+| `OwnerPropertyUseCase` | 100% (1/1) | 100% (1/1) | 96% (30/31)  |
 | `PasserbyUseCase`      | 100% (1/1) | 100% (1/1) | 100% (6/6)   |
 | `StartingPointUseCase` | 100% (1/1) | 100% (1/1) | 100% (2/2)   |
 | `StatusChecker`        | 100% (1/1) | 100% (1/2) | 100% (4/4)   |
@@ -123,16 +129,17 @@ Currently, the up-to-date test coverage is:
 
 | Element           | Class, %  | Method, %  | Line, %    |
 | ----------------- | --------- | ---------- | ---------- |
-| `GameBoard`       | 0%(0/4)   | 0% (0/11)  | 0% (0/30)  |
-| `GameMain`        | 0%(0/1)   | 0% (0/4)   | 0% (0/6)   |
+| `GameBoard`       |           |            |            |
+| `GameMain`        |           |            |            |
 | `GameMapPanel`    | 100%(1/1) | 100% (1/1) | 100% (1/1) |
 | `InputPresenter`  | 100%(1/1) | 100% (1/1) | 100% (8/8) |
 | `OutputPresenter` | 100%(1/1) | 100% (5/5) | 100% (8/8) |
-| `PlayerInfoPanel` | 100%(1/1) | 100% (2/2) | 100% (7/7) |
+| `PlayerInfoPanel` | 100%(1/1) | 100% (1/1) | 100% (1/1) |
 
 # Code Style and Documentation
 
 - The whole project completely follows a good and health convention. The readability of our codes are great. Some examples are
+    - We used `alllowercase` for package names.
     - We used `lowerCamelCase` for variable and method names.
     - We used `CONSTANT_CASE` for `static final` constants.
     - We used `CamelCase` for class names.
@@ -170,6 +177,13 @@ Currently, the up-to-date test coverage is:
 
 # Design Patterns
 
+## Dependency Injection and Factory - `generators`
+
+- External generators for Destiny cards and properties are injected into the classes that need them,
+  avoiding hard dependencies and promoting loose coupling.
+- The external generators act as factories, creating instances of `DestinyCard` and `Property` objectss based
+  on data from external sources.
+
 ## Strategy - `DataManager`
 
 - The `DataManager` class is an interface that contains methods that can be implemented by specific instances of `DataManager`
@@ -190,6 +204,7 @@ Currently, the up-to-date test coverage is:
 - The `GameBoard` class will only have 1 valid instance throughout the whole lifetime of the application
 - Although we did not implement the singleton pattern specifically, it still serves this purpose, as we do not have any way to start another instance of it 
 
+
 # Clean Architecture
 
 - We have followed "Clean Architecture" strictly when writing up our code
@@ -200,7 +215,7 @@ Currently, the up-to-date test coverage is:
 # SOLID
 
 1. **Single Responsibility Principle**: Every class in our project has only one responsibility. For example, 
-    
+   
 2. **Open and Closed Principle**: 
 3. **Liskov Substitution Principle**: 
 4. **Interface Segregation Principle**: 
