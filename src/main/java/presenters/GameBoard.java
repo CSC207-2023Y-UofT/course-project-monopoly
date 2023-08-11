@@ -1,4 +1,10 @@
 package presenters;
+import entities.Block;
+import entities.GameData;
+import entities.Player;
+import entities.Property;
+import usecases.StatusChecker;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
