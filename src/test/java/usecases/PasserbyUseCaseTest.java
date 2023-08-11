@@ -52,7 +52,7 @@ class PasserbyUseCaseTest {
     void testPasserByArrival(){
         property.upgradeLevel();
 
-        PasserbyUseCase.passerbyArrival(passer, property, owner);
+        PasserbyUseCase.passerbyArrival(passer, property);
 
         assertEquals(990, passer.getMoney());
         assertEquals(1010, owner.getMoney());
