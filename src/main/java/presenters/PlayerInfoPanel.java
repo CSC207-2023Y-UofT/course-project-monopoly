@@ -27,4 +27,6 @@ public class PlayerInfoPanel {
         if (!(allplayerTextAreas == null))
             allplayerTextAreas.get(playerId - 1).setText(currSaving + " TBucks");
     }
+    public static void playerBankrupt(int playerId)
+    {}
 }

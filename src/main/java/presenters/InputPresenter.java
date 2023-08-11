@@ -26,8 +26,17 @@ public class InputPresenter {
             } else if (choice == 0) {
                 return false;
             } else {
-                continue;
+                System.out.print("Invalid Input! Please try again.\n");
             }
         }
     }
+
+    public static int playerChooseBlock() {
+        return 0;
+    }
+    public static void notifyWinner(int playerId)
+    {}
+    public static void notifyWinner()
+    {}
+    public static void detiny(Player currentPlayer, String message) {}
 }

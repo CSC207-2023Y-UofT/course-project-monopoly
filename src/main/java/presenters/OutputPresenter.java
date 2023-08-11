@@ -164,6 +164,11 @@ public class OutputPresenter {
     public static void notifyDestiny(String message) {
         gameThreadTextArea.append("Destiny: " + message + "\n");
     }
+
+    public static void notifyRandomDice(int points)
+    {
+        gameThreadTextArea.append( "Player " + "  rolls the dice to " + points+ " points." );
+    }
 }
 
 
