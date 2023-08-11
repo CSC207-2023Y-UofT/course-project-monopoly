@@ -17,7 +17,9 @@ public class Main {
     // File paths for game data initialization
     public static final String propertiesFile = "data/develop/revised_properties.csv";
     public static final String extraBlocksFile = "data/develop/extra_blocks_example.csv";
-    public static final String[] destinyFiles = {"data/develop/destiny_card.csv", "data/develop/destiny_card.csv", "data/develop/destiny_card.csv"};
+    public static final String[] destinyFiles = {"data/develop/destiny_card.csv",
+            "data/develop/destiny_card.csv",
+            "data/develop/destiny_card.csv"};
 
     /**
      * Uploads and initializes the game data using the data files specified.
@@ -51,14 +53,13 @@ public class Main {
             while(!controller.isGameOver())
             {
                 OutputPresenter.notifyStartOfRound();
-//                System.out.println("===================================\n\nCurrent Player is: Player"
-//                        + data.currentPlayer.getUserId());
+
                 Player currentplayer = data.currentPlayer;
                 OutputPresenter.notifyTurn(currentplayer.getUserId());
                 // Check if the current player is movable
                 if(!controller.isCurrentMovable()) {
                     OutputPresenter.notifyRemainingStopRounds(currentplayer.getUserId(), StatusChecker.getRemainRounds(currentplayer));
-//                    System.out.println("Player " + data.currentPlayerIndex + " cannot move.");
+
                     frame.updateAll(data);
                     JOptionPane.showMessageDialog(frame,"You can not move. Please stay here.", "End of one turn",JOptionPane.INFORMATION_MESSAGE);
                     controller.updatePlayerMoveStatus();
