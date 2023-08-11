@@ -580,7 +580,11 @@ public class GameBoard extends JFrame{
         for (Block block : data.blocks) {
             if (!(block instanceof Property))
                 continue;
-            this.blockReplace(block.getId(), ((Property) block).getOwner().getUserId(), ((Property) block).getLevel());
+            int ownerId = -1;
+            Player owner = ((Property) block).getOwner();
+            if (owner != null)
+                ownerId = owner.getUserId();
+            this.blockReplace(block.getId(), ownerId, ((Property) block).getLevel());
         }
     }
 }
