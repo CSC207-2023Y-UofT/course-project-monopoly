@@ -452,7 +452,7 @@ public class GameBoard extends JFrame {
         // update player information
         for (Player player: data.currentPlayers) {
             if (!StatusChecker.isPlayable(player))
-                PlayerInfoPanel.playerBankrupt(player.getUserId());
+                this.deletePlayer(player.getUserId());
             else {
                 PlayerInfoPanel.updatePanel(player.getUserId(), player.getMoney());
                 this.playerMove(player.getUserId(), player.getPosition());

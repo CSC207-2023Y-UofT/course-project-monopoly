@@ -22,7 +22,6 @@ public class MoneyImpactor {
 
         PlayerInfoPanel.updatePanel(giver.getUserId(), giver.getMoney());
         if (giver.getMoney() < 0) {
-            PlayerInfoPanel.playerBankrupt(giver.getUserId());
             StatusImpactor.changeStatus(giver, "playable", -1);
         }
     }
