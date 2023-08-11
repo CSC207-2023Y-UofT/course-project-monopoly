@@ -526,11 +526,12 @@ public class GameBoard extends JFrame{
 
 
     public void blockReplace(int blockId, int ownerId, int nextLevel) {
+        //TODO
         ownerId += 1;
         // Modify the GameBoard instance as needed
 //        images.replace(blockId + "_" + currLevel, images.get(blockId + "_" + nextLevel));
         blocklocations.get(blockId);
-        blocks.replace(blockId + "_", images.get("105_0"));
+        blocks.replace(blockId + "_", images.get(" "));
         repaint();
     }
 
