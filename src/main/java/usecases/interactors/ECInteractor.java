@@ -23,7 +23,7 @@ public class ECInteractor implements UseCaseInteractor {
     @Override
     public void interact(Block block, GameData data) {
         StatusImpactor.changeStatus(data.currentPlayer,"movable",-2);
-//        System.out.println("Player " + data.currentPlayer.getUserId() + " is in the exam center");
-        OutputPresenter.notifyGoToExam(data.currentPlayer.getUserId());
+        OutputPresenter.notifyGoToExam(data.currentPlayer.getUserId() );
+
     }
 }

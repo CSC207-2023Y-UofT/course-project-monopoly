@@ -60,7 +60,10 @@ public class GameController {
         }
 
     }
-
+    public void updatePlayerMoveStatus()
+    {
+        StatusImpactor.changeStatus(data.currentPlayer);
+    }
     /**
      * Get the player with the maximum amount of money.
      *
@@ -112,7 +115,6 @@ public class GameController {
     public void settleOneRound()
     {
         data.gameRounds += 1;
-        StatusImpactor.changeStatus(data.currentPlayer);
 
         for(int i = 1; i <= data.currentPlayers.size(); i++)
         {
@@ -158,9 +160,8 @@ public class GameController {
      *
      * @return True if the movement was successful, otherwise false.
      */
-    public boolean playerRelativeWalk()
+    public boolean playerRelativeWalk(int points)
     {
-        int points = randomDice();
         boolean flag = PositionImpactor.relativeMove(data, points);
         String message = "Player " + data.currentPlayer.getUserId() + " moved to " + data.currentPlayer.getPosition();
         OutputPresenter.notifyRandomDice(points);

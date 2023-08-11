@@ -4,6 +4,8 @@ import entities.*;
 import usecases.*;
 import presenters.*;
 
+import javax.swing.*;
+
 /**
  * The Main class is the entry point for the game application. It initializes the game data, creates a game controller,
  * and runs the main game loop until the game is over.
@@ -42,6 +44,7 @@ public class Main {
         javax.swing.SwingUtilities.invokeLater(() -> {
             GameBoard frame = new GameBoard();
             frame.setVisible(true);
+            frame.updateAll(data);
 
             // Run the main game loop until the game is over
             while(!controller.isGameOver())
@@ -53,17 +56,22 @@ public class Main {
                 OutputPresenter.notifyTurn(currentplayer.getUserId());
                 // Check if the current player is movable
                 if(!controller.isCurrentMovable()) {
-                    OutputPresenter.notifyRemainingStopRounds(currentplayer.getUserId(), -currentplayer.getStatus().get("status"));
+                    OutputPresenter.notifyRemainingStopRounds(currentplayer.getUserId(), StatusChecker.getRemainRounds(currentplayer));
 //                    System.out.println("Player " + data.currentPlayerIndex + " cannot move.");
+                    frame.updateAll(data);
+                    JOptionPane.showMessageDialog(frame,"You can not move. Please stay here.", "End of one turn",JOptionPane.INFORMATION_MESSAGE);
+                    controller.updatePlayerMoveStatus();
                     controller.settleOneRound();
+
                     continue;
                 }
 
                 // Move the player and check if they pass the starting point
                 // If the player passes the starting point, give them a bonus
 
-
-                if(controller.playerRelativeWalk()) {
+                int points = controller.randomDice();
+                frame.rollDice(currentplayer.getUserId(),points);
+                if(controller.playerRelativeWalk(points)) {
 
                     StartingPointUseCase.giveBonus(data.currentPlayer);
                     OutputPresenter.notifyPassingGO(data.currentPlayer.getUserId());
@@ -83,7 +91,10 @@ public class Main {
                 frame.blockReplace(currentplayer.getPosition(), currentplayer.getUserId(), level);
 
                 // Settle the round and move to the next player
+                frame.updateAll(data);
+                JOptionPane.showMessageDialog(frame,"End of your turn", "End of one turn",JOptionPane.INFORMATION_MESSAGE);
                 controller.settleOneRound();
+
             }
 
             // Finish the game and determine the winner
