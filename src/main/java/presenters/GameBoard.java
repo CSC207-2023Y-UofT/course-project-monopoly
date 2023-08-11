@@ -7,6 +7,8 @@ import usecases.StatusChecker;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -26,7 +28,7 @@ import java.awt.event.ActionListener;
  * and game-related drawings.
  */
 public class GameBoard extends JFrame {
-
+    private boolean keyPressed = false; // Instance variable
     private static boolean buttonResult = false;
 
     public HashMap<String, BufferedImage> getImages() {
@@ -38,6 +40,7 @@ public class GameBoard extends JFrame {
     }
 
     private BufferedImage backgroundImage;
+    private BufferedImage interactivePanelImage;
     private static final int SIDEBAR_WIDTH = 400;
     private static final int THREAD_SECTION_HEIGHT = 280;  // bottom half of the sidebar
 
@@ -45,6 +48,7 @@ public class GameBoard extends JFrame {
 
     // The first Hash Map: For file name : image
     public HashMap<String, BufferedImage> images;
+    public HashMap<String, BufferedImage> blocks;
 
     // Second Hash Map: For Block ID : Location
     private HashMap<Integer, ArrayList<Integer>> blocklocations;
@@ -55,7 +59,8 @@ public class GameBoard extends JFrame {
 
     private HashMap<Integer, ArrayList<Integer>> playerPosition;
 
-
+    private Boolean playerDecision = null;
+    //interactive panels
     /**
      * Constructor for GameBoard.
      * Initializes the background image and sets up the main frame, game thread text area, and player text areas.
@@ -80,7 +85,7 @@ public class GameBoard extends JFrame {
 
         //initialize player location.
         playerLocation = new HashMap<>();
-        for (int i = 1; i <=4; i ++){
+        for (int i = 1; i <= 4; i++){
             int startX = 0;
             int startY = 0;
             //initialize starting position
@@ -160,7 +165,6 @@ public class GameBoard extends JFrame {
             }
         }
 
-
         //initialize player Position
         playerPosition = new HashMap<>();
         for (int i = 1; i <= 4; i++){
@@ -205,6 +209,28 @@ public class GameBoard extends JFrame {
         }
 
 
+
+        File folderRolls = new File("data/images/interactive"); // Replace with your directory path
+        File[] listOfFileRolls = folderRolls.listFiles();
+
+        if (listOfFileRolls != null) {
+            for (File file : listOfFileRolls) {
+                if (file.isFile() && (file.getName().endsWith(".png") || file.getName().endsWith(".jpg"))) { // Add more extensions if needed
+                    try {
+                        BufferedImage img = ImageIO.read(file);
+                        String nameWithoutExtension = file.getName().substring(0, file.getName().lastIndexOf('.'));
+                        images.put(nameWithoutExtension, img);
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        interactivePanelImage = images.get("p1_roll");
+        blocks = images;
+
+
         // Paint the board
         JPanel panel = new JPanel() {
             @Override
@@ -214,6 +240,7 @@ public class GameBoard extends JFrame {
 //              drawGameTitle(g);
                 drawBlocks(g);
                 drawPlayers(g);
+                drawInteractivePanel(g);
             }
         };
         panel.setPreferredSize(new Dimension(1920, 1080));
@@ -225,7 +252,29 @@ public class GameBoard extends JFrame {
         setUpGameThreadTextArea();
         setUpPlayerTextAreas();
 
-        addInteractivePanel();  // This will ensure every GameBoard instance gets an interactive panel
+
+
+        this.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyChar() == 'Y' || e.getKeyChar() == 'y') {
+                    playerDecision = true;
+                } else if (e.getKeyChar() == 'N' || e.getKeyChar() == 'n') {
+                    playerDecision = false;
+                }
+            }
+        });
+        this.setFocusable(true); // Ensure the JFrame can receive key events
+    }
+
+    // Method to fetch the player's decision
+    public Boolean getPlayerDecision() {
+        return playerDecision;
+    }
+
+    // Method to reset player's decision
+    public void resetPlayerDecision() {
+        playerDecision = null;
     }
 
 
@@ -327,29 +376,29 @@ public class GameBoard extends JFrame {
         // Draw the blocks
 
         putBlockLocation(100, 888, 13);
-        drawImage(g, images.get("100_go"), 888, 13);
+        drawImage(g, blocks.get("100_go"), 888, 13);
 
 
         // Top right
         putBlockLocation(101, 960, 13);
-        drawImage(g, images.get("101_0"), 960, 13);
+        drawImage(g, blocks.get("101_0"), 960, 13);
 
 //      //Right side
         for (int i = 102; i <= 112; i ++) {
-            drawImage(g, images.get(i + "_0"), 960, 90 + (i - 102) * 80);
+            drawImage(g, blocks.get(i + "_0"), 960, 90 + (i - 102) * 80);
             putBlockLocation(i, 960, 90 + (i - 102) * 80);
         }
 
         //Bottom right
-        drawImage(g, images.get("113_0"), 960, 90 + (112 - 102) * 80);
+        drawImage(g, blocks.get("113_0"), 960, 90 + (112 - 102) * 80);
         putBlockLocation(113, 960, 90 + (113 - 102) * 80);
 
         //Bottom Middle
-        drawImage(g, images.get("114_ex"), 888, 90 + (112 - 102) * 80);
+        drawImage(g, blocks.get("114_ex"), 888, 90 + (112 - 102) * 80);
         putBlockLocation(114, 888, 90 + (112 - 102) * 80);
 
         //Bottom left
-        drawImage(g, images.get("115_0"), 438, 90 + (112 - 102) * 80);
+        drawImage(g, blocks.get("115_0"), 438, 90 + (112 - 102) * 80);
         putBlockLocation(114, 438, 90 + (112 - 102) * 80);
 
 
@@ -378,7 +427,18 @@ public class GameBoard extends JFrame {
     private void drawPlayers(Graphics g){
         for (int i = 1; i <= 4; i++){
             ArrayList<Integer> Location = playerPosition.get(i);
-            drawImage(g, images.get("player" + i), Location.get(0) , Location.get(1));
+            drawImage(g, blocks.get("player" + i), Location.get(0) , Location.get(1));
+        }
+    }
+
+    private void drawInteractivePanel(Graphics g){
+        drawImage(g, interactivePanelImage, 1540, 540);
+    }
+
+    private void drawPlayersInfoPanel(Graphics g){
+        for (int i = 1; i <= 4; i++){
+            ArrayList<Integer> Location = playerPosition.get(i);
+            drawImage(g, blocks.get("player" + i), Location.get(0) , Location.get(1));
         }
     }
 
@@ -416,7 +476,7 @@ public class GameBoard extends JFrame {
         interactivePanel.setBounds(1650, 270, 130, 80);// x, y, width, height
 
         // Add interactive panel to the JFrame
-        add(interactivePanel);
+//        add(interactivePanel);
     }
 
     private void handleButtonPress(boolean result) {
@@ -433,19 +493,80 @@ public class GameBoard extends JFrame {
         javax.swing.SwingUtilities.invokeLater(() -> {
             GameBoard frame = new GameBoard();
             frame.setVisible(true);
+
+            //These are just for testing, remember to use javax.swing.SwingUtilities.invokeLater(() ->
+            // in the main loop
+            int currentPlayerId = 1;
+            String blockName = "BA";
+            int currentPrice = 50;
+            int currentLevel = 3;
+            String propName = "Boardwalk";
+            int tax = 150;
+            int ownerId = 2;
+            String message = "You received a Destiny card!";
+
+            OutputPresenter.notifyStartOfRound();
+            OutputPresenter.notifyTurn(currentPlayerId);
+            OutputPresenter.notifyMovement(currentPlayerId, blockName);
+            OutputPresenter.notifyOwnerUpgraded(currentPlayerId, "invested", propName, currentPrice, currentLevel);
+            OutputPresenter.notifyOwnerIgnored(currentPlayerId, propName);
+            OutputPresenter.notifyPasserbyPaid(currentPlayerId, tax, ownerId, propName);
+            OutputPresenter.notifyMaxLevel(propName);
+            OutputPresenter.notifyInsufficientFund();
+            OutputPresenter.notifyPassingGO(currentPlayerId);
+            OutputPresenter.notifyGoToExam(currentPlayerId);
+            OutputPresenter.notifyRemainingStopRounds(currentPlayerId, 2);
+            OutputPresenter.notifyDestiny(message);
+
+            PlayerInfoPanel.updatePanel(1, 1000);
+            PlayerInfoPanel.updatePanel(2, 1000);
+            PlayerInfoPanel.updatePanel(2, 3000);
+            PlayerInfoPanel.updatePanel(3, 3000);
+            PlayerInfoPanel.updatePanel(4, 3000);
+
+
+            frame.bankrupt(1);
         });
     }
     public void deletePlayer(int playerId)
     {}
     public void blockReplace(int blockId, int ownerId, int nextLevel) {
+        ownerId += 1;
         // Modify the GameBoard instance as needed
 //        images.replace(blockId + "_" + currLevel, images.get(blockId + "_" + nextLevel));
-        images.replace("104_0", images.get("105_0"));
+         blocklocations.get(blockId);
+        blocks.replace(blockId + "_", images.get("105_0"));
         repaint();
     }
 
     public void playerMove(int playerId, int nextBlockId) {
+        playerId += 1;
         playerPosition.replace(playerId, playerLocation.get(playerId).get(nextBlockId));
+    }
+
+    public void rollDice(int playerId, int value){
+        interactivePanelImage = images.get("p" + playerId + "_roll");
+        repaint();
+        Boolean decision = getPlayerDecision();
+        if (decision != null) {
+            if (decision) {
+                System.out.println("Yes");
+                interactivePanelImage = images.get("p" + playerId + "_" + value);
+                repaint();
+            } else {
+                // player pressed 'N'
+            }
+            resetPlayerDecision(); // reset after reading
+        }
+    }
+
+    public void bankrupt(int playerId){
+        playerId += 1;
+        blocks.remove("player" + playerId);
+        repaint();
+
+        //
+        // drawImage();
     }
 
     public void updateAll(GameData data) {
@@ -467,7 +588,6 @@ public class GameBoard extends JFrame {
 
 
     }
-
 }
 
 
