@@ -53,10 +53,9 @@ public class Main {
                 OutputPresenter.notifyTurn(currentplayer.getUserId());
                 // Check if the current player is movable
                 if(!controller.isCurrentMovable()) {
-                    OutputPresenter.notifyRemainingStopRounds(currentplayer.getUserId(), StatusChecker.getRemainRounds(currentplayer));
+                    OutputPresenter.notifyRemainingStopRounds(currentplayer.getUserId(), -currentplayer.getStatus().get("status"));
 //                    System.out.println("Player " + data.currentPlayerIndex + " cannot move.");
                     controller.settleOneRound();
-                    frame.updateAll(data);
                     continue;
                 }
 
@@ -85,7 +84,6 @@ public class Main {
 
                 // Settle the round and move to the next player
                 controller.settleOneRound();
-                frame.updateAll(data);
             }
 
             // Finish the game and determine the winner

@@ -175,16 +175,14 @@ public class GameController {
      */
     public Player finish() {
         if (data.currentPlayers.size() == 0) {
-            System.out.println("All player has broken up, there is no winner!");
             return null;
-
+//            System.out.println("All player has broken up, there is no winner!");
         }
 
         if (data.currentPlayers.size() == 1) {
             System.out.println("Game over! Winner is Player " + data.currentPlayers.get(0).getUserId());
-            return data.currentPlayers.get(0);
+            return;
         }
-        
 
         Player winner = data.currentPlayers.get(0);
         for (int i = 0; i < data.currentPlayers.size(); i++) {
@@ -192,7 +190,6 @@ public class GameController {
                 winner = data.currentPlayers.get(i);
             }
         }
-
         StringBuilder message = new StringBuilder("Game over! winner is ");
         for (Player player: data.currentPlayers) {
             if (player.getMoney() == winner.getMoney())
@@ -201,6 +198,5 @@ public class GameController {
         message.delete(message.length()-5, message.length());
         message.append("!");
         System.out.println(message);
-        return winner;
     }
 }
