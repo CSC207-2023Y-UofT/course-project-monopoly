@@ -30,6 +30,9 @@ public class GameBoard extends JFrame{
     private static final int SIDEBAR_WIDTH = 400;
     private static final int THREAD_SECTION_HEIGHT = 280;  // bottom half of the sidebar
 
+    private static final int STARTING_BLOCK_ID = 100;
+    private static final int BLOCKS_COUNT = 27;
+
     // The first Hash Map: For file name : image
     public HashMap<String, BufferedImage> blocks;
 
@@ -96,39 +99,41 @@ public class GameBoard extends JFrame{
 
             HashMap<Integer, ArrayList<Integer>> temp_hash = new HashMap<>();
 
-            for (int j = 100; j <= 127; j++) {
-                if (j == 100) {
+            for (int j = STARTING_BLOCK_ID; j <= STARTING_BLOCK_ID + BLOCKS_COUNT; j++) {
+                if (j == STARTING_BLOCK_ID) {
                     ArrayList<Integer> location = new ArrayList<>(Arrays.asList(startX, startY));
                     temp_hash.put(j, location);
                     startX += 90;
                 }
 
-                if (j == 101) {
+                if (j == STARTING_BLOCK_ID + 1) {
                     ArrayList<Integer> location = new ArrayList<>(Arrays.asList(startX, startY));
                     temp_hash.put(j, location);
                     startX += 94;
                 }
 
-                if (j >= 102 && j <= 112) {
+                // These 12 are on the right side
+                if (j >= STARTING_BLOCK_ID + 2 && j <= STARTING_BLOCK_ID + 12) {
                     ArrayList<Integer> location = new ArrayList<>(Arrays.asList(startX, startY));
                     temp_hash.put(j, location);
                     startY += 80;
                 }
 
-                if (j == 113) {
+                // Right bottom corner
+                if (j == STARTING_BLOCK_ID + 13) {
                     startY -= 65;
                     startX -= 94;
                     ArrayList<Integer> location = new ArrayList<>(Arrays.asList(startX, startY));
                     temp_hash.put(j, location);
                 }
 
-                if (j == 114) {
+                if (j == STARTING_BLOCK_ID + 14) {
                     startX -= 90;
                     ArrayList<Integer> location = new ArrayList<>(Arrays.asList(startX, startY));
                     temp_hash.put(j, location);
                 }
 
-                if (j == 115) {
+                if (j == STARTING_BLOCK_ID + 15) {
                     startX -= 90;
                     ArrayList<Integer> location = new ArrayList<>(Arrays.asList(startX, startY));
                     temp_hash.put(j, location);
@@ -136,13 +141,14 @@ public class GameBoard extends JFrame{
                     startY -= 10;
                 }
 
-                if (j >= 116 && j <= 126) {
+                if (j >= STARTING_BLOCK_ID + 16 && j <= STARTING_BLOCK_ID + 26) {
                     ArrayList<Integer> location = new ArrayList<>(Arrays.asList(startX, startY));
                     temp_hash.put(j, location);
                     startY -= 80;
                 }
 
-                if (j == 127) {
+                // Final block
+                if (j == STARTING_BLOCK_ID + BLOCKS_COUNT) {
                     startY += 78;
                     startX += 94;
                     ArrayList<Integer> location = new ArrayList<>(Arrays.asList(startX, startY));
@@ -156,7 +162,7 @@ public class GameBoard extends JFrame{
         // Initialize player Position
         playerPosition = new HashMap<>();
         for (int i = 1; i <= 4; i++) {
-            playerPosition.put(i, playerLocation.get(i).get(100));
+            playerPosition.put(i, playerLocation.get(i).get(STARTING_BLOCK_ID));
         }
 
         File folderBlocks = new File(BLOCK_PATH);
@@ -369,47 +375,59 @@ public class GameBoard extends JFrame{
      * at the same time fill in a hash map for later application
      */
     private void drawBlocks(Graphics g) {
-        putBlockLocation(100, 888, 13);
-        drawImage(g, blocks.get("100_go"), 888, 13);
+        putBlockLocation(STARTING_BLOCK_ID, 888, 13);
+        drawImage(g, blocks.get(String.format("%d_go", STARTING_BLOCK_ID)), 888, 13);
 
 
         // Top right
-        putBlockLocation(101, 960, 13);
-        drawImage(g, blocks.get("101_0_0"), 960, 13);
+        putBlockLocation(STARTING_BLOCK_ID + 1, 960, 13);
+        drawImage(g, blocks.get(String.format("%d_0_0", STARTING_BLOCK_ID + 1)),
+                960, 13);
 
         // Right
-        for (int i = 102; i <= 112; i++) {
-            drawImage(g, blocks.get(i + "_0_0"), 960, 90 + (i - 102) * 80);
+        for (int i = STARTING_BLOCK_ID + 2; i <= STARTING_BLOCK_ID + 12; i++) {
+            drawImage(g, blocks.get(String.format("%d_0_0", i)),
+                    960, 90 + (i - 102) * 80);
             putBlockLocation(i, 960, 90 + (i - 102) * 80);
         }
 
         // Bottom right
-        drawImage(g, blocks.get("113_0_0"), 960, 90 + (112 - 102) * 80);
-        putBlockLocation(113, 960, 90 + (113 - 102) * 80);
+        putBlockLocation(STARTING_BLOCK_ID + 13, 960, 90 + (113 - 102) * 80);
+        drawImage(g, blocks.get(String.format("%d_0_0", STARTING_BLOCK_ID + 13)),
+                960, 90 + (112 - 102) * 80);
 
         // Bottom Middle
-        drawImage(g, blocks.get("114_examcentre"), 888, 90 + (112 - 102) * 80);
-        putBlockLocation(114, 888, 90 + (112 - 102) * 80);
+        putBlockLocation(STARTING_BLOCK_ID + 14, 888, 90 + (112 - 102) * 80);
+        drawImage(g, blocks.get(String.format("%d_examcentre", STARTING_BLOCK_ID + 14)),
+                888, 90 + (112 - 102) * 80);
 
         // Bottom left
-        drawImage(g, blocks.get("115_0_0"), 438, 90 + (112 - 102) * 80);
-        putBlockLocation(114, 438, 90 + (112 - 102) * 80);
+        putBlockLocation(STARTING_BLOCK_ID + 15, 438, 90 + (112 - 102) * 80);
+        drawImage(g, blocks.get(String.format("%d_0_0", STARTING_BLOCK_ID + 15)),
+                438, 90 + (112 - 102) * 80);
 
         // Left
-        for (int i = 126; i >= 116; i--) {
-            drawImage(g, blocks.get(i + "_0_0"), 438, 90 + (126 - i) * 80);
-            putBlockLocation(114, 438, 90 + (126 - i) * 80);
+        for (int i = STARTING_BLOCK_ID + 26; i >= STARTING_BLOCK_ID + 16; i--) {
+            putBlockLocation(i, 438, 90 + (126 - i) * 80);
+            drawImage(g, blocks.get(String.format("%d_0_0", i)),
+                    438, 90 + (126 - i) * 80);
+
         }
 
         // Top left
-        drawImage(g, blocks.get("127_0_0"), 438, 13);
-        putBlockLocation(127, 438, 13);
+        drawImage(g, blocks.get(String.format("%d_0_0", STARTING_BLOCK_ID + BLOCKS_COUNT)),
+                438, 13);
+        putBlockLocation(STARTING_BLOCK_ID + BLOCKS_COUNT, 438, 13);
 
         // Special Images
-        drawImage(g, blocks.get("106_ttc"), 960, 90 + (106 - 102) * 80);
-        drawImage(g, blocks.get("110_destiny1"), 960, 90 + (110 - 102) * 80);
-        drawImage(g, blocks.get("118_destiny2"), 438, 90 + (126 - 118) * 80);
-        drawImage(g, blocks.get("125_destiny3"), 438, 90 + (126 - 125) * 80);
+        drawImage(g, blocks.get(String.format("%d_ttc", STARTING_BLOCK_ID + 6)),
+                960, 90 + (106 - 102) * 80);
+        drawImage(g, blocks.get(String.format("%d_destiny1", STARTING_BLOCK_ID + 10)),
+                960, 90 + (110 - 102) * 80);
+        drawImage(g, blocks.get(String.format("%d_destiny2", STARTING_BLOCK_ID + 18)),
+                438, 90 + (126 - 118) * 80);
+        drawImage(g, blocks.get(String.format("%d_destiny3", STARTING_BLOCK_ID + 25)),
+                438, 90 + (126 - 125) * 80);
     }
 
 
