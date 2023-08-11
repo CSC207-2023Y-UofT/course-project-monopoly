@@ -228,6 +228,25 @@ public class GameBoard extends JFrame {
             }
         }
         interactivePanelImage = images.get("p1_roll");
+
+        File folderInteractive = new File("data/images/infopanel"); // Replace with your directory path
+        File[] listOfFileInteractive = folderInteractive.listFiles();
+
+        if (listOfFileInteractive != null) {
+            for (File file : listOfFileInteractive) {
+                if (file.isFile() && (file.getName().endsWith(".png") || file.getName().endsWith(".jpg"))) { // Add more extensions if needed
+                    try {
+                        BufferedImage img = ImageIO.read(file);
+                        String nameWithoutExtension = file.getName().substring(0, file.getName().lastIndexOf('.'));
+                        images.put(nameWithoutExtension, img);
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
         blocks = images;
 
 
@@ -241,17 +260,16 @@ public class GameBoard extends JFrame {
                 drawBlocks(g);
                 drawPlayers(g);
                 drawInteractivePanel(g);
+                drawPlayersInfoPanel(g);
             }
         };
-        panel.setPreferredSize(new Dimension(1920, 1080));
 
+        setUpPlayerTextAreas();
         setContentPane(panel);
 
         // Add the Text Area
         setLayout(null);
         setUpGameThreadTextArea();
-        setUpPlayerTextAreas();
-
 
 
         this.addKeyListener(new KeyAdapter() {
@@ -344,18 +362,6 @@ public class GameBoard extends JFrame {
         // Create a new panel for the buttons
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT)); // Set the FlowLayout to align to the right
         buttonPanel.setBounds(getWidth() - 200, 10, 180, 40); // Increase the width
-
-        for (String key : images.keySet()) {
-            System.out.println(key);
-        }
-    }
-
-
-    /**
-     * Sets up the button panel
-     */
-    private void setUpButtonPanel() {
-        // Code to set up the button panel if needed
     }
 
     /**
@@ -437,8 +443,7 @@ public class GameBoard extends JFrame {
 
     private void drawPlayersInfoPanel(Graphics g){
         for (int i = 1; i <= 4; i++){
-            ArrayList<Integer> Location = playerPosition.get(i);
-            drawImage(g, blocks.get("player" + i), Location.get(0) , Location.get(1));
+            drawImage(g, blocks.get("player" + i + "_information_panel"),0, 17 + (i-1) * 160);
         }
     }
 
@@ -526,6 +531,8 @@ public class GameBoard extends JFrame {
 
 
             frame.bankrupt(1);
+            frame.rollDice(1, 1);
+            System.out.println(frame.getPlayerDecision());
         });
     }
     public void deletePlayer(int playerId)
@@ -563,10 +570,9 @@ public class GameBoard extends JFrame {
     public void bankrupt(int playerId){
         playerId += 1;
         blocks.remove("player" + playerId);
+        blocks.replace("player" + playerId + "_information_panel", images.get("bankruptcy"));
         repaint();
 
-        //
-        // drawImage();
     }
 
     public void updateAll(GameData data) {
