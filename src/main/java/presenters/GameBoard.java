@@ -172,7 +172,7 @@ public class GameBoard extends JFrame{
         }
 
 
-        File folder = new File("data/images/blocks (test)"); // Replace with your directory path
+        File folder = new File("data/images/blocks"); // Replace with your directory path
         File[] listOfFiles = folder.listFiles();
 
         if (listOfFiles != null) {
@@ -368,43 +368,42 @@ public class GameBoard extends JFrame{
 
         // Top right
         putBlockLocation(101, 960, 13);
-        drawImage(g, blocks.get("101_0"), 960, 13);
+        drawImage(g, blocks.get("101_0_0"), 960, 13);
 
 //      //Right side
         for (int i = 102; i <= 112; i++) {
-            drawImage(g, blocks.get(i + "_0"), 960, 90 + (i - 102) * 80);
+            drawImage(g, blocks.get(i + "_0_0"), 960, 90 + (i - 102) * 80);
             putBlockLocation(i, 960, 90 + (i - 102) * 80);
         }
 
         //Bottom right
-        drawImage(g, blocks.get("113_0"), 960, 90 + (112 - 102) * 80);
+        drawImage(g, blocks.get("113_0_0"), 960, 90 + (112 - 102) * 80);
         putBlockLocation(113, 960, 90 + (113 - 102) * 80);
 
         //Bottom Middle
-        drawImage(g, blocks.get("114_ex"), 888, 90 + (112 - 102) * 80);
+        drawImage(g, blocks.get("114_examcentre"), 888, 90 + (112 - 102) * 80);
         putBlockLocation(114, 888, 90 + (112 - 102) * 80);
 
         //Bottom left
-        drawImage(g, blocks.get("115_0"), 438, 90 + (112 - 102) * 80);
+        drawImage(g, blocks.get("115_0_0"), 438, 90 + (112 - 102) * 80);
         putBlockLocation(114, 438, 90 + (112 - 102) * 80);
 
 
         //Left side
         for (int i = 126; i >= 116; i--) {
-            drawImage(g, images.get(i + "_0"), 438, 90 + (126 - i) * 80);
+            drawImage(g, blocks.get(i + "_0_0"), 438, 90 + (126 - i) * 80);
             putBlockLocation(114, 438, 90 + (126 - i) * 80);
         }
 
         //Top left
-        drawImage(g, images.get("127_0"), 438, 13);
+        drawImage(g, blocks.get("127_0_0"), 438, 13);
         putBlockLocation(127, 438, 13);
 
         //special ones
-        drawImage(g, images.get("106_ttc"), 960, 90 + (106 - 102) * 80);
-        drawImage(g, images.get("110_des"), 960, 90 + (110 - 102) * 80);
-        drawImage(g, images.get("118_des"), 438, 90 + (126 - 118) * 80);
-        drawImage(g, images.get("125_des"), 438, 90 + (126 - 125) * 80);
-
+        drawImage(g, blocks.get("106_ttc"), 960, 90 + (106 - 102) * 80);
+        drawImage(g, blocks.get("110_destiny1"), 960, 90 + (110 - 102) * 80);
+        drawImage(g, blocks.get("118_destiny2"), 438, 90 + (126 - 118) * 80);
+        drawImage(g, blocks.get("125_destiny3"), 438, 90 + (126 - 125) * 80);
     }
 
 
@@ -516,11 +515,18 @@ public class GameBoard extends JFrame{
 
             System.out.println("0");
 
-            frame.rollDice(1, 1);
+//            frame.rollDice(1, 1);
 
             System.out.println("1");
-            frame.rollDice(2, 2);
+//            frame.rollDice(2, 2);
             System.out.println("2");
+
+            frame.blockReplace(101, 0, 3);
+            frame.blockReplace(113, 2, 2);
+            frame.blockReplace(103, 1, 2);
+            frame.blockReplace(105, 3, 3);
+
+
         });
     }
 
@@ -529,9 +535,7 @@ public class GameBoard extends JFrame{
         //TODO
         ownerId += 1;
         // Modify the GameBoard instance as needed
-//        images.replace(blockId + "_" + currLevel, images.get(blockId + "_" + nextLevel));
-        blocklocations.get(blockId);
-        blocks.replace(blockId + "_", images.get(" "));
+        blocks.replace(blockId + "_0_0", images.get(blockId + "_" + ownerId + "_" + nextLevel));
         repaint();
     }
 
@@ -576,7 +580,7 @@ public class GameBoard extends JFrame{
         for (Block block : data.blocks) {
             if (!(block instanceof Property))
                 continue;
-//            this.blockReplace(block.getId(), ((Property) block).getOwner().getUserId(), ((Property) block).getLevel());
+            this.blockReplace(block.getId(), ((Property) block).getOwner().getUserId(), ((Property) block).getLevel());
         }
     }
 }
