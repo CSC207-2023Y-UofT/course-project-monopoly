@@ -1,6 +1,8 @@
 package controllers;
 
 import entities.*;
+import presenters.InputPresenter;
+import presenters.OutputPresenter;
 import usecases.*;
 import usecases.impactors.PositionImpactor;
 import usecases.impactors.PropertyImpactor;
@@ -158,9 +160,12 @@ public class GameController {
      */
     public boolean playerRelativeWalk()
     {
+        int points = randomDice();
+        boolean flag = PositionImpactor.relativeMove(data, points);
+        String message = "Player " + data.currentPlayer.getUserId() + " moved to " + data.currentPlayer.getPosition();
+        OutputPresenter.notifyRandomDice(points);
 
-        boolean flag = PositionImpactor.relativeMove(data, randomDice());
-        System.out.println("Player " + data.currentPlayer.getUserId() + " moved to " + data.currentPlayer.getPosition());
+//        System.out.println("Player " + data.currentPlayer.getUserId() + " moved to " + data.currentPlayer.getPosition());
         return flag;
     }
 
@@ -168,9 +173,10 @@ public class GameController {
     /**
      * Finish the game and display the winner or a message if no winner is found.
      */
-    public void finish() {
+    public Player finish() {
         if (data.currentPlayers.size() == 0) {
-            System.out.println("All player has broken up, there is no winner!");
+            return null;
+//            System.out.println("All player has broken up, there is no winner!");
         }
 
         if (data.currentPlayers.size() == 1) {
@@ -193,5 +199,4 @@ public class GameController {
         message.append("!");
         System.out.println(message);
     }
-
 }
