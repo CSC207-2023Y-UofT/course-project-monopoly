@@ -25,4 +25,8 @@ public class StatusChecker {
         int status = player.getStatus().get("movable");
         return status >= 0;
     }
+
+    public static int getRemainRounds(Player player) {
+        return -1 * player.getStatus().get("movable");
+    }
 }

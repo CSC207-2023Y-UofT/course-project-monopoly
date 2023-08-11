@@ -39,7 +39,9 @@ public class OwnerPropertyUseCase {
             OutputPresenter.notifyOwnerIgnored(playerId, propName);
             return;
         }
-
+/**
+ *  Loop
+ */
         // The player need to input 'Y' for property buy/upgrade, or 'N' for ignoring.
         boolean choice = InputPresenter.ownerChooseAtProperty(verb, propName, currPrice);
 

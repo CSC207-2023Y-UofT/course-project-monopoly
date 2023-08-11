@@ -17,15 +17,17 @@ public class PPTInteractor implements UseCaseInteractor {
      */
     @Override
     public void interact(Block block, GameData data) {
+        int id = data.currentPlayer.getUserId() + 1;
         // Check if the player is the owner of the property
         if (OwnerIdentifier.isOwner(data.currentPlayer, (Property) block)) {
             // Player is the owner, upgrade the property
             OwnerPropertyUseCase.ownerUpgrade(data.currentPlayer, (Property) block);
+
         }
         else {
             // Player is not the owner, interact with the property as a passerby
-            PasserbyUseCase.passerbyArrival(data.currentPlayer, (Property) block,
-                    ((Property) block).getOwner());
+            PasserbyUseCase.passerbyArrival(data.currentPlayer, (Property) block);
+
         }
     }
 }

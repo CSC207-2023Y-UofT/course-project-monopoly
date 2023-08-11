@@ -3,7 +3,11 @@ package usecases.interactors;
 import entities.Block;
 import entities.GameData;
 import entities.UseCaseInteractor;
+import presenters.OutputPresenter;
 import usecases.impactors.StatusImpactor;
+import presenters.*;
+
+import javax.swing.*;
 
 /**
  * The ECInteractor class represents an interactor that handles the exam center interaction in the game.
@@ -20,9 +24,8 @@ public class ECInteractor implements UseCaseInteractor {
      */
     @Override
     public void interact(Block block, GameData data) {
-        // Player will be stopped for 2 rounds
         StatusImpactor.changeStatus(data.currentPlayer,"movable",-2);
-        System.out.println("Player " + data.currentPlayer.getUserId() + " is in the exam center");
-        // UI: Update the current player's movable status to show they are in the exam center
+        OutputPresenter.notifyGoToExam(data.currentPlayer.getUserId() );
+
     }
 }

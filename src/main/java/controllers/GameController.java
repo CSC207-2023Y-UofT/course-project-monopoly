@@ -1,6 +1,8 @@
 package controllers;
 
 import entities.*;
+import presenters.InputPresenter;
+import presenters.OutputPresenter;
 import usecases.*;
 import usecases.impactors.PositionImpactor;
 import usecases.impactors.PropertyImpactor;
@@ -58,7 +60,10 @@ public class GameController {
         }
 
     }
-
+    public void updatePlayerMoveStatus()
+    {
+        StatusImpactor.changeStatus(data.currentPlayer);
+    }
     /**
      * Get the player with the maximum amount of money.
      *
@@ -110,7 +115,6 @@ public class GameController {
     public void settleOneRound()
     {
         data.gameRounds += 1;
-        StatusImpactor.changeStatus(data.currentPlayer);
 
         for(int i = 1; i <= data.currentPlayers.size(); i++)
         {
@@ -156,11 +160,13 @@ public class GameController {
      *
      * @return True if the movement was successful, otherwise false.
      */
-    public boolean playerRelativeWalk()
+    public boolean playerRelativeWalk(int points)
     {
+        boolean flag = PositionImpactor.relativeMove(data, points);
+        String message = "Player " + data.currentPlayer.getUserId() + " moved to " + data.currentPlayer.getPosition();
+        OutputPresenter.notifyRandomDice(points);
 
-        boolean flag = PositionImpactor.relativeMove(data, randomDice());
-        System.out.println("Player " + data.currentPlayer.getUserId() + " moved to " + data.currentPlayer.getPosition());
+//        System.out.println("Player " + data.currentPlayer.getUserId() + " moved to " + data.currentPlayer.getPosition());
         return flag;
     }
 
@@ -168,15 +174,17 @@ public class GameController {
     /**
      * Finish the game and display the winner or a message if no winner is found.
      */
-    public void finish() {
+    public Player finish() {
         if (data.currentPlayers.size() == 0) {
-            System.out.println("All player has broken up, there is no winner!");
+            return null;
+//            System.out.println("All player has broken up, there is no winner!");
         }
 
         if (data.currentPlayers.size() == 1) {
-            System.out.println("Game over! Winner is Player " + data.currentPlayers.get(0).getUserId());
-            return;
+//            System.out.println("Game over! Winner is Player " + data.currentPlayers.get(0).getUserId());
+            return data.currentPlayers.get(0);
         }
+        
 
         Player winner = data.currentPlayers.get(0);
         for (int i = 0; i < data.currentPlayers.size(); i++) {
@@ -184,14 +192,14 @@ public class GameController {
                 winner = data.currentPlayers.get(i);
             }
         }
-        StringBuilder message = new StringBuilder("Game over! winner is ");
-        for (Player player: data.currentPlayers) {
-            if (player.getMoney() == winner.getMoney())
-                message.append("Player ").append(player.getUserId()).append(" and ");
-        }
-        message.delete(message.length()-5, message.length());
-        message.append("!");
-        System.out.println(message);
+        return winner;
+//        StringBuilder message = new StringBuilder("Game over! winner is ");
+//        for (Player player: data.currentPlayers) {
+//            if (player.getMoney() == winner.getMoney())
+//                message.append("Player ").append(player.getUserId()).append(" and ");
+//        }
+//        message.delete(message.length()-5, message.length());
+//        message.append("!");
+//        System.out.println(message);
     }
-
 }

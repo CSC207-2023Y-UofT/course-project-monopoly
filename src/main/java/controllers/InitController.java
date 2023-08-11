@@ -14,6 +14,7 @@ import java.util.*;
 public class InitController {
     private static final String DELIMITER = ",(?=([^\"]*\"[^\"]*\")*[^\"]*$)";
     private static final int INIT_MONEY = 1500;
+    private static final int PLAYER_NUM = 4;
 
     /**
      * Initializes the GameData based on the provided files and user input.
@@ -52,8 +53,7 @@ public class InitController {
         // player
         Scanner scanner = new Scanner(System.in);
         ArrayList<Player> players = new ArrayList<>();
-        System.out.println("Enter the number of players: ");
-        int num = scanner.nextInt();
+        int num = PLAYER_NUM;
         for (int i = 0; i < num; i++) {
             Player player = new Player(i, INIT_MONEY);
             StatusImpactor.initStatus(player);

@@ -1,6 +1,8 @@
 package usecases.impactors;
 
 import entities.Player;
+import presenters.InputPresenter;
+import presenters.OutputPresenter;
 import presenters.PlayerInfoPanel;
 
 /**
