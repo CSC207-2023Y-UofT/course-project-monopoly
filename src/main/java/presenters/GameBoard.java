@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.HashMap;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 
 /**
@@ -24,7 +26,8 @@ import java.util.HashMap;
  * and game-related drawings.
  */
 public class GameBoard extends JFrame {
-    private List<ImageHolder> imagess;
+
+    private static boolean buttonResult = false;
 
     public HashMap<String, BufferedImage> getImages() {
         return images;
@@ -58,7 +61,6 @@ public class GameBoard extends JFrame {
      * Initializes the background image and sets up the main frame, game thread text area, and player text areas.
      */
     public GameBoard() {
-
 
         // Set the frame size
         setSize(1920, 1080);
@@ -158,6 +160,7 @@ public class GameBoard extends JFrame {
             }
         }
 
+
         //initialize player Position
         playerPosition = new HashMap<>();
         for (int i = 1; i <= 4; i++){
@@ -201,9 +204,6 @@ public class GameBoard extends JFrame {
             }
         }
 
-        //initialize playerLocation
-
-
 
         // Paint the board
         JPanel panel = new JPanel() {
@@ -218,17 +218,6 @@ public class GameBoard extends JFrame {
         };
         panel.setPreferredSize(new Dimension(1920, 1080));
 
-//        imagess = new ArrayList<>();
-//        add(new JPanel() {
-//            @Override
-//            protected void paintComponent(Graphics g) {
-//                super.paintComponent(g);
-//                g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
-//                drawBlocks(g);
-//                drawPlayers(g);
-//            }
-//        });
-
         setContentPane(panel);
 
         // Add the Text Area
@@ -236,6 +225,7 @@ public class GameBoard extends JFrame {
         setUpGameThreadTextArea();
         setUpPlayerTextAreas();
 
+        addInteractivePanel();  // This will ensure every GameBoard instance gets an interactive panel
     }
 
 
@@ -381,50 +371,10 @@ public class GameBoard extends JFrame {
 
     }
 
-    /**
-     * Draws the game title on the Graphics context.
-     */
-    private void drawGameTitle(Graphics g) {
-        // Set the title font, style and size
-        Font titleFont = new Font("Arial", Font.BOLD, 30);
-        g.setFont(titleFont);
-
-        // Get the width and height of the string with the current font to position it correctly
-        FontMetrics fm = g.getFontMetrics();
-        int titleWidth = fm.stringWidth("Monopoly: Adventure at UofT");
-        int titleHeight = fm.getAscent();  // This gives the height from base to top of the font
-
-        // Calculate the position to center the title
-        int x = (getWidth() - titleWidth) / 2;
-        int y = titleHeight + 20;  // A little padding from the top
-
-        // Set color for the title
-        g.setColor(new Color(173, 216, 230));  // Light blue color
-        g.drawString("Monopoly: Adventure at UofT", x, y);
-    }
-
 
     /**
      * Draws the game thread title on the Graphics context.
      */
-    private void drawGameThreadTitle(Graphics g) {
-        // Set the title font, style and size
-        Font titleFont = new Font("Arial", Font.BOLD, 15);
-        g.setFont(titleFont);
-
-        // Get the width and height of the string with the current font to position it correctly
-        FontMetrics fm = g.getFontMetrics();
-        int titleWidth = fm.stringWidth("Game Thread");
-
-        // Calculate the position to center the title
-        int x = 150 - titleWidth / 2 ;
-        int y = 525;  // A little padding from the top
-
-        // Set color for the title
-        g.setColor(new Color(173, 216, 230));  // Light blue color
-        g.drawString("Game Thread", x, y);
-    }
-
     private void drawPlayers(Graphics g){
         for (int i = 1; i <= 4; i++){
             ArrayList<Integer> Location = playerPosition.get(i);
@@ -436,56 +386,58 @@ public class GameBoard extends JFrame {
     /**
      * Main method to run the GameBoard; Just for testing
      */
+    private void addInteractivePanel() {
+        // Interactive panel
+        JPanel interactivePanel = new JPanel();
+        interactivePanel.setOpaque(false);  // Set the panel to be transparent
+
+        // Button1 - will set the result to True
+        JButton button1 = new JButton("Yes");
+        button1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleButtonPress(true);
+            }
+        });
+
+        // Button2 - will set the result to False
+        JButton button2 = new JButton("No");
+        button2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                handleButtonPress(false);
+            }
+        });
+
+        interactivePanel.add(button1);
+        interactivePanel.add(button2);
+
+        // Set panel's position and size
+        interactivePanel.setBounds(1650, 270, 130, 80);// x, y, width, height
+
+        // Add interactive panel to the JFrame
+        add(interactivePanel);
+    }
+
+    private void handleButtonPress(boolean result) {
+        buttonResult = result;
+        if (result) {
+            System.out.println("Yes was pressed");
+        } else {
+            System.out.println("No was pressed");
+        }
+    }
     public static void main(String[] args) {
+
         // Create an instance of GameBoard class
         javax.swing.SwingUtilities.invokeLater(() -> {
             GameBoard frame = new GameBoard();
             frame.setVisible(true);
-
-            //These are just for testing, remember to use javax.swing.SwingUtilities.invokeLater(() ->
-            // in the main loop
-            int currentPlayerId = 1;
-            String blockName = "BA";
-            int currentPrice = 50;
-            int currentLevel = 3;
-            String propName = "Boardwalk";
-            int tax = 150;
-            int ownerId = 2;
-            String message = "You received a Destiny card!";
-
-            //Note from Noah:
-            // Example method calls from the OutputPresenter class
-            OutputPresenter.notifyStartOfRound();
-            OutputPresenter.notifyTurn(currentPlayerId);
-            OutputPresenter.notifyMovement(currentPlayerId, blockName);
-            OutputPresenter.notifyOwnerUpgraded(currentPlayerId, "invested", propName, currentPrice, currentLevel);
-            OutputPresenter.notifyOwnerIgnored(currentPlayerId, propName);
-            OutputPresenter.notifyPasserbyPaid(currentPlayerId, tax, ownerId, propName);
-            OutputPresenter.notifyMaxLevel(propName);
-            OutputPresenter.notifyInsufficientFund();
-            OutputPresenter.notifyPassingGO(currentPlayerId);
-            OutputPresenter.notifyGoToExam(currentPlayerId);
-            OutputPresenter.notifyRemainingStopRounds(currentPlayerId, 2);
-            OutputPresenter.notifyDestiny(message);
-
-            PlayerInfoPanel.updatePanel(1, 1000);
-            PlayerInfoPanel.updatePanel(2, 1000);
-            PlayerInfoPanel.updatePanel(2, 3000);
-            PlayerInfoPanel.updatePanel(3, 3000);
-            PlayerInfoPanel.updatePanel(4, 3000);
-
-
-
-            int i = 127;
-            frame.playerMove(1, i);
-            frame.playerMove(2, i);
-            frame.playerMove(3, i);
-            frame.playerMove(4, i);
-
-
         });
     }
-    public void blockReplace(int blockId, int ownerId, int currLevel, int nextLevel) {
+    public void deletePlayer(int playerId)
+    {}
+    public void blockReplace(int blockId, int ownerId, int nextLevel) {
         // Modify the GameBoard instance as needed
 //        images.replace(blockId + "_" + currLevel, images.get(blockId + "_" + nextLevel));
         images.replace("104_0", images.get("105_0"));
@@ -495,6 +447,27 @@ public class GameBoard extends JFrame {
     public void playerMove(int playerId, int nextBlockId) {
         playerPosition.replace(playerId, playerLocation.get(playerId).get(nextBlockId));
     }
+
+    public void updateAll(GameData data) {
+        // update player information
+        for (Player player: data.currentPlayers) {
+            if (!StatusChecker.isPlayable(player))
+                PlayerInfoPanel.playerBankrupt(player.getUserId());
+            else {
+                PlayerInfoPanel.updatePanel(player.getUserId(), player.getMoney());
+                this.playerMove(player.getUserId(), player.getPosition());
+            }
+        }
+        // update block information
+        for (Block block: data.blocks) {
+            if (!(block instanceof Property))
+                continue;
+            this.blockReplace(block.getId(), ((Property) block).getOwner().getUserId(), ((Property) block).getLevel());
+        }
+
+
+    }
+
 }
 
 
