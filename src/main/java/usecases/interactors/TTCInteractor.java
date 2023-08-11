@@ -1,6 +1,7 @@
 package usecases.interactors;
 
 import entities.*;
+import presenters.InputPresenter;
 import usecases.impactors.PositionImpactor;
 
 import java.util.InputMismatchException;
@@ -25,20 +26,21 @@ public class TTCInteractor implements UseCaseInteractor {
         System.out.println("Enter a block id: ");
         Scanner scanner = new Scanner(System.in);
         int blockID;
-        while (true) {
-            try {
-                blockID = scanner.nextInt();
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid id, try again: ");
-                scanner.next();
-                continue;
-            }
-            if (data.getBlockFromId(blockID).getBlockName().equals("ttcstation")) {
-                System.out.println("Invalid move, try again: ");
-                continue;
-            }
-            break;
-        }
+//        while (true) {
+//            try {
+//                blockID = scanner.nextInt();
+//            } catch (InputMismatchException e) {
+//                System.out.println("Invalid id, try again: ");
+//                scanner.next();
+//                continue;
+//            }
+//            if (data.getBlockFromId(blockID).getBlockName().equals("ttcstation")) {
+//                System.out.println("Invalid move, try again: ");
+//                continue;
+//            }
+//            break;
+//        }
+        blockID = InputPresenter.playerChooseBlock();
 
         // Move the player to the chosen block using absoluteMove
         PositionImpactor.absoluteMove(data,blockID);

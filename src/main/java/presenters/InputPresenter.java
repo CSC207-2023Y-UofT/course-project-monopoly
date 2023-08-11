@@ -1,6 +1,8 @@
 package presenters;
 
 import controllers.InteractivePanelAdapter;
+import entities.Player;
+
 import java.util.Scanner;
 
 /**
