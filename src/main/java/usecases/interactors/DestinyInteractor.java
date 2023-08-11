@@ -2,6 +2,7 @@ package usecases.interactors;
 
 import entities.*;
 import usecases.*;
+import presenters.*;
 
 /**
  * The DestinyInteractor class represents an interactor that handles the destiny card interaction in the game.
@@ -18,7 +19,10 @@ public class DestinyInteractor implements UseCaseInteractor {
     @Override
     public void interact(Block block, GameData data) {
         DestinyCard card = DestinyCardChooser.chooseCard((Destiny) block);
-        System.out.println(DestinyCardExecutor.executeCard(data, data.currentPlayer, card));
+//        System.out.println(DestinyCardExecutor.executeCard(data, data.currentPlayer, card));
+        InputPresenter.detiny(data.currentPlayer, card.getMessage());
+        String message = DestinyCardExecutor.executeCard(data, data.currentPlayer, card);
+        OutputPresenter.notifyDestiny(message);
         // UI: Display the result message on the game board
     }
 }

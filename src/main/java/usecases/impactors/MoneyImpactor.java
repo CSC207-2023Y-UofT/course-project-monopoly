@@ -1,6 +1,8 @@
 package usecases.impactors;
 
 import entities.Player;
+import presenters.InputPresenter;
+import presenters.OutputPresenter;
 import presenters.PlayerInfoPanel;
 
 /**
@@ -20,6 +22,7 @@ public class MoneyImpactor {
 
         PlayerInfoPanel.updatePanel(giver.getUserId(), giver.getMoney());
         if (giver.getMoney() < 0) {
+            PlayerInfoPanel.playerBankrupt(giver.getUserId());
             StatusImpactor.changeStatus(giver, "playable", -1);
         }
     }
