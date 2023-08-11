@@ -7,6 +7,8 @@ import presenters.OutputPresenter;
 import usecases.impactors.StatusImpactor;
 import presenters.*;
 
+import javax.swing.*;
+
 /**
  * The ECInteractor class represents an interactor that handles the exam center interaction in the game.
  * It implements the UseCaseInteractor interface to provide a method for interacting with the exam center when a player steps on it.

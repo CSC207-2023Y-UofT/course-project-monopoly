@@ -43,6 +43,7 @@ public class Main {
         // initialize the game board
         javax.swing.SwingUtilities.invokeLater(() -> {
             GameBoard frame = new GameBoard();
+            InputPresenter.setFrame(frame);
             frame.setVisible(true);
             frame.updateAll(data);
 
@@ -87,8 +88,7 @@ public class Main {
 
                 currentBlock.run(data);
                 frame.playerMove(currentplayer.getUserId(), currentplayer.getPosition());
-                int level = ((Property) data.getBlockFromId(currentplayer.getPosition())).getLevel();
-                frame.blockReplace(currentplayer.getPosition(), currentplayer.getUserId(), level);
+
 
                 // Settle the round and move to the next player
                 frame.updateAll(data);

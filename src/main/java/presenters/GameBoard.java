@@ -25,7 +25,7 @@ import java.util.HashMap;
  * This class extends JFrame and handles the main game board display, background images, player text areas,
  * and game-related drawings.
  */
-public class GameBoard extends JFrame {
+public class GameBoard extends JFrame{
     private boolean keyPressed = false; // Instance variable
     private static boolean buttonResult = false;
 
@@ -257,9 +257,11 @@ public class GameBoard extends JFrame {
                 g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
 //              drawGameTitle(g);
                 drawBlocks(g);
+
                 drawPlayers(g);
                 drawInteractivePanel(g);
                 drawPlayersInfoPanel(g);
+
             }
         };
 
@@ -271,16 +273,6 @@ public class GameBoard extends JFrame {
         setUpGameThreadTextArea();
 
 
-        this.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyChar() == 'Y' || e.getKeyChar() == 'y') {
-                    playerDecision = true;
-                } else if (e.getKeyChar() == 'N' || e.getKeyChar() == 'n') {
-                    playerDecision = false;
-                }
-            }
-        });
         this.setFocusable(true); // Ensure the JFrame can receive key events
 
     }
@@ -513,11 +505,11 @@ public class GameBoard extends JFrame {
             OutputPresenter.notifyRemainingStopRounds(currentPlayerId, 2);
             OutputPresenter.notifyDestiny(message);
 
+            PlayerInfoPanel.updatePanel(0, 1000);
             PlayerInfoPanel.updatePanel(1, 1000);
-            PlayerInfoPanel.updatePanel(2, 1000);
+            PlayerInfoPanel.updatePanel(1, 3000);
             PlayerInfoPanel.updatePanel(2, 3000);
             PlayerInfoPanel.updatePanel(3, 3000);
-            PlayerInfoPanel.updatePanel(4, 3000);
 
 
 
@@ -562,6 +554,7 @@ public class GameBoard extends JFrame {
         playerId += 1;
         blocks.remove("player" + playerId);
         blocks.replace("player" + playerId + "_information_panel", images.get("bankruptcy"));
+
         repaint();
 
     }
@@ -584,8 +577,6 @@ public class GameBoard extends JFrame {
                 continue;
 //            this.blockReplace(block.getId(), ((Property) block).getOwner().getUserId(), ((Property) block).getLevel());
         }
-
-
     }
 }
 

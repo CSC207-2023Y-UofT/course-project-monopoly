@@ -6,6 +6,7 @@ import entities.GameData;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import presenters.OutputPresenter;
 import presenters.PlayerInfoPanel;
 import usecases.impactors.PositionImpactor;
 
@@ -59,6 +60,7 @@ class ECInteractorTest {
                 new JTextArea(),
                 new JTextArea()
         )));
+        OutputPresenter.setGameThreadTextArea(new JTextArea());
     }
 
     /**

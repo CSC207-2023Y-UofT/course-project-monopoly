@@ -22,10 +22,17 @@ public class PlayerInfoPanel {
      * @param currSaving the saving of the player after the change.
      */
     public static void updatePanel(int playerId, int currSaving) {
+        playerId++;
         System.out.println("[INFO PANEL] Current saving for Player " + playerId + ": " + currSaving + " TBucks. ");
 
         if (!(allplayerTextAreas == null))
             allplayerTextAreas.get(playerId - 1).setText(currSaving + " TBucks");
+    }
+
+    public static void clearPlayerPanel(int playerId) {
+        playerId++;
+        if (!(allplayerTextAreas == null))
+            allplayerTextAreas.get(playerId -1).setText("");
     }
 
 }

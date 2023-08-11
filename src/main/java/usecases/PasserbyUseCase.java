@@ -13,9 +13,9 @@ public class PasserbyUseCase {
      *
      * @param passer   The player who is passing by the block.
      * @param property The property on this block.
-     * @param owner    The player who owns this property.
      */
-    public static void passerbyArrival(Player passer, Property property, Player owner) {
+    public static void passerbyArrival(Player passer, Property property) {
+        Player owner = property.getOwner();
         int passerId = passer.getUserId();
         int ownerId = owner.getUserId();
 
