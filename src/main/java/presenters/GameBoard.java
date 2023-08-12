@@ -35,6 +35,7 @@ public class GameBoard extends JFrame{
 
     // The first Hash Map: For file name : image
     public HashMap<String, BufferedImage> blocks;
+    public HashMap<String, BufferedImage> images;
 
     // Second Hash Map: For Block ID: Location
     private final HashMap<Integer, ArrayList<Integer>> blockLocations;
@@ -80,7 +81,7 @@ public class GameBoard extends JFrame{
 
         // Setup two hash maps
         // Mapping from String to BufferedImage
-        blocks = new HashMap<>();
+        images = new HashMap<>();
         blockLocations = new HashMap<>();
 
         // Initialize player location.
@@ -177,7 +178,7 @@ public class GameBoard extends JFrame{
                     BufferedImage img = ImageIO.read(file);
                     String nameWithoutExtension = file.getName()
                             .substring(0, file.getName().lastIndexOf('.'));
-                    blocks.put(nameWithoutExtension, img);
+                    images.put(nameWithoutExtension, img);
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -195,7 +196,7 @@ public class GameBoard extends JFrame{
                     BufferedImage img = ImageIO.read(file);
                     String nameWithoutExtension = file.getName()
                             .substring(0, file.getName().lastIndexOf('.'));
-                    blocks.put(nameWithoutExtension, img);
+                    images.put(nameWithoutExtension, img);
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -215,7 +216,7 @@ public class GameBoard extends JFrame{
                     BufferedImage img = ImageIO.read(file);
                     String nameWithoutExtension = file.getName()
                             .substring(0, file.getName().lastIndexOf('.'));
-                    blocks.put(nameWithoutExtension, img);
+                    images.put(nameWithoutExtension, img);
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -236,13 +237,16 @@ public class GameBoard extends JFrame{
                     BufferedImage img = ImageIO.read(file);
                     String nameWithoutExtension = file.getName()
                             .substring(0, file.getName().lastIndexOf('.'));
-                    blocks.put(nameWithoutExtension, img);
+                    images.put(nameWithoutExtension, img);
 
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         }
+
+        blocks = new HashMap<>();
+        blocks.putAll(images);
 
         // Paint the board
         JPanel panel = new JPanel() {
@@ -454,7 +458,7 @@ public class GameBoard extends JFrame{
     public void blockReplace(int blockId, int ownerId, int nextLevel) {
         ownerId += 1;
         // Modify the GameBoard instance as needed
-        blocks.replace(blockId + "_0_0", blocks.get(blockId + "_" + ownerId + "_" + nextLevel));
+        blocks.replace(blockId + "_0_0", images.get(blockId + "_" + ownerId + "_" + nextLevel));
         repaint();
     }
 
@@ -466,14 +470,14 @@ public class GameBoard extends JFrame{
     public void rollDice(int playerId, int value) {
         playerId += 1;
 
-        interactivePanelImage = blocks.get("p" + playerId + "_roll");
+        interactivePanelImage = images.get("p" + playerId + "_roll");
         repaint();
         JOptionPane.showMessageDialog(this,
                 "Roll Dice",
                 "Roll Dice",
                 JOptionPane.INFORMATION_MESSAGE);
 
-        interactivePanelImage = blocks.get("p" + playerId + "_" + value);
+        interactivePanelImage = images.get("p" + playerId + "_" + value);
         repaint();
     }
 
@@ -481,7 +485,7 @@ public class GameBoard extends JFrame{
         playerId += 1;
 
         blocks.remove("player" + playerId);
-        blocks.replace("player" + playerId + "_information_panel", blocks.get("bankruptcy"));
+        blocks.replace("player" + playerId + "_information_panel", images.get("bankruptcy"));
 
         repaint();
 
