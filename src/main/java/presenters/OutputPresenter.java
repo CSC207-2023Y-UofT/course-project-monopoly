@@ -167,7 +167,7 @@ public class OutputPresenter {
 
     public static void notifyRandomDice(int points)
     {
-        gameThreadTextArea.append( "Player " + "  rolls the dice to " + points+ " points." );
+        gameThreadTextArea.append(String.format("Player rolls the dice to %d points", points));
     }
 }
 
