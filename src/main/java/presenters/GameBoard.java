@@ -1,4 +1,6 @@
 package presenters;
+import datagateways.DataManager;
+import datagateways.DestinyCardDataManager;
 import entities.Block;
 import entities.GameData;
 import entities.Player;
@@ -32,6 +34,8 @@ public class GameBoard extends JFrame{
 
     private static final int STARTING_BLOCK_ID = 100;
     private static final int BLOCKS_COUNT = 27;
+
+    private final String POSITION_FILENAME = "data/develop/player_location.csv";
 
     // The first Hash Map: For file name : image
     public HashMap<String, BufferedImage> blocks;
@@ -112,79 +116,18 @@ public class GameBoard extends JFrame{
         // Initialize player current place
         playerPosition = new HashMap<>();
 
+        DataManager<String> manager = new DestinyCardDataManager();
+        ArrayList<String[]> positions = manager.readData(POSITION_FILENAME);
 
-        ArrayList<int[]> playerDefaultLocation = new ArrayList<>();
-
-        playerDefaultLocation.add(new int[]{928, 93});
-        playerDefaultLocation.add(new int[]{960, 93});
-        playerDefaultLocation.add(new int[]{928, 125});
-        playerDefaultLocation.add(new int[]{960, 125});
-
-        for (int i = 1; i <= 4; i++) {
-            // Initialize starting position
-            int startX = playerDefaultLocation.get(i - 1)[0];
-            int startY = playerDefaultLocation.get(i - 1)[1];
-
-            HashMap<Integer, ArrayList<Integer>> temp_hash = new HashMap<>();
-
-            for (int j = STARTING_BLOCK_ID; j <= STARTING_BLOCK_ID + BLOCKS_COUNT; j++) {
-                if (j == STARTING_BLOCK_ID) {
-                    ArrayList<Integer> location = new ArrayList<>(Arrays.asList(startX, startY));
-                    temp_hash.put(j, location);
-                    startX += 90;
-                }
-
-                if (j == STARTING_BLOCK_ID + 1) {
-                    ArrayList<Integer> location = new ArrayList<>(Arrays.asList(startX, startY));
-                    temp_hash.put(j, location);
-                    startX += 94;
-                }
-
-                // These 12 are on the right side
-                if (j >= STARTING_BLOCK_ID + 2 && j <= STARTING_BLOCK_ID + 12) {
-                    ArrayList<Integer> location = new ArrayList<>(Arrays.asList(startX, startY));
-                    temp_hash.put(j, location);
-                    startY += 80;
-                }
-
-                // Right bottom corner
-                if (j == STARTING_BLOCK_ID + 13) {
-                    startY -= 65;
-                    startX -= 94;
-                    ArrayList<Integer> location = new ArrayList<>(Arrays.asList(startX, startY));
-                    temp_hash.put(j, location);
-                }
-
-                if (j == STARTING_BLOCK_ID + 14) {
-                    startX -= 90;
-                    ArrayList<Integer> location = new ArrayList<>(Arrays.asList(startX, startY));
-                    temp_hash.put(j, location);
-                }
-
-                if (j == STARTING_BLOCK_ID + 15) {
-                    startX -= 90;
-                    ArrayList<Integer> location = new ArrayList<>(Arrays.asList(startX, startY));
-                    temp_hash.put(j, location);
-                    startX -= 94;
-                    startY -= 10;
-                }
-
-                if (j >= STARTING_BLOCK_ID + 16 && j <= STARTING_BLOCK_ID + 26) {
-                    ArrayList<Integer> location = new ArrayList<>(Arrays.asList(startX, startY));
-                    temp_hash.put(j, location);
-                    startY -= 80;
-                }
-
-                // Final block
-                if (j == STARTING_BLOCK_ID + BLOCKS_COUNT) {
-                    startY += 78;
-                    startX += 94;
-                    ArrayList<Integer> location = new ArrayList<>(Arrays.asList(startX, startY));
-                    temp_hash.put(j, location);
-                }
-
-                playerLocation.put(i, temp_hash);
-            }
+        for (String[] row: positions) {
+            int playerId = Integer.parseInt(row[0]);
+            if (!playerLocation.containsKey(playerId))
+                playerLocation.put(playerId, new HashMap<>());
+            playerLocation.get(playerId).put(Integer.parseInt(row[1]),
+                    new ArrayList<>(Arrays.asList(
+                            Integer.parseInt(row[2]),
+                            Integer.parseInt(row[3])
+                    )));
         }
 
 
