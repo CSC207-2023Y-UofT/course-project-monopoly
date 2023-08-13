@@ -52,6 +52,7 @@ public class Main {
             // Run the main game loop until the game is over
             while(!controller.isGameOver())
             {
+                frame.updateAll(data);
                 OutputPresenter.notifyStartOfRound();
 
                 Player currentplayer = data.currentPlayer;
@@ -93,9 +94,9 @@ public class Main {
 
                 // Settle the round and move to the next player
                 frame.updateAll(data);
-                JOptionPane.showMessageDialog(frame,"End of your turn", "End of one turn",JOptionPane.INFORMATION_MESSAGE);
                 controller.settleOneRound();
-
+                frame.updateAll(data);
+                JOptionPane.showMessageDialog(frame,"End of your turn", "End of one turn",JOptionPane.INFORMATION_MESSAGE);
             }
 
             // Finish the game and determine the winner

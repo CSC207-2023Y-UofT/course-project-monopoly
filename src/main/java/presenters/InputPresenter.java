@@ -44,7 +44,7 @@ public class InputPresenter {
         while (true) {
             try {
                 userInput = JOptionPane.showInputDialog(frame, "Enter a block to go to: ");
-                blockID = Integer.parseInt(userInput);
+                blockID = 100 + Integer.parseInt(userInput);
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(frame,
                         "Please enter valid block id",

@@ -23,8 +23,6 @@ public class TTCInteractor implements UseCaseInteractor {
      */
     @Override
     public void interact(Block block, GameData data) {
-        System.out.println("Enter a block id: ");
-        Scanner scanner = new Scanner(System.in);
         int blockID;
         blockID = InputPresenter.playerChooseBlock(data);
 
@@ -32,7 +30,6 @@ public class TTCInteractor implements UseCaseInteractor {
         PositionImpactor.absoluteMove(data,blockID);
 
         // UI: Display the player's move using absoluteMove
-        System.out.println("Player " + data.currentPlayer.getUserId() + " moved to " + data.currentPlayer.getPosition());
 
         // Execute the run method of the new block the player moved to
         Block newBlock = data.getBlockFromId(blockID);

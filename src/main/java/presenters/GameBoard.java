@@ -45,23 +45,45 @@ public class GameBoard extends JFrame{
     private final HashMap<Integer, HashMap<Integer, ArrayList<Integer>>> playerLocation;
 
     private final HashMap<Integer, ArrayList<Integer>> playerPosition;
+    // Some configurations
+
+    // Replace with your directory path
+    private final String BLOCK_PATH = "data/images/blocks";
+    private final String PLAYER_PATH = "data/images/players";
+    private final String ROLL_PATH = "data/images/interactive";
+    private final String INTERACTIVE_PATH = "data/images/infopanel";
+    private final String BACKGROUND_IMAGE_PATH = "data/images/background/background.png";
+    // Add more extensions if needed
+    final List<String> VALID_IMAGE_FORMAT = List.of(new String[]{".png", ".jpg"});
+
+    public void loadImages(String filename)
+    {
+        File folder = new File(filename);
+        File[] listOfFiles = folder.listFiles();
+
+        // We would assume that the path does contain something
+        // So an assert statement is needed
+        assert listOfFiles != null;
+        for (File file : listOfFiles) {
+            if (file.isFile() && isValidFormat(file, VALID_IMAGE_FORMAT)) {
+                try {
+                    BufferedImage img = ImageIO.read(file);
+                    String nameWithoutExtension = file.getName()
+                            .substring(0, file.getName().lastIndexOf('.'));
+                    images.put(nameWithoutExtension, img);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
     /**
      * Constructor for GameBoard.
      * Initializes the background image and sets up the main frame, game thread text area, and player text areas.
      */
     public GameBoard() {
-        // Some configurations
-
-        // Replace with your directory path
-        final String BLOCK_PATH = "data/images/blocks";
-        final String PLAYER_PATH = "data/images/players";
-        final String ROLL_PATH = "data/images/interactive";
-        final String INTERACTIVE_PATH = "data/images/infopanel";
-        final String BACKGROUND_IMAGE_PATH = "data/images/background/background.png";
-
-        // Add more extensions if needed
-        final List<String> VALID_IMAGE_FORMAT = List.of(new String[]{".png", ".jpg"});
 
         // Set the frame size
         setSize(1920, 1080);
@@ -70,22 +92,27 @@ public class GameBoard extends JFrame{
         // Center the frame on the screen
         setLocationRelativeTo(null);
 
+        // Set up the main frame
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         try {
             backgroundImage = ImageIO.read(new File(BACKGROUND_IMAGE_PATH));
         } catch (java.io.IOException e) {
             e.printStackTrace();
         }
 
-        // Set up the main frame
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 
         // Setup two hash maps
         // Mapping from String to BufferedImage
         images = new HashMap<>();
         blockLocations = new HashMap<>();
-
-        // Initialize player location.
+        // Initialize player location.(place that players can move to)
         playerLocation = new HashMap<>();
+        // Initialize player current place
+        playerPosition = new HashMap<>();
+
+
         ArrayList<int[]> playerDefaultLocation = new ArrayList<>();
 
         playerDefaultLocation.add(new int[]{928, 93});
@@ -160,90 +187,20 @@ public class GameBoard extends JFrame{
             }
         }
 
-        // Initialize player Position
-        playerPosition = new HashMap<>();
+
+        //initialize the player current position
         for (int i = 1; i <= 4; i++) {
             playerPosition.put(i, playerLocation.get(i).get(STARTING_BLOCK_ID));
         }
 
-        File folderBlocks = new File(BLOCK_PATH);
-        File[] listOfBlocks = folderBlocks.listFiles();
+        // load all the image files
+        loadImages(BLOCK_PATH);
+        loadImages(PLAYER_PATH);
+        loadImages(ROLL_PATH);
+        loadImages(INTERACTIVE_PATH);
 
-        // We would assume that the path does contain something
-        // So an assert statement is needed
-        assert listOfBlocks != null;
-        for (File file : listOfBlocks) {
-            if (file.isFile() && isValidFormat(file, VALID_IMAGE_FORMAT)) {
-                try {
-                    BufferedImage img = ImageIO.read(file);
-                    String nameWithoutExtension = file.getName()
-                            .substring(0, file.getName().lastIndexOf('.'));
-                    images.put(nameWithoutExtension, img);
+        interactivePanelImage = images.get("p1_roll");
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        File folderPlayers = new File(PLAYER_PATH); // Replace with your directory path
-        File[] listOfPlayers = folderPlayers.listFiles();
-
-        assert listOfPlayers != null;
-        for (File file : listOfPlayers) {
-            if (file.isFile() && isValidFormat(file, VALID_IMAGE_FORMAT)) {
-                try {
-                    BufferedImage img = ImageIO.read(file);
-                    String nameWithoutExtension = file.getName()
-                            .substring(0, file.getName().lastIndexOf('.'));
-                    images.put(nameWithoutExtension, img);
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-
-        File folderRoll = new File(ROLL_PATH);
-        File[] listOfRolls = folderRoll.listFiles();
-
-        assert listOfRolls != null;
-
-        for (File file : listOfRolls) {
-            if (file.isFile() && isValidFormat(file, VALID_IMAGE_FORMAT)) {
-                try {
-                    BufferedImage img = ImageIO.read(file);
-                    String nameWithoutExtension = file.getName()
-                            .substring(0, file.getName().lastIndexOf('.'));
-                    images.put(nameWithoutExtension, img);
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-
-        interactivePanelImage = blocks.get("p1_roll");
-
-        File folderInteractive = new File(INTERACTIVE_PATH);
-        File[] listOfInteractives = folderInteractive.listFiles();
-
-        assert listOfInteractives != null;
-
-        for (File file : listOfInteractives) {
-            if (file.isFile() && isValidFormat(file, VALID_IMAGE_FORMAT)) {
-                try {
-                    BufferedImage img = ImageIO.read(file);
-                    String nameWithoutExtension = file.getName()
-                            .substring(0, file.getName().lastIndexOf('.'));
-                    images.put(nameWithoutExtension, img);
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
 
         blocks = new HashMap<>();
         blocks.putAll(images);
