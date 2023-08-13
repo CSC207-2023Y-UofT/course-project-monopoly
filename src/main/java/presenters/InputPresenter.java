@@ -75,7 +75,7 @@ public class InputPresenter {
                 "Game over", JOptionPane.INFORMATION_MESSAGE);
     }
     public static void detiny(Player currentPlayer, String message) {
-        JOptionPane.showMessageDialog(frame,"Player " + currentPlayer.getUserId()+1 + " got a destiny card: \n" + message,
+        JOptionPane.showMessageDialog(frame,"Player " + (currentPlayer.getUserId() + 1) + " got a destiny card: \n" + message,
                 "Destiny Card", JOptionPane.INFORMATION_MESSAGE);
     }
 }
