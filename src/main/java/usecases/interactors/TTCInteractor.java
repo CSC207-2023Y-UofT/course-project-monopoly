@@ -2,6 +2,7 @@ package usecases.interactors;
 
 import entities.*;
 import presenters.InputPresenter;
+import usecases.InputPresentingInferface;
 import usecases.impactors.PositionImpactor;
 
 import java.util.InputMismatchException;
@@ -12,6 +13,11 @@ import java.util.Scanner;
  * It implements the UseCaseInteractor interface to provide a method for interacting with the TTC station when a player steps on it.
  */
 public class TTCInteractor implements UseCaseInteractor {
+
+    private static InputPresentingInferface inputPresenter;
+    public static void setInputPresenter(InputPresentingInferface newInputPresenter) {
+        inputPresenter = newInputPresenter;
+    }
 
     /**
      * Interacts with the TTC station when a player steps on it.
@@ -24,7 +30,7 @@ public class TTCInteractor implements UseCaseInteractor {
     @Override
     public void interact(Block block, GameData data) {
         int blockID;
-        blockID = InputPresenter.playerChooseBlock(data);
+        blockID = inputPresenter.playerChooseBlock(data);
 
         // Move the player to the chosen block using absoluteMove
         PositionImpactor.absoluteMove(data,blockID);

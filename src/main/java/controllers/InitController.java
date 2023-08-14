@@ -1,9 +1,12 @@
 package controllers;
 
 import entities.*;
+import presenters.InputPresenter;
+import usecases.OwnerPropertyUseCase;
 import usecases.generators.DestinyCardPoolGenerator;
 import usecases.generators.PropertyGenerator;
 import usecases.impactors.StatusImpactor;
+import usecases.interactors.TTCInteractor;
 
 import java.io.*;
 import java.util.*;
@@ -25,6 +28,11 @@ public class InitController {
      * @return The initialized GameData instance.
      */
     public static GameData init(String propertiesFile, String extraBlocksFile, String[] destinyFiles) {
+        // for GUI game, set the OwnerPropertyUseCase's presenter to GUI presenter
+        InputPresenter presenter = new InputPresenter();
+        OwnerPropertyUseCase.setInputPresenter(presenter);
+        TTCInteractor.setInputPresenter(presenter);
+
         // blocks
         ArrayList<Block> blocks = new ArrayList<>(PropertyGenerator.generateProperties(propertiesFile));
         try(BufferedReader reader = new BufferedReader(new FileReader(extraBlocksFile))) {

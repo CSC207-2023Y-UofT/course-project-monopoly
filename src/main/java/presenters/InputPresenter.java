@@ -3,6 +3,7 @@ package presenters;
 import controllers.InteractivePanelAdapter;
 import entities.GameData;
 import entities.Player;
+import usecases.InputPresentingInferface;
 
 import javax.swing.*;
 import java.util.Scanner;
@@ -12,18 +13,19 @@ import java.util.Scanner;
  * Main Interactive Panel
  * NOTE: Since we are at the terminal version, this class is minimally implemented.
  */
-public class InputPresenter {
+public class InputPresenter implements InputPresentingInferface {
 
     private static GameBoard frame;
-    public static void setFrame(GameBoard frame) {
-        frame = frame;
+    public static void setFrame(GameBoard newFrame) {
+        frame = newFrame;
     }
 
     /**
      * Asks for and collect raw input from the user
      * when player chooses whether to invest / upgrade or ignore a property, if available.
      */
-    public static boolean ownerChooseAtProperty(String verb, String propName, int currPrice) {
+    @Override
+    public boolean ownerChooseAtProperty(String verb, String propName, int currPrice) {
         while (true) {
             int choice = JOptionPane.showConfirmDialog(frame,
                     String.format("%s %s for %d TBucks?", verb, propName, currPrice),
@@ -38,7 +40,8 @@ public class InputPresenter {
         }
     }
 
-    public static int playerChooseBlock(GameData data) {
+    @Override
+    public int playerChooseBlock(GameData data) {
         int blockID;
         String userInput;
         while (true) {

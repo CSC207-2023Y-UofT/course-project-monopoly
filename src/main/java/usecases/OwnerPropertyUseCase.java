@@ -16,6 +16,15 @@ import java.util.ArrayList;
  */
 public class OwnerPropertyUseCase {
 
+    private static InputPresentingInferface inputPresenter;
+
+    /**
+     * set the inputPresenter, injects dependency
+     */
+    public static void setInputPresenter(InputPresentingInferface newInputPresenter) {
+        inputPresenter = newInputPresenter;
+    }
+
     /**
      * Allows the owner to upgrade their property or invest in unoccupied properties.
      *
@@ -39,11 +48,9 @@ public class OwnerPropertyUseCase {
             OutputPresenter.notifyOwnerIgnored(playerId, propName);
             return;
         }
-/**
- *  Loop
- */
+
         // The player need to input 'Y' for property buy/upgrade, or 'N' for ignoring.
-        boolean choice = InputPresenter.ownerChooseAtProperty(verb, propName, currPrice);
+        boolean choice = inputPresenter.ownerChooseAtProperty(verb, propName, currPrice);
 
         if (choice) {  // Inputted 'Y'.
             if (currSaving < currPrice) {  // Fail to proceed due to insufficient fund.
